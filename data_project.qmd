@@ -1,0 +1,26 @@
+---
+title: "FAOSTAT 2.3"
+subtitle: "A revitalisation of the API wrapper of the FAOSTAT API"
+date: "`r Sys.Date()`"
+date-format: long
+search: false
+format:
+    pdf: 
+      mainfont: Cambria
+    html: 
+      self-contained: true
+filters:
+  - abstract-section
+reference-location: margin
+citation-location: margin
+---
+
+# Abstract
+**Abstract** Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed sapien dolor. Nulla in consectetur urna. Morbi lacinia ornare massa vel    viverra. Vestibulum vel venenatis dolor. Nulla facilisi. Duis suscipit nunc id viverra eleifend. Nullam imperdiet risus malesuada aliquam luctus. Orci     varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+
+
+# Introduction
+
+
+
+# Bibliography

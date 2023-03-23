@@ -1,0 +1,39 @@
+---
+title: "FAOSTAT 2.3"
+subtitle: "A revitalisation of the API wrapper of the FAOSTAT API"
+author: "Sebastian Campbell"
+date: April  
+format: 
+  revealjs:
+    theme: simple
+    logo: img/uls_logo.png
+    css: lib/css/logo.css
+editor: source
+
+---
+
+# What _is_ FAOSTAT?
+
+FAOSTAT is 
+
+# How do we get data from FAOSTAT?
+
+# FAOSTAT package
+
+- Developed by Michael Kao et. al
+- Currently maintained by Paul Rougieux
+
+# Challenges
+
+- Old API doesn't work
+- New API is largely undocumented
+
+
+# Future work
+
+- Release of 3.0
+
+# Further reading
+
+- My report
+
