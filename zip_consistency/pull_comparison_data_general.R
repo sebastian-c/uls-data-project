@@ -1,4 +1,4 @@
-library(FAOSTAT) # >=2.3.0
+library(FAOSTAT) # >=2.3.0, feature branch
 library(data.table)
 
 # Doing this without groups
