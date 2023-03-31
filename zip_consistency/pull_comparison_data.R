@@ -12,6 +12,7 @@ setDT(dataset_dimensions)
 
 # Maybe doing it by year would be more sensible? There are ~200 countries and
 # only about ~70 years
+# Nope - country is better. That way you don't have annoying groups
 year_list <- read_dimension_metadata(dataset_code, "years")
 
 
@@ -28,6 +29,11 @@ for (year_index in seq_len(nrow(comparison_frame))){
   
   message(comparison_frame[year == year_code, year], 
           sprintf(" (%s/%s)", year_index, nrow(comparison_frame)))
+  
+  rest_data <- try(read_fao(dataset_code, 
+                            item_format = "FAO",
+                            year_codes = year_code, 
+                            clean_format = "snake_case"))
   
   n_tries = 2
   total_tries = 3
@@ -58,3 +64,23 @@ for (year_index in seq_len(nrow(comparison_frame))){
 }
 
 comparison_frame[rest_rows != zip_rows]
+
+
+z = year_zip_data
+r = rest_data
+
+setDT(z)
+setDT(r)
+
+z[,  `:=`(area_code = as.character(area_code),
+          item_code = as.integer(item_code))]
+
+zr_join = c(area = "area", item_code = "item_code__fao_", 
+            element_code = "element_code" ,
+            year = "year")
+
+rz_join = setNames(names(zr_join), zr_join)
+
+z[!r, on = zr_join][, .N, by = area]
+
+r[!z, on = rz_join]
