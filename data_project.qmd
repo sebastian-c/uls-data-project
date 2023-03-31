@@ -21,6 +21,20 @@ citation-location: margin
 
 # Introduction
 
+## FAOSTAT
+
+## FAOSTAT package
+
+### History
+
+### Current state
+
+# Project goals
+
+# Methods
+
+# Use case
+
 
 
 # Bibliography

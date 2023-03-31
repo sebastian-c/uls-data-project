@@ -12,11 +12,30 @@ editor: source
 
 ---
 
+::: {.notes}
+Consider using the server thing so that I can control the presentation from my phone
+:::
+
 # What _is_ FAOSTAT?
 
-FAOSTAT is 
+- FAOSTAT is the Food and Agriculture Organization's (FAO) tool for disseminating statistical data they produce
+
+- Not all data
+  - Fisheries and Forestry are separate
 
 # How do we get data from FAOSTAT?
+
+- Web interface
+  - Data explorer
+  - CSV exporter
+  - Bulk download
+- FAOSTAT3 API
+- Web interface API
+
+# Existing documentation
+
+- A single json file
+- An incomplete Word document
 
 # FAOSTAT package
 
