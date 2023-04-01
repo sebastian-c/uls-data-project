@@ -12,16 +12,27 @@ format:
 filters:
   - abstract-section
 reference-location: margin
-citation-location: margin
+bibliography: FAOSTAT.bib
 ---
 
 # Abstract
-**Abstract** Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed sapien dolor. Nulla in consectetur urna. Morbi lacinia ornare massa vel    viverra. Vestibulum vel venenatis dolor. Nulla facilisi. Duis suscipit nunc id viverra eleifend. Nullam imperdiet risus malesuada aliquam luctus. Orci     varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed sapien dolor. Nulla in consectetur urna. Morbi lacinia ornare massa vel viverra. Vestibulum vel venenatis dolor. Nulla facilisi. Duis suscipit nunc id viverra eleifend. Nullam imperdiet risus malesuada aliquam luctus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
 
 
-# Introduction
+## Project background
 
-## FAOSTAT
+The motivation for this project came from a Data Mining project from UniLaSalle. It was suggested that we use FAO^[Food and Agriculture Organization of the United Nations] data from their statistical platform FAOstat^[Food and Agriculture Organization Corporate Statistical Database]. As R was the language of choice, the obvious port of call was the 
+FAOSTAT package^[For the purposes of clarity, this document will use the style "FAOSTAT" for the R package and "FAOstat" for the statistical platform][@Kao2022a], developed by employees at FAO.
+
+However, the FAOSTAT package did not work. It could not download data from the API and could only download bulk data with the entirety of a dataset in one go. For the particular dataset we were interested in, we found that there was a discrepancy between the data in the bulk download and the data on the web platform.^[This discrepancy has been fixed as of 2023-03-10] 
+
+Eventually it became necessary to use the same API that the FAOstat website uses to pull data. This method worked and it became clear that it could be used to revitalise the FAOSTAT package and part of an effort to restore it to full functionality.
+
+## FAOstat
+
+FAOstat is FAO's web-based statistical platform for the free dissemination of food and agriculture statistics. This data is obtained from questionnaires that FAO distributes throughout the world every year.[@FAO2019] Some of its data also comes from imputations and models where data is not available, but official country data takes precedence.
+
+This platform uses a REST API internally to communicate with its database as well as providing a set of zip files with the entirety of certain datasets in order to reduce the load on the database.
 
 ## FAOSTAT package
 
@@ -29,12 +40,15 @@ citation-location: margin
 
 ### Current state
 
-# Project goals
+## Project goals
 
-# Methods
+## Methods
 
-# Use case
+## Use case
 
+## Future work
 
+## Bibliography
 
-# Bibliography
+::: {#refs}
+:::

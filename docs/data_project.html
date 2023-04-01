@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2023-03-29">
+<meta name="dcterms.date" content="2023-04-01">
 
 <title>data_project - FAOSTAT 2.3</title>
 <style>
@@ -20,6 +20,25 @@ ul.task-list li input[type="checkbox"] {
 width: 0.8em;
 margin: 0 0.8em 0.2em -1.6em;
 vertical-align: middle;
+}
+div.csl-bib-body { }
+div.csl-entry {
+clear: both;
+}
+.hanging div.csl-entry {
+margin-left:2em;
+text-indent:-2em;
+}
+div.csl-left-margin {
+min-width:2em;
+float:left;
+}
+div.csl-right-inline {
+margin-left:2em;
+padding-left:1em;
+}
+div.csl-indent {
+margin-left: 2em;
 }
 </style>
 
@@ -3917,18 +3936,20 @@ vertical-align: -.125em;
 
 </head>
 
-<body class="fullcontent">
+<body>
 
 <div id="quarto-search-results"></div>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
 <div class="quarto-title">
 <h1 class="title">FAOSTAT 2.3</h1>
 <p class="subtitle lead">A revitalisation of the API wrapper of the FAOSTAT API</p>
@@ -3942,51 +3963,49 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 29, 2023</p>
+      <p class="date">April 1, 2023</p>
     </div>
   </div>
   
     
   </div>
   
-<div>
-  <div class="abstract">
+<div class="page-columns page-full">
+  <div class="abstract page-columns page-full">
     <div class="abstract-title">Abstract</div>
-    <p><strong>Abstract</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed sapien dolor. Nulla in consectetur urna. Morbi lacinia ornare massa vel viverra. Vestibulum vel venenatis dolor. Nulla facilisi. Duis suscipit nunc id viverra eleifend. Nullam imperdiet risus malesuada aliquam luctus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed sapien dolor. Nulla in consectetur urna. Morbi lacinia ornare massa vel viverra. Vestibulum vel venenatis dolor. Nulla facilisi. Duis suscipit nunc id viverra eleifend. Nullam imperdiet risus malesuada aliquam luctus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+    <h2 id="project-background" class="anchored">Project background</h2>
+    <div class="page-columns page-full"><p>The motivation for this project came from a Data Mining project from UniLaSalle. It was suggested that we use FAO<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> data from their statistical platform FAOstat<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. As R was the language of choice, the obvious port of call was the FAOSTAT package<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a><span class="citation" data-cites="Kao2022a">(<a href="#ref-Kao2022a" role="doc-biblioref">Kao, Gheri, and Gesmann 2022</a>)</span>, developed by employees at FAO.</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup> Food and Agriculture Organization of the United Nations</p></li><li id="fn2"><p><sup>2</sup> Food and Agriculture Organization Corporate Statistical Database</p></li><li id="fn3"><p><sup>3</sup> For the purposes of clarity, this document will use the style “FAOSTAT” for the R package and “FAOstat” for the statistical platform</p></li></div></div>
+    <div class="page-columns page-full"><p>However, the FAOSTAT package did not work. It could not download data from the API and could only download bulk data with the entirety of a dataset in one go. For the particular dataset we were interested in, we found that there was a discrepancy between the data in the bulk download and the data on the web platform.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn4"><p><sup>4</sup> This discrepancy has been fixed as of 2023-03-10</p></li></div></div>
+    <p>Eventually it became necessary to use the same API that the FAOstat website uses to pull data. This method worked and it became clear that it could be used to revitalise the FAOSTAT package and part of an effort to restore it to full functionality.</p>
+    <h2 id="faostat" class="anchored">FAOstat</h2>
+    <p>FAOstat is FAO’s web-based statistical platform for the free dissemination of food and agriculture statistics. This data is obtained from questionnaires that FAO distributes throughout the world every year.<span class="citation" data-cites="FAO2019">(<a href="#ref-FAO2019" role="doc-biblioref">FAO 2019</a>)</span> Some of its data also comes from imputations and models where data is not available, but official country data takes precedence.</p>
+    <p>This platform uses a REST API internally to communicate with its database as well as providing a set of zip files with the entirety of certain datasets in order to reduce the load on the database.</p>
+    <h2 id="faostat-package" class="anchored">FAOSTAT package</h2>
+    <h3 id="history" class="anchored">History</h3>
+    <h3 id="current-state" class="anchored">Current state</h3>
+    <h2 id="project-goals" class="anchored">Project goals</h2>
+    <h2 id="methods" class="anchored">Methods</h2>
+    <h2 id="use-case" class="anchored">Use case</h2>
+    <h2 id="future-work" class="anchored">Future work</h2>
+    <h2 id="bibliography" class="anchored">Bibliography</h2>
+    <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+    <div id="ref-FAO2019" class="csl-entry" role="doc-biblioentry">
+    FAO. 2019. <span>“<span class="nocase">Data collection</span>.”</span> <a href="https://www.fao.org/statistics/data-collection/en/#jfmulticontent_c728270-2">https://www.fao.org/statistics/data-collection/en/#jfmulticontent_c728270-2</a>.
+    </div>
+    <div id="ref-Kao2022a" class="csl-entry" role="doc-biblioentry">
+    Kao, Michael C J, Filippo Gheri, and Markus Gesmann. 2022. <span>“<span class="nocase">FAOSTAT: Download Data from the FAOSTAT Database</span>.”</span> <a href="https://gitlab.com/paulrougieux/faostatpackage https://cran.r-project.org/package=FAOSTAT">https://gitlab.com/paulrougieux/faostatpackage https://cran.r-project.org/package=FAOSTAT</a>.
+    </div>
+    </div>
+    
+    
   </div>
 </div>
 
 </header>
 
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<section id="faostat" class="level2">
-<h2 class="anchored" data-anchor-id="faostat">FAOSTAT</h2>
-</section>
-<section id="faostat-package" class="level2">
-<h2 class="anchored" data-anchor-id="faostat-package">FAOSTAT package</h2>
-<section id="history" class="level3">
-<h3 class="anchored" data-anchor-id="history">History</h3>
-</section>
-<section id="current-state" class="level3">
-<h3 class="anchored" data-anchor-id="current-state">Current state</h3>
-</section>
-</section>
-</section>
-<section id="project-goals" class="level1">
-<h1>Project goals</h1>
-</section>
-<section id="methods" class="level1">
-<h1>Methods</h1>
-</section>
-<section id="use-case" class="level1">
-<h1>Use case</h1>
-</section>
-<section id="bibliography" class="level1">
-<h1>Bibliography</h1>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
