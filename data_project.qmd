@@ -12,14 +12,20 @@ format:
 filters:
   - abstract-section
 reference-location: margin
+cap-location: margin
 bibliography: FAOSTAT.bib
 ---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(ggplot2)
+```
 
 # Abstract
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed sapien dolor. Nulla in consectetur urna. Morbi lacinia ornare massa vel viverra. Vestibulum vel venenatis dolor. Nulla facilisi. Duis suscipit nunc id viverra eleifend. Nullam imperdiet risus malesuada aliquam luctus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
 
+### Other formats
 [{{< fa file-code >}} HTML](https://sebastian-c.github.io/uls-openfoodfacts/nutriscore_report.html) | [{{< fa file-pdf >}} PDF](https://sebastian-c.github.io/uls-openfoodfacts/nutriscore_report.pdf) | [{{< fa brands github >}} GitHub](https://github.com/sebastian-c/uls-openfoodfacts)
-
 
 ## Project background
 
@@ -33,6 +39,23 @@ Eventually it became necessary to use the same API that the FAOstat website uses
 ## FAOstat
 
 FAOstat is FAO's web-based statistical platform for the free dissemination of food and agriculture statistics. This data is obtained from questionnaires that FAO distributes throughout the world every year.[@FAO2019] Some of its data also comes from imputations and models where data is not available, but official country data takes precedence.
+
+```{r faostat_mentions}
+
+#| label: fig-faostat_mentions
+#| fig-cap: "Academic papers referencing FAOSTAT over the last 25 years"
+
+fao_mentions <- read.csv("data/faostat_mentions.csv")
+
+ggplot(fao_mentions, aes(x = year, y = results)) +
+  geom_col() +
+  theme_bw() +
+  labs(title = "Academic papers referencing FAOSTAT 1998-2023",
+       x = "Year",
+       y = ("Number of papers"))
+```
+
+The FAOstat service is a public-facing aspect of FAO
 
 This platform uses a REST API internally to communicate with its database as well as providing a set of zip files with the entirety of certain datasets in order to reduce the load on the database.
 
