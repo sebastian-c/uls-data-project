@@ -2,7 +2,8 @@
 title: "FAOSTAT 2.3"
 subtitle: "A revitalisation of the API wrapper of the FAOSTAT API"
 author: "Sebastian Campbell"
-date: April  
+date: "`r Sys.Date()`"
+date-format: long
 format: 
   revealjs:
     theme: simple
