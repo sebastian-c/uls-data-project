@@ -25,43 +25,48 @@ library(ggplot2)
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed sapien dolor. Nulla in consectetur urna. Morbi lacinia ornare massa vel viverra. Vestibulum vel venenatis dolor. Nulla facilisi. Duis suscipit nunc id viverra eleifend. Nullam imperdiet risus malesuada aliquam luctus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
 
 ### Other formats
-[{{< fa file-code >}} HTML](https://sebastian-c.github.io/uls-openfoodfacts/nutriscore_report.html) | [{{< fa file-pdf >}} PDF](https://sebastian-c.github.io/uls-openfoodfacts/nutriscore_report.pdf) | [{{< fa brands github >}} GitHub](https://github.com/sebastian-c/uls-openfoodfacts)
+[{{< fa file-code >}} HTML report](https://sebastian-c.github.io/uls-data-project/data_project.html) | [{{< fa file-pdf >}} PDF report](https://sebastian-c.github.io/uls-data-project/data_project.pdf) | [{{< fa expand >}} Presentation](https://sebastian-c.github.io/uls-data-project/data_project_presentation.html) | [{{< fa brands github >}} GitHub](https://github.com/sebastian-c/uls-data-project) 
 
 ## Project background
 
 The motivation for this project came from a Data Mining project from UniLaSalle. It was suggested that we use FAO^[Food and Agriculture Organization of the United Nations] data from their statistical platform FAOstat^[Food and Agriculture Organization Corporate Statistical Database]. As R was the language of choice, the obvious port of call was the 
 FAOSTAT package^[For the purposes of clarity, this document will use the style "FAOSTAT" for the R package and "FAOstat" for the statistical platform] [@Kao2022a], developed by employees at FAO.
 
-However, the FAOSTAT package did not work. It could not download data from the API and could only download bulk data with the entirety of a dataset in one go. For the particular dataset we were interested in, we found that there was a discrepancy between the data in the bulk download and the data on the web platform.^[This discrepancy has been fixed as of 2023-03-10] 
+However, the FAOSTAT package did not work. It could not download data from the API and could only download bulk data with the entirety of a dataset in one go. For the particular dataset we were interested in, we found that there was a discrepancy between the data in the bulk download and the data on the web platform.^[This discrepancy has been fixed as of 2023-03-10]
 
 Eventually it became necessary to use the same API that the FAOstat website uses to pull data. This method worked and it became clear that it could be used to revitalise the FAOSTAT package and part of an effort to restore it to full functionality.
 
 ## FAOstat
 
-FAOstat is FAO's web-based statistical platform for the free dissemination of food and agriculture statistics. This data is obtained from questionnaires that FAO distributes throughout the world every year.[@FAO2019] Some of its data also comes from imputations and models where data is not available, but official country data takes precedence.
+FAOstat is FAO's web-based statistical platform for the free dissemination of food and agriculture statistics. This data is obtained from questionnaires that FAO distributes throughout the world every year [@FAO2019]. Some of its data also comes from imputations and models where data is not available, but official country data takes precedence.
 
-```{r faostat_mentions}
-
+```{r}
 #| label: fig-faostat_mentions
-#| fig-cap: "Academic papers referencing FAOSTAT over the last 25 years"
+#| fig-cap: "Academic papers referencing FAOSTAT over the last 25 years [@Strobel2018]"
 
 fao_mentions <- read.csv("data/faostat_mentions.csv")
 
 ggplot(fao_mentions, aes(x = year, y = results)) +
   geom_col() +
-  theme_bw() +
+  theme_minimal() +
   labs(title = "Academic papers referencing FAOSTAT 1998-2023",
        x = "Year",
        y = ("Number of papers"))
 ```
 
-The FAOstat service is a public-facing aspect of FAO
+The FAOstat service is a public-facing aspect of FAO, with an overall trend of increasing citations in academic papers year on year with a peak of 21 400 citations in 2021 (@fig-faostat_mentions).
 
-This platform uses a REST API internally to communicate with its database as well as providing a set of zip files with the entirety of certain datasets in order to reduce the load on the database.
+![FAOstat interface for exploration of country data](img/faostat.png){#fig-faostat_interface}
+
+This platform uses a REST API internally to communicate with its database as well as providing a set of zip files with the entirety of certain datasets in order to reduce the load on the database. This REST API allows the website to generate CSVs as well as to allow exploration of the data via interactive graphs (@fig-faostat_interface).
 
 ## FAOSTAT package
 
+The FAOSTAT package is an API wrapper to pull data from FAOSTAT into a R session. It can also perform small necessary tasks such as country code conversion and coalescing data from different country groups.^[For example, China may be just the mainland or may include Taiwan (Chinese Taipei), Hong Kong and Macao]
+
 ### History
+
+The FAOSTAT package was originally developed as a too to source data for the SYB^[Statistical Year Book] project. The yearbooks are yearly summaries of the worldwide state of agriculture for that year. At the time, they were manually typeset and compiled. The new SYB project was to use a combination of `LaTeX`, `knitr` and `R` to automatically pull data from FAOSTAT and other data sources such as the World Bank. This data would be then be transformed and processed to create graphs and tables before finally formatting and typesetting to create a finished product which could then be printed.^[The author has no insight into the current production of the SYB, but they are still being produced and can be found on the [FAO website](https://www.fao.org/documents/card/en/c/cc2211en)]
 
 ### Current state
 

@@ -1,5 +1,5 @@
 ---
-title: "FAOSTAT 2.3"
+title: "FAOSTAT-package 2.3"
 subtitle: "A revitalisation of the API wrapper of the FAOSTAT API"
 author: "Sebastian Campbell"
 date: "`r Sys.Date()`"
@@ -8,7 +8,7 @@ format:
   revealjs:
     theme: simple
     logo: img/uls_logo.png
-    css: lib/css/logo.css
+    ?css: lib/css/logo.css
 editor: source
 
 ---
@@ -55,5 +55,5 @@ Consider using the server thing so that I can control the presentation from my p
 
 # Further reading
 
-- My report
+- [The companion report to this presentation](https://sebastian-c.github.io/uls-data-project/data_project.html)
 
