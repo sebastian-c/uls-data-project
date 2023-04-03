@@ -29,7 +29,7 @@ abstract: |
 
 ### Other formats
 
-[{{< fa file-code >}} HTML report](https://sebastian-c.github.io/uls-data-project/data_project.html) | [{{< fa file-pdf >}} PDF report](https://sebastian-c.github.io/uls-data-project/data_project.pdf) | [{{< fa expand >}} Presentation](https://sebastian-c.github.io/uls-data-project/data_project_presentation.html) | [{{< fa brands github >}} GitHub](https://github.com/sebastian-c/uls-data-project) 
+[{{< fa file-code >}} HTML report](data_project.html) | [{{< fa file-pdf >}} PDF report](data_project.pdf) | [{{< fa expand >}} Presentation](data_project_presentation.html) | [{{< fa brands github >}} GitHub](https://github.com/sebastian-c/uls-data-project) 
 
 ## Project background
 
