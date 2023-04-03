@@ -1,6 +1,8 @@
 ---
 title: "FAOSTAT 2.3"
 subtitle: "A revitalisation of the API wrapper of the FAOSTAT API"
+author: Sebastian Campbell
+affiliation: UniLaSalle Rouen
 date: "`r Sys.Date()`"
 date-format: long
 search: false
@@ -10,8 +12,6 @@ format:
     html: 
       include-in-header: lib/html/favicon.html
       self-contained: true
-filters:
-  - abstract-section
 reference-location: margin
 cap-location: margin
 bibliography: FAOSTAT.bib
@@ -22,10 +22,13 @@ knitr::opts_chunk$set(echo = FALSE)
 library(ggplot2)
 ```
 
-# Abstract
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed sapien dolor. Nulla in consectetur urna. Morbi lacinia ornare massa vel viverra. Vestibulum vel venenatis dolor. Nulla facilisi. Duis suscipit nunc id viverra eleifend. Nullam imperdiet risus malesuada aliquam luctus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+---
+abstract: |
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed sapien dolor. Nulla in consectetur urna. Morbi lacinia ornare massa vel viverra. Vestibulum vel venenatis dolor. Nulla facilisi. Duis suscipit nunc id viverra eleifend. Nullam imperdiet risus malesuada aliquam luctus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+---
 
 ### Other formats
+
 [{{< fa file-code >}} HTML report](https://sebastian-c.github.io/uls-data-project/data_project.html) | [{{< fa file-pdf >}} PDF report](https://sebastian-c.github.io/uls-data-project/data_project.pdf) | [{{< fa expand >}} Presentation](https://sebastian-c.github.io/uls-data-project/data_project_presentation.html) | [{{< fa brands github >}} GitHub](https://github.com/sebastian-c/uls-data-project) 
 
 ## Project background
@@ -46,16 +49,21 @@ FAOstat is FAO's web-based statistical platform for the free dissemination of fo
 #| fig-cap: "Academic papers referencing FAOSTAT over the last 25 years [@Strobel2018]"
 
 fao_mentions <- read.csv("data/faostat_mentions.csv")
+fao_mentions <- fao_mentions[fao_mentions$year <= 2021,]
 
 ggplot(fao_mentions, aes(x = year, y = results)) +
   geom_col() +
   theme_minimal() +
-  labs(title = "Academic papers referencing FAOSTAT 1998-2023",
+  labs(title = "Academic papers referencing FAOSTAT 1998-2021",
        x = "Year",
        y = ("Number of papers"))
+
+max_papers <- max(fao_mentions$results)
+max_papers_year <- fao_mentions[which.max(fao_mentions$results), "year"]
+
 ```
 
-The FAOstat service is a public-facing aspect of FAO, with an overall trend of increasing citations in academic papers year on year with a peak of 21 400 citations in 2021 (@fig-faostat_mentions).
+The FAOstat service is a public-facing aspect of FAO, with an overall trend of increasing citations in academic papers year on year with `r max_papers` citations by `r max_papers_year` (@fig-faostat_mentions).
 
 ![FAOstat interface for exploration of country data](img/faostat.png){#fig-faostat_interface}
 
@@ -88,24 +96,53 @@ A number of functions are simply designed to pull in data from other sources suc
 Many uses of FAOSTAT require data outside of the data that comes directly from FAOSTAT. The major use case is for code conversions. There are two main code types that require conversion:
 
 - Country codes
-  - *FAO* FAO's internal codes for countries^[For further details about FAO and how it handles country identification, see [FAO's NOCS database](https://www.fao.org/nocs/en)]
-  - *M49* The UN standard country codes
-  - ISO2 & ISO3
+  - **FAO**: FAO's internal codes for countries^[For further details about FAO and how it handles country identification, see [FAO's NOCS database](https://www.fao.org/nocs/en)]
+  - **M49**: The UN standard country codes
+  - **ISO2 & ISO3**: 2 and 3 letter country codes
 - Item codes
-  - FAO
-  - CPC
+  - **FAO**: Internal FAO codes to describe commodities
+  - **CPC**: Central Product Classification code [@UNSD2005]
+  
+The conversions are not dynamically taken from the API but rather stored in a fixed file. This makes them vulnerable to code or name changes in the future such as the name change of Swaziland to Eswatini in 2018 [@UN2018].
 
 #### Change of FAOstat API
 
-- Lots of SYB functions
-- Maintained by someone outside of FAO (European Commission)
+The FAOSTAT package is currently configured to access a now-defunct API^[Originally hosted at faostat3.fao.org] (FAOSTAT3). As a result, it has no methods of retrieving data from the FAOstat platform with the sole exception of the bulk zip downloads which have been since adapted to use the current platform.
+
+#### Other issues
+
+The FAOSTAT package is currently maintained by Paul Rougieux who has done an excellent job of keeping the package afloat. However, it's a small project done in his spare time, so he hasn't been able to make the time to do a full overhaul. In addition, he isn't an employee of FAO, but rather of the European Commission. As a face that FAO shows to the world, it seems reasonable that it be placed under its guidance.
 
 ## Project goals
+There are three main goals of this project:
 
 - Fix up core functions
+- Characterise relevant aspects of the new API
 - Transfer maintainership
 
+
+#### Fix up core functions
+
+The first priority to bring the FAOSTAT package to an acceptable level of functionality is to repair the most basic and most used functions.^[The functions below have been paired with a corresponding Gitlab issue that gives more context]
+
+Functions should not only be repaired but also renamed to have a consistent naming system. 
+
+- getFAO^[[GitLab issue #16](https://gitlab.com/paulrougieux/faostatpackage/-/issues/16)] - The heart of the package, pulls a custom slice of data from FAOstat
+- FAOsearch^[[GitLab issue #22](https://gitlab.com/paulrougieux/faostatpackage/-/issues/22)] - Allows a user to find the dataset they're looking for using the directory in FAOstat
+- translateCountryCode^[[GitLab issue #28](https://gitlab.com/paulrougieux/faostatpackage/-/issues/28)]
+
+
+
+#### Create functions to work with new API
+
+#### Transfer maintainership
+
+Uploading a package on CRAN^[Comprehensive R Archive Network, the centralised repository where the majority of R users download R packages] requires the permission of the maintainer. At the upload step, an email is sent to the maintainer of the last recorded package version to confirm that the upload was authorised. Only then can the new version proceed to the registration step.
+
 ## Methods
+
+Talked with existing maintainer
+Interviewed package author
 
 Please see issues in milestone: https://gitlab.com/paulrougieux/faostatpackage/-/issues/?sort=created_date&state=closed&milestone_title=2.3.0&first_page_size=20
 
@@ -130,13 +167,11 @@ Please see issues in milestone: https://gitlab.com/paulrougieux/faostatpackage/-
   - Fully integrating with the new API
 - Publishing a paper in [JOSS](https://joss.theoj.org/papers/published)
 - Publish news in rweekly
-- Publish 
+- Publish FAO news alert
+- Move package to FAO repository
 
 ## Funding declaration
 
 This project has been funded by the Food and Agriculture Organization of the United Nations and the author is grateful for their help in reviving it.
 
 ## Bibliography
-
-::: {#refs}
-:::
