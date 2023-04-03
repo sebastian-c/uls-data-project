@@ -11,6 +11,7 @@ format:
       mainfont: Cambria
     html: 
       include-in-header: lib/html/favicon.html
+      toc: true
       self-contained: true
 reference-location: margin
 cap-location: margin
@@ -24,7 +25,7 @@ library(ggplot2)
 
 ---
 abstract: |
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed sapien dolor. Nulla in consectetur urna. Morbi lacinia ornare massa vel viverra. Vestibulum vel venenatis dolor. Nulla facilisi. Duis suscipit nunc id viverra eleifend. Nullam imperdiet risus malesuada aliquam luctus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+  The FAOSTAT package is an important part of the Food and Agriculture Organization (FAO)'s image that is being maintained, but requires a makeover. Here an updated version, 2.3.0, of the package is presented with repaired access to FAO's API, new functions and preparation for a complete overhaul in 3.0.0. The package has been modernised according to new coding conventions with improved dependencies, documentation and tests. Old useless functions have been pruned and the package is now firmly focused on providing an interface to FAO data to users of R.
 ---
 
 ### Other formats
@@ -83,7 +84,7 @@ The package was maintained by Michael Kao, the author, from 2013 to 2014. In 201
 
 While it was [originally hosted on Github](https://github.com/mkao006/FAOSTATpackage) under Michael Kao's personal account, It is [currently hosted on GitLab](https://gitlab.com/paulrougieux/faostatpackage/) under Paul Rougieux's personal account.
 
-### Current state
+### Current state {#sec-current_state}
 
 The FAOSTAT package has only a shadow of its former functionality. While it has retained the ability to download and process zip files and country code processing functions,^[For a full description of the status of individual issues, please see the GitLab issue [#20 Remove functions linked to defunct uses of FAOSTAT](https://gitlab.com/paulrougieux/faostatpackage/-/issues/20)] its capacities are limited by the following issues:
 
@@ -113,11 +114,15 @@ The FAOSTAT package is currently configured to access a now-defunct API^[Origina
 
 The FAOSTAT package is currently maintained by Paul Rougieux who has done an excellent job of keeping the package afloat. However, it's a small project done in his spare time, so he hasn't been able to make the time to do a full overhaul. In addition, he isn't an employee of FAO, but rather of the European Commission. As a face that FAO shows to the world, it seems reasonable that it be placed under its guidance.
 
+As the package is old, it also has a number of dependencies that are unused or will be after redundant functions are removed. Other dependencies are simply no longer developed or have been superseded by newer packages.
+
 ## Project goals
-There are three main goals of this project:
+
+There are four main goals of this project:
 
 - Fix up core functions
-- Characterise relevant aspects of the new API
+- Triage existing functions
+- Characterise relevant aspects of the new API to wrap
 - Transfer maintainership
 
 
@@ -131,9 +136,14 @@ Functions should not only be repaired but also renamed to have a consistent nami
 - FAOsearch^[[GitLab issue #22](https://gitlab.com/paulrougieux/faostatpackage/-/issues/22)] - Allows a user to find the dataset they're looking for using the directory in FAOstat
 - translateCountryCode^[[GitLab issue #28](https://gitlab.com/paulrougieux/faostatpackage/-/issues/28)]
 
+#### Triage existing functions
 
+As described in the Current state section, many functions no longer work and need to be removed. This involves a thorough listing of them and their functionality and assessment of their usefulness.
 
-#### Create functions to work with new API
+#### Characterise relevant aspects of the new API to wrap
+
+Full overhauling the package is not in scope for FAOSTAT 2.3.0, but rather reserved for the next major version FAOSTAT 3.0.0. ^[For a full set of changes expected for FAOSTAT 3.0.0, see the [GitLab milestone page](https://gitlab.com/paulrougieux/faostatpackage/-/milestones/2)] This requires the additional step of inspecting the API manually as it doesn't have complete documentation.
+
 
 #### Transfer maintainership
 
@@ -146,13 +156,26 @@ Interviewed package author
 
 Please see issues in milestone: https://gitlab.com/paulrougieux/faostatpackage/-/issues/?sort=created_date&state=closed&milestone_title=2.3.0&first_page_size=20
 
+- Examining the API
+
 - Refactor essential functions
   - getFAO -> read_fao
   - FAOsearch -> search_fao
   
+- [Characterise functions GitLab #20](https://gitlab.com/paulrougieux/faostatpackage/-/issues/20)
+  
+- Had to repair zip function because of fao search
+  
 - Add caching
+
+One of the drawbacks of moving from internal data to pulling from the API is the need to read in data every time a lookup table or other piece of reference data is required. This slows down scripts as it's forced to wait for a reply from the FAOstat server. To mitigate that, caching was implemented. ^[[GitLab issue #27](https://gitlab.com/paulrougieux/faostatpackage/-/issues/27)] Now instead of pulling every time, the server is polled only once and the response is kept and referred to for subsequent queries.
+
 - Add column metadata
-- documentation, examples, tests
+
+
+Documented using `roxygen2` [@Wickham2022], tests written using `testthat` [@Wickham2011]
+
+- examples
 
 ## Use case
 
