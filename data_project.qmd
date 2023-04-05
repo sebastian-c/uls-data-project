@@ -3,7 +3,7 @@ title: "FAOSTAT 2.3"
 subtitle: "A revitalisation of the API wrapper of the FAOSTAT API"
 author: Sebastian Campbell
 affiliation: UniLaSalle Rouen
-date: "`r Sys.Date()`"
+date: "2023-04-05"
 date-format: long
 search: false
 format:
@@ -15,6 +15,7 @@ format:
       self-contained: true
 reference-location: margin
 cap-location: margin
+citation: true
 bibliography: FAOSTAT.bib
 ---
 
@@ -132,10 +133,6 @@ The first priority to bring the FAOSTAT package to an acceptable level of functi
 
 Functions should not only be repaired but also renamed to have a consistent naming system. 
 
-- getFAO^[[GitLab issue #16](https://gitlab.com/paulrougieux/faostatpackage/-/issues/16)] - The heart of the package, pulls a custom slice of data from FAOstat
-- FAOsearch^[[GitLab issue #22](https://gitlab.com/paulrougieux/faostatpackage/-/issues/22)] - Allows a user to find the dataset they're looking for using the directory in FAOstat
-- translateCountryCode^[[GitLab issue #28](https://gitlab.com/paulrougieux/faostatpackage/-/issues/28)]
-
 ## Triage existing functions
 
 As described in the [Current state](#current-state) section, many functions no longer work and need to be removed. This involves a thorough listing of them and their functionality and assessment of their usefulness.
@@ -153,30 +150,39 @@ Uploading a package on CRAN^[Comprehensive R Archive Network, the centralised re
 
 On 2023-03-30, the FAOSTAT package version 2.3.0 was published to CRAN.^[[CRAN package page](https://cran.r-project.org/web/packages/FAOSTAT/index.html)] The process required the resolution of the issues detailed in the [Project Goals](#project-goals) section.^[Please see [GitLab Milestone 2.3.0](https://gitlab.com/paulrougieux/faostatpackage/-/issues/?sort=created_date&state=closed&milestone_title=2.3.0) for a full list of related issues]
 
+In order to solve these issues, a full examination of the package context, the API and a redesign of existing functions needed to be made.
+
+
 ## Learning package context
 
-- Talked with existing maintainer
-- Interviewed package author
+The two most important developers of the FAOSTAT package are the package author, Michael Kao and the current maintainer, Paul Rougieux.
+
+Paul Rougieux has been very helpful in guiding the author's proposed changes to the package - making excellent suggestions in regards to code style and formatting as well as documentation and general useability.
+
+An interview with the package author clarified that a number of of unusual functions were due to its previous linkage with the Statistical Yearbook and that the paper attached to the package had never been published and suggested that it should be tidied up and published in future.
 
 ## Examining the API
 
-- No proper documentation
-  - Managed to get an incomplete word document
-  - Found json API description
-    - Only gives idea of structure, not purpose or use
+The API is not fully documented and this is mostly because it's not really intended for interactive use. The main documentation is a JSON:API specification,^[[JSON:API](https://jsonapi.org/format/) is a standard way to describe the structure of an API as a single json document] which describes the structure perfectly, but gives no context or recommendations for use, nor does it describe output.
+
+It was thus necessary to use this document to manually examine all the endpoints and characterise all the the data output from them.^[A full set of this examination is found in [GitLab issue #23](https://gitlab.com/paulrougieux/faostatpackage/-/issues/23)]
 
 ## Redesigning functions
 
-- Refactor essential functions
-  - getFAO -> read_fao
-  - FAOsearch -> search_fao
-- [Characterise functions GitLab #20](https://gitlab.com/paulrougieux/faostatpackage/-/issues/20)
+The existing functions to be refactored to read data from the new API. FAOSTAT 2.3.0 only has core functions in scope.^[A full list of functions to be refactored or discarded is in [GitLab issue #20](https://gitlab.com/paulrougieux/faostatpackage/-/issues/20)] The most core functions include:
+
+
+- `getFAO`^[[GitLab issue #16](https://gitlab.com/paulrougieux/faostatpackage/-/issues/16)] - The heart of the package, pulls a custom slice of data from FAOstat. Renamed to `read_fao`
+- `FAOsearch`^[[GitLab issue #22](https://gitlab.com/paulrougieux/faostatpackage/-/issues/22)] - Allows a user to find the dataset they're looking for using the directory in FAOstat. Renamed to `search_fao`
+- `translateCountryCode`^[[GitLab issue #28](https://gitlab.com/paulrougieux/faostatpackage/-/issues/28)] - Translates country codes between formats. Renamed to `translate_countrycodes`
   
 ## Consequent work
+
+The above changes sometimes entailed additional work due to unforeseen problems or hidden requirements
   
 ### Function regression  
 
-- Had to repair zip function because of fao search
+It was intended that the bulk zip download files remained intact, as they were the most functional part of the package. However, it depends on `FAOsearch`/`search_fao` which was changed as part of the 2.3.0 release. As a result, it was necessary to refactor some of the bulk download code to restore functionality.
   
 ### Caching
 
@@ -188,13 +194,15 @@ One of the drawbacks of moving from internal data to pulling from the API is the
 
 When using the package, it was found that certain functionalities were immediately necessary. It was nigh-impossible to practically make a request for data without knowing what datasets were available and what their column names were. As a last minute addition, functions to perform these tasks were slipped into the 2.3.0 release.^[GitLab commit: [Added functions to get dimensions](https://gitlab.com/paulrougieux/faostatpackage/-/commit/06548dd0a74e1075469aece12f0bf2f8df4a3f11)]
 
-### Testing and documentation
+### Testing
 
-- Used chatGPT to help generate tests.^[[ChatGPTv3 conversation](https://sharegpt.com/c/REwBzY6) 2023-03-28] Gave it code and told it to give me ideas for tests
+When making changes to a codebase it's important to make tests to assure that the function works as intended but also to report when the function breaks as a result of changes to it or its dependencies. This package uses `testthat` for its tests [@Wickham2011].
 
-Documented using `roxygen2` [@Wickham2022], tests written using `testthat` [@Wickham2011]
+Making tests is repetitive work however and many tests are structured the same way. This sort of repetitive intellectual work is perfect for an AI. The author used chatGPT to help generate tests.^[[ChatGPTv3 conversation](https://sharegpt.com/c/REwBzY6) 2023-03-28] It was supplied with the function code and responded with valid tests from which relevant ones were selected.
 
-- examples
+### Documentation
+
+The package is documented using `roxygen2` [@Wickham2022] which allows documentation and code to be kept in the same file. Documentation has been particularly important for this project, specifically examples. As a lot of information has to be supplied to a function to get data in terms of codes, it's important that users have a clear idea of what is required as incorrect codes can result in cryptic empty responses from the server.
 
 <!-- # Use case -->
 
@@ -205,15 +213,22 @@ Documented using `roxygen2` [@Wickham2022], tests written using `testthat` [@Wic
 
 # Future work
 
-- Release 3.0.0
-  - Fully integrating with the new API
-- Publishing a paper in [JOSS](https://joss.theoj.org/papers/published)
-- Publish news in rweekly
-- Publish FAO news alert
-- Move package to FAO repository
+FAOSTAT 2.3 is the first step to producing the fully revamped FAOSTAT 3.0.0 which will have full integration with all aspects of the API rather than just a subset.
+
+## Publication
+
+The FAOSTAT package has never been officially published and it's important to widely publicise it to encourage use. The following avenues are available:
+
+- Publishing a paper in [JOSS](https://joss.theoj.org/papers/published) - JOSS is an online journal with peer review entirely managed by github issues
+- Publish news in [rweekly](https://rweekly.org/) - Rweekly is a weekly newsletter that publishes news about R in the last week
+- Publish FAO news alert - FAO has internal news services and a FAO product should be publicised through it
+- Move package to FAO repository - The package is currently hosted on GitLab and should ideally be moved to a repository with FAO branding such as the the [GitHub FAOSTAT organisation](https://github.com/FAOSTAT).
 
 # Funding declaration
 
 This project has been funded by the Food and Agriculture Organization of the United Nations and the author is grateful for their help in reviving it.
 
 # Bibliography
+
+:::{.refs}
+:::

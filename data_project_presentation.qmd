@@ -2,27 +2,41 @@
 title: "FAOSTAT-package 2.3"
 subtitle: "A revitalisation of the API wrapper of the FAOSTAT API"
 author: "Sebastian Campbell"
-date: "`r Sys.Date()`"
+date: "2023-04-05"
 date-format: long
+search: false
 format: 
   revealjs:
     theme: simple
-    logo: img/uls_logo.png
+    logo: img/combined_logo.png
     css: lib/css/logo.css
 editor: source
 
 ---
 
+```{r setup, include = FALSE}
+library(FAOSTAT)
+```
+
+# What _is_ FAOSTAT?
+
+- [FAOSTAT](https://www.fao.org/faostat) is the Food and Agriculture Organization's (FAO) tool for disseminating statistical data they produce
+
+- Not all data
+  - Fisheries and Forestry are separate
+
 ::: {.notes}
 Consider using the server thing so that I can control the presentation from my phone
 :::
 
-# What _is_ FAOSTAT?
+# How do we get data from FAOSTAT?
 
-- FAOSTAT is the Food and Agriculture Organization's (FAO) tool for disseminating statistical data they produce
-
-- Not all data
-  - Fisheries and Forestry are separate
+- Web interface
+  - Data explorer
+  - CSV exporter
+  - **Bulk download**
+  - Web interface API
+- FAOSTAT3 API
 
 # How do we get data from FAOSTAT?
 
@@ -30,28 +44,73 @@ Consider using the server thing so that I can control the presentation from my p
   - Data explorer
   - CSV exporter
   - Bulk download
-- FAOSTAT3 API
-- Web interface API
+  - Web interface API
+- ~~FAOSTAT3 API~~
+
+# What is the FAOSTAT package?
+
+- API wrapper that allows R users to use FAO functions
+- Allows users to pull in FAOSTAT data
+
+# Quick demo
+```{r, echo = TRUE, cache = TRUE}
+landuse <- get_faostat_bulk("RL")
+head(landuse)
+```
+
+# Custodianship
+
+- Developed by FAO employees
+- Currently maintained by Paul Rougieux at the European Commission
 
 # Existing documentation
 
 - A single json file
-- An incomplete Word document
-
-# FAOSTAT package
-
-- Developed by Michael Kao et. al
-- Currently maintained by Paul Rougieux
+- A word document
+  - Only covers a subset of functionality
 
 # Challenges
 
 - Old API doesn't work
 - New API is largely undocumented
+- Outdated functions
 
+# We need to get from here
+
+![](img/gitlab_code.png){.r-stretch}
+
+# To here
+
+![](img/faostat_cran.png){.r-stretch}
+
+# Three step program
+
+- Fix core functions
+- Triage existing functions
+- Describe all API endpoints
+
+# [Fix core functions](https://gitlab.com/paulrougieux/faostatpackage/-/issues/12)
+
+{{< video vid/faostat_ping.mp4 >}}
+
+# [Triage existing functions](https://gitlab.com/paulrougieux/faostatpackage/-/issues/20)
+
+![](img/defunctions.png){.r-stretch}
+
+# Describe all API endpoints
+
+- Used json doc
+- Manually tested all the endpoints
+- Wrote everything up on an issue page
+
+# [It was a lot of work](https://gitlab.com/paulrougieux/faostatpackage/-/issues/23)
+
+![](img/api_endpoints.png)
 
 # Future work
 
 - Release of 3.0
+- New API is designed for the interface and not for this use case
 
 # Further reading
 

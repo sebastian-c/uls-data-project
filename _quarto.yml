@@ -2,3 +2,9 @@ project:
   title: "data_project"
   type: website
   output-dir: docs
+  execute-dir: project
+  resources: 
+    - vid/
+    - img/
+    - lib/
+    - .nojekyll

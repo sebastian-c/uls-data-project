@@ -6,3 +6,5 @@
 /.quarto/
 
 *.bib
+
+*_cache/

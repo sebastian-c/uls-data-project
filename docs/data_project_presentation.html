@@ -6,11 +6,13 @@
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/quarto-contrib/videojs/video.min.js"></script>
+<link href="site_libs/quarto-contrib/videojs/video-js.css" rel="stylesheet"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.2.335">
 
   <meta name="author" content="Sebastian Campbell">
-  <meta name="dcterms.date" content="2023-04-04">
+  <meta name="dcterms.date" content="2023-04-05">
   <title>data_project - FAOSTAT-package 2.3</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -29,6 +31,70 @@
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto.css" id="theme">
   <link rel="stylesheet" href="lib/css/logo.css">
@@ -337,10 +403,17 @@ Sebastian Campbell
 </div>
 </div>
 
-  <p class="date">April 4, 2023</p>
+  <p class="date">April 5, 2023</p>
 </section>
-<section class="slide level2">
-
+<section id="what-is-faostat" class="title-slide slide level1 center">
+<h1>What <em>is</em> FAOSTAT?</h1>
+<ul>
+<li><p><a href="https://www.fao.org/faostat">FAOSTAT</a> is the Food and Agriculture Organization’s (FAO) tool for disseminating statistical data they produce</p></li>
+<li><p>Not all data</p>
+<ul>
+<li>Fisheries and Forestry are separate</li>
+</ul></li>
+</ul>
 <aside class="notes">
 <p>Consider using the server thing so that I can control the presentation from my phone</p>
 <style type="text/css">
@@ -355,16 +428,6 @@ Sebastian Campbell
           display:block!important;
       }</style></aside>
 </section>
-<section id="what-is-faostat" class="title-slide slide level1 center">
-<h1>What <em>is</em> FAOSTAT?</h1>
-<ul>
-<li><p>FAOSTAT is the Food and Agriculture Organization’s (FAO) tool for disseminating statistical data they produce</p></li>
-<li><p>Not all data</p>
-<ul>
-<li>Fisheries and Forestry are separate</li>
-</ul></li>
-</ul>
-</section>
 
 <section id="how-do-we-get-data-from-faostat" class="title-slide slide level1 center">
 <h1>How do we get data from FAOSTAT?</h1>
@@ -373,10 +436,64 @@ Sebastian Campbell
 <ul>
 <li>Data explorer</li>
 <li>CSV exporter</li>
-<li>Bulk download</li>
+<li><strong>Bulk download</strong></li>
+<li>Web interface API</li>
 </ul></li>
 <li>FAOSTAT3 API</li>
+</ul>
+</section>
+
+<section id="how-do-we-get-data-from-faostat-1" class="title-slide slide level1 center">
+<h1>How do we get data from FAOSTAT?</h1>
+<ul>
+<li>Web interface
+<ul>
+<li>Data explorer</li>
+<li>CSV exporter</li>
+<li>Bulk download</li>
 <li>Web interface API</li>
+</ul></li>
+<li><del>FAOSTAT3 API</del></li>
+</ul>
+</section>
+
+<section id="what-is-the-faostat-package" class="title-slide slide level1 center">
+<h1>What is the FAOSTAT package?</h1>
+<ul>
+<li>API wrapper that allows R users to use FAO functions</li>
+<li>Allows users to pull in FAOSTAT data</li>
+</ul>
+</section>
+
+<section id="quick-demo" class="title-slide slide level1 center">
+<h1>Quick demo</h1>
+<div class="cell" data-hash="data_project_presentation_cache/revealjs/unnamed-chunk-1_e56b49e5b88a1bbc75dc94e8536b4ded">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>landuse <span class="ot">&lt;-</span> <span class="fu">get_faostat_bulk</span>(<span class="st">"RL"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">head</span>(landuse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  area_code area_code__m49_        area item_code         item element_code
+1         2            '004 Afghanistan      6600 Country area         5110
+2         2            '004 Afghanistan      6600 Country area         5110
+3         2            '004 Afghanistan      6600 Country area         5110
+4         2            '004 Afghanistan      6600 Country area         5110
+5         2            '004 Afghanistan      6600 Country area         5110
+6         2            '004 Afghanistan      6600 Country area         5110
+  element year_code year    unit value flag
+1    area      1961 1961 1000 ha 65286    A
+2    area      1962 1962 1000 ha 65286    A
+3    area      1963 1963 1000 ha 65286    A
+4    area      1964 1964 1000 ha 65286    A
+5    area      1965 1965 1000 ha 65286    A
+6    area      1966 1966 1000 ha 65286    A</code></pre>
+</div>
+</div>
+</section>
+
+<section id="custodianship" class="title-slide slide level1 center">
+<h1>Custodianship</h1>
+<ul>
+<li>Developed by FAO employees</li>
+<li>Currently maintained by Paul Rougieux at the European Commission</li>
 </ul>
 </section>
 
@@ -384,15 +501,10 @@ Sebastian Campbell
 <h1>Existing documentation</h1>
 <ul>
 <li>A single json file</li>
-<li>An incomplete Word document</li>
-</ul>
-</section>
-
-<section id="faostat-package" class="title-slide slide level1 center">
-<h1>FAOSTAT package</h1>
+<li>A word document
 <ul>
-<li>Developed by Michael Kao et. al</li>
-<li>Currently maintained by Paul Rougieux</li>
+<li>Only covers a subset of functionality</li>
+</ul></li>
 </ul>
 </section>
 
@@ -401,13 +513,58 @@ Sebastian Campbell
 <ul>
 <li>Old API doesn’t work</li>
 <li>New API is largely undocumented</li>
+<li>Outdated functions</li>
 </ul>
 </section>
+
+<section id="we-need-to-get-from-here" class="title-slide slide level1 center">
+<h1>We need to get from here</h1>
+<img data-src="img/gitlab_code.png" class="r-stretch">
+</section>
+
+<section id="to-here" class="title-slide slide level1 center">
+<h1>To here</h1>
+<img data-src="img/faostat_cran.png" class="r-stretch">
+</section>
+
+<section id="three-step-program" class="title-slide slide level1 center">
+<h1>Three step program</h1>
+<ul>
+<li>Fix core functions</li>
+<li>Triage existing functions</li>
+<li>Describe all API endpoints</li>
+</ul>
+</section>
+
+<section id="fix-core-functions" class="title-slide slide level1 center">
+<h1><a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/12">Fix core functions</a></h1>
+<video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="vid/faostat_ping.mp4"></video>
+</section>
+
+<section id="triage-existing-functions" class="title-slide slide level1 center">
+<h1><a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/20">Triage existing functions</a></h1>
+<img data-src="img/defunctions.png" class="r-stretch">
+</section>
+
+<section id="describe-all-api-endpoints" class="title-slide slide level1 center">
+<h1>Describe all API endpoints</h1>
+<ul>
+<li>Used json doc</li>
+<li>Manually tested all the endpoints</li>
+<li>Wrote everything up on an issue page</li>
+</ul>
+</section>
+
+<section id="it-was-a-lot-of-work" class="title-slide slide level1 center">
+<h1><a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/23">It was a lot of work</a></h1>
+
+<img data-src="img/api_endpoints.png" class="r-stretch"></section>
 
 <section id="future-work" class="title-slide slide level1 center">
 <h1>Future work</h1>
 <ul>
 <li>Release of 3.0</li>
+<li>New API is designed for the interface and not for this use case</li>
 </ul>
 </section>
 
@@ -418,7 +575,7 @@ Sebastian Campbell
 </ul>
 
 
-<img src="img/uls_logo.png" class="slide-logo r-stretch"><div class="footer footer-default">
+<img src="img/combined_logo.png" class="slide-logo r-stretch"><div class="footer footer-default">
 
 </div>
 </section>
@@ -803,6 +960,7 @@ Sebastian Campbell
       }
     });
     </script>
+    
     
 
 </body></html>
