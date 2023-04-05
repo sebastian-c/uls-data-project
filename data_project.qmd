@@ -198,7 +198,7 @@ When using the package, it was found that certain functionalities were immediate
 
 When making changes to a codebase it's important to make tests to assure that the function works as intended but also to report when the function breaks as a result of changes to it or its dependencies. This package uses `testthat` for its tests [@Wickham2011].
 
-Making tests is repetitive work however and many tests are structured the same way. This sort of repetitive intellectual work is perfect for an AI. The author used chatGPT to help generate tests.^[[ChatGPTv3 conversation](https://sharegpt.com/c/REwBzY6) 2023-03-28] It was supplied with the function code and responded with valid tests from which relevant ones were selected.
+Making tests is repetitive work however and many tests are structured the same way. This sort of repetitive intellectual work is perfect for an AI. The author used chatGPT to help generate tests.^[[ChatGPTv3 conversation](https://sharegpt.com/c/REwBzY6) dated 2023-03-28] It was supplied with the function code and responded with valid tests from which relevant ones were selected.
 
 ### Documentation
 
