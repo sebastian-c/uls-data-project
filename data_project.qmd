@@ -1,9 +1,9 @@
 ---
-title: "FAOSTAT 2.3"
+title: "FAOSTAT 3.0"
 subtitle: "A revitalisation of the API wrapper of the FAOSTAT API"
 author: Sebastian Campbell
 affiliation: UniLaSalle Rouen
-date: "2023-04-05"
+date: "2024-03-01"
 date-format: long
 search: false
 format:
@@ -12,7 +12,7 @@ format:
     html: 
       include-in-header: lib/html/favicon.html
       toc: true
-      self-contained: true
+      self-contained: false
 reference-location: margin
 cap-location: margin
 citation: true
@@ -20,14 +20,21 @@ bibliography: FAOSTAT.bib
 ---
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, cache = TRUE)
 library(ggplot2)
+library(forcats)
+library(data.table)
 ```
 
 ---
 abstract: |
+
   The FAOSTAT package is an important part of the Food and Agriculture Organization (FAO)'s image that is being maintained, but requires a makeover. Here an updated version, 2.3.0, of the package is presented with repaired access to FAO's API, new functions and preparation for a complete overhaul in 3.0.0. The package has been modernised according to new coding conventions with improved dependencies, documentation and tests. Old useless functions have been pruned and the package is now firmly focused on providing an interface to FAO data to users of R.
 ---
+
+::: {.callout-important}
+The abstract needs to be updated to 3.0
+::: 
 
 ## Other formats
 
@@ -38,9 +45,43 @@ abstract: |
 The motivation for this project came from a Data Mining project from UniLaSalle. It was suggested that we use FAO^[Food and Agriculture Organization of the United Nations] data from their statistical platform FAOstat^[Food and Agriculture Organization Corporate Statistical Database]. As R was the language of choice, the obvious port of call was the 
 FAOSTAT package^[For the purposes of clarity, this document will use the style "FAOSTAT" for the R package and "FAOstat" for the statistical platform] [@Kao2022a], developed by employees at FAO.
 
-However, the FAOSTAT package did not work. It could not download data from the API and could only download bulk data with the entirety of a dataset in one go. For the particular dataset we were interested in, we found that there was a discrepancy between the data in the bulk download and the data on the web platform.^[This discrepancy has been fixed as of 2023-03-10]
+However, the FAOSTAT package did not work. It could not download data from the API^[Application Programming Interface] and could only download bulk data with the entirety of a dataset in one go. For the particular dataset we were interested in, we found that there was a discrepancy between the data in the bulk download and the data on the web platform.^[This discrepancy has been fixed as of 2023-03-10]
 
 Eventually it became necessary to use the same API that the FAOstat website uses to pull data. This method worked and it became clear that it could be used to revitalise the FAOSTAT package and part of an effort to restore it to full functionality.
+
+A first update, FAOSTAT 2.3.0 was released by the author in May 2023. FAOSTAT 3.0 is a continuation of that effort and realises many of the goals that it set out.
+
+## What's an API?
+
+An API^[Application Programming Interface] is a method for a host application to allow a client to send it commands in a way the client understands. The API is a layer that converts these client commands to ones that the host understands. To use a metaphor, you could in theory drive a car by manually turning the axle to got left and start it by hitting a spark plug yourself. However, the key (or start button, if you have a newer model) and steering wheel are a much more natural and intuitive way to direct a car for a human being. However, from the car's perspective the axle gets turned and the spark plug is struck. The steering wheel and key essentially work as an API between the server (the car) and the client (the person).
+
+In modern parlance, when we refer to an API, we usually mean a REST^[REpresentative State Transfer] API. This is a type of API run over the web via HTTP^[HyperText Transfer Protocol], the same protocol that serves web pages. These APIs are a method of exchanging data and use the following major verbs^[There are other verbs (HEAD, CONNECT, OPTIONS, TRACE and PATCH), but they are of much lower importance] from HTTP:
+
+**GET** - Request data from the server
+
+  * Request: `GET https://example.com/johnsmith/info` 
+  * Payload: None
+  * Response: `{username: johnsmith, full_name = "John Smith"}` 
+
+**PUT** - Send data to the server    
+
+  * Request: `PUT https://example.com/johnsmith/info`
+  * Payload: `{full_name: "John Allen Smith"}`
+  * Response: None
+
+**POST** - Send data to the server and receive data    
+
+  * Request: `POST https://example.com/johnsmith/send_email`
+  * Payload: `{subject: "Business opportunity", body = "Dear {fullname}, please reply"}`
+  * Response: `{result: "success", send_time: "2020-09-23 17:34:15"}`
+
+**DELETE** - Delete data from the server    
+
+  * Request: `DELETE https://example.com/johnsmith`
+  * Payload: None
+  * Response: None
+
+The key innovation that REST introduces is _statelessness_. The server doesn't have to keep track of any previous requests. Each request is atomic and is considered in isolation. This distinguishes it from other API patterns such as SOAP^[Simple Object Access Protocol] (@Halili2018).
 
 # FAOstat
 
@@ -79,15 +120,81 @@ The FAOSTAT package is an API wrapper to pull data from FAOSTAT into a R session
 
 The FAOSTAT package was originally developed in 2013 as a tool to source data for the SYB^[Statistical Year Book] project. The yearbooks are yearly summaries of the worldwide state of agriculture for that year. At the time, they were manually typeset and compiled. The new SYB project was to use a combination of `LaTeX`, `knitr` and `R` to automatically pull data from FAOSTAT and other data sources such as the World Bank. This data would be then be transformed and processed to create graphs and tables before finally formatting and typesetting to create a finished product which could then be printed.^[The author has no insight into the current production of the SYB, but they are still being produced and can be found on the [FAO website](https://www.fao.org/documents/card/en/c/cc2211en)].  Given that this use case no longer exists, the primary use of this package is for researchers and other R users to read data from FAOstat in a clean way that makes it easier to move to analysis afterwards.
 
-It is a reasonably popular package in the 86th percentile of all packages on CRAN on 2023-04-01 by downloads. In total, the package has been downloaded over 50 000 times with a peak 121 daily downloads on 2019-05-15. [@Li2023]
+It is a reasonably popular package; in the 86th percentile of all packages on CRAN on 2023-04-01 by downloads. In total, the package has been downloaded over 50 000 times with a peak 121 daily downloads on 2019-05-15. [@Li2023]
 
-The package was maintained by Michael Kao, the author, from 2013 to 2014. In 2014, it was maintained by Filippo Gheri before passing to Paul Rougieux (the current maintainer) in 2020. 
+### Maintainership
+
+```{mermaid}
+%%| label: fig-timeline
+%%| fig-cap: A timeline of the FAOSTAT package from its creation to today
+%%| fig-width: 4
+%%{init: {'timeline': {'disableMulticolor': true} } }%%
+timeline
+    title History of the FAOSTAT package
+      2013 : Michael Kao creates the FAOSTAT package on GitHub
+      2014 : Filippo Gheri takes maintainership FAOSTAT
+      2017 : FAOSTAT3 API is deprecated
+      2020 : Paul Rougieux takes maintainership of FAOSTAT : FAOSTAT moves to GitLab
+      2023 : Sebastian Campbell begins work on FAOSTAT : FAOSTAT 0.2.3 released
+      2024 : FAOSTAT 3.0.0 released
+```
+
+The package was maintained by Michael Kao, the author, from 2013 to 2014. In 2014, it was maintained by Filippo Gheri before passing to Paul Rougieux (the current maintainer) in 2020 (@fig-timeline).
 
 While it was [originally hosted on Github](https://github.com/mkao006/FAOSTATpackage) under Michael Kao's personal account, It is [currently hosted on GitLab](https://gitlab.com/paulrougieux/faostatpackage/) under Paul Rougieux's personal account.
 
-## Current state
+```{r}
+#| label: fig-git-contributions
+#| fig-cap: "Contributions to the FAOSTAT git repository by number of commits and by number of lines contributed that remain in the current master branch"
+git_stats <- fread("data/commit_stats.csv")
+git_stats[, author := fct_reorder(author, number, .desc = TRUE)]
+ggplot(git_stats, aes(x = author, y = number)) +
+  geom_col() +
+  scale_x_discrete(guide = guide_axis(n.dodge=3)) +
+  facet_grid(rows = "type", scales = "free_y") +
+  labs(title = "Contributions to FAOSTAT by commits and retained lines of code",
+       x = "Author",
+       y = "Number of contributions") +
+  theme_minimal()
+```
 
-The FAOSTAT package has only a shadow of its former functionality. While it has retained the ability to download and process zip files and country code processing functions,^[For a full description of the status of individual issues, please see the GitLab issue [#20 Remove functions linked to defunct uses of FAOSTAT](https://gitlab.com/paulrougieux/faostatpackage/-/issues/20)] its capacities are limited by the following issues:
+While there have been other contributors, they have only provided occasional commits and very little of that code remains in the codebase (@fig-git-contributions). The major four maintainers (Kao, Gheri, Rougieux and Campbell) are by far the main contributors.
+
+```{r}
+#| label: fig-git-timeline
+#| fig-cap: "Contributions to the FAOSTAT git repository over time by author"
+
+commit_log <- fread("data/faostat_gitlog.txt", sep = "|")
+
+mkao_names <- c("Michael. C. J. Kao", "mk", "mkao006")
+josh_names <- c("rockclimber112358")
+seb_names <- c("Sebastian", "Sebastian Campbell")
+filippo_names <- c("filippogheri")
+
+commit_log[author %in% mkao_names, author := "Michael Kao"]
+commit_log[author %in% josh_names, author := "Joshua Browning"]
+commit_log[author %in% seb_names, author := "Sebastian Campbell"]
+commit_log[author %in% filippo_names, author := "Filippo Gheri"]
+
+commit_log[, date := as.Date(as.POSIXct(timestamp))]
+commit_log[, year := as.Date(format(date, "%Y-01-01"))]
+
+commit_dates <- commit_log[, .(n_commits = .N), by = .(author, year)]
+
+ggplot(commit_dates, aes(x = year, y = n_commits, fill = author)) +
+  geom_col() +
+  scale_x_date(date_labels = "%Y", breaks = "year") +
+  scale_fill_brewer(palette="Spectral") +
+  theme_minimal() +
+  labs(fill = "Author", y = "Number of commits", x = "Year")
+
+```
+
+The package's development can be split into two major periods. Between 2013 and 2017 (@fig-git-timeline), the package is focused on the Statistical Yearbooks and the FAOSTAT3 API. However, as the package is no longer used for the yearbook and the API is discontinued, the focus is changed to the bulk download functionality to download whole datasets at once.
+
+## Identified problems
+
+The FAOSTAT package has only a shadow of its former functionality. While it has retained the ability to download and process zip files (bulk downloads) and country code processing functions,^[For a full description of the status of individual issues, please see the GitLab issue [#20 Remove functions linked to defunct uses of FAOSTAT](https://gitlab.com/paulrougieux/faostatpackage/-/issues/20)] its capacities are limited by the following issues:
 
 ### Functionality locked to the Statistical Yearbook
 
@@ -107,15 +214,27 @@ Many uses of FAOSTAT require data outside of the data that comes directly from F
   
 The conversions are not dynamically taken from the API but rather stored in a fixed file. This makes them vulnerable to code or name changes in the future such as the name change of Swaziland to Eswatini in 2018 [@UN2018].
 
-### Change of FAOstat API
+### Inactive API
 
 The FAOSTAT package is currently configured to access a now-defunct API^[Originally hosted at faostat3.fao.org] (FAOSTAT3). As a result, it has no methods of retrieving data from the FAOstat platform with the sole exception of the bulk zip downloads which have been since adapted to use the current platform.
 
 ### Other issues
 
-The FAOSTAT package is currently maintained by Paul Rougieux who has done an excellent job of keeping the package afloat. However, it's a small project done in his spare time, so he hasn't been able to make the time to do a full overhaul. In addition, he isn't an employee of FAO, but rather of the European Commission. As a face that FAO shows to the world, it seems reasonable that it be placed under its guidance.
+The FAOSTAT package is currently maintained by Paul Rougieux who has done an excellent job of keeping the package afloat. However, it is a small project done in his free time, so he has not been able to make the time to do a full overhaul. In addition, he is not an employee of FAO, but rather of the European Commission. As a face that FAO shows to the world, it seems reasonable that it be placed under its guidance.
 
 As the package is old, it also has a number of dependencies that are unused or will be after redundant functions are removed. Other dependencies are simply no longer developed or have been superseded by newer packages.
+
+::: {.callout-important}
+
+This section needs the following structure
+
+- Problems
+  - Problem description
+- Solutions
+  - Brief recap of problem
+  - Full detail of solution
+
+:::
 
 # Project goals
 
@@ -127,7 +246,7 @@ There are four main goals of this project:
 - Transfer maintainership
 
 
-## Fix up core functions
+## Fix core functions
 
 The first priority to bring the FAOSTAT package to an acceptable level of functionality is to repair the most basic and most used functions.^[The functions below have been paired with a corresponding Gitlab issue that gives more context]
 
@@ -146,26 +265,94 @@ Full overhauling the package is not in scope for FAOSTAT 2.3.0, but rather reser
 
 Uploading a package on CRAN^[Comprehensive R Archive Network, the centralised repository where the majority of R users download R packages] requires the permission of the maintainer. At the upload step, an email is sent to the maintainer of the last recorded package version to confirm that the upload was authorised. Only then can the new version proceed to the registration step.
 
-# Methods
+# Methods & Discussion
 
 On 2023-03-30, the FAOSTAT package version 2.3.0 was published to CRAN.^[[CRAN package page](https://cran.r-project.org/web/packages/FAOSTAT/index.html)] The process required the resolution of the issues detailed in the [Project Goals](#project-goals) section.^[Please see [GitLab Milestone 2.3.0](https://gitlab.com/paulrougieux/faostatpackage/-/issues/?sort=created_date&state=closed&milestone_title=2.3.0) for a full list of related issues]
 
-In order to solve these issues, a full examination of the package context, the API and a redesign of existing functions needed to be made.
+In order to solve these issues, a full examination of the package context, the API and a redesign of existing functions needed to be made. These efforts permitted the eventual release of FAOSTAT 3.0.0.
+
+## Solutions to Identified problems
+
+In the above [Identified Problems](#identified-problems) section, we identified the following issues:
+
+- Functionality locked to the Statistical Yearbook
+- Functionality powered by local files
+- Inactive API
+- Maintainership
+- Old dependencies
+
+### Functionality locked to the Statistical Yearbook
+
+Of all the functions in the FAOSTAT package, we identified eleven functions that we inextricably linked to the Statistical Yearbook. They were either linked to text formatting (e.g. `printLab`) or obtaining auxiliary data from third party sources like the World Bank (e.g. `getWDI`). These were all identified^[[GitLab issue #20](https://gitlab.com/paulrougieux/faostatpackage/-/issues/20)] and removed^[[Commit e1f0a910](https://gitlab.com/paulrougieux/faostatpackage/-/commit/e1f0a910a8bf358217263ca29a89db39c1974828)]. 
+
+For the most part, they could be easily identified by the use of "SYB" in the function name or reference to non-FAO sources like the World Bank. 
 
 
 ## Learning package context
 
 The two most important developers of the FAOSTAT package are the package author, Michael Kao and the current maintainer, Paul Rougieux.
 
-Paul Rougieux has been very helpful in guiding the author's proposed changes to the package - making excellent suggestions in regards to code style and formatting as well as documentation and general useability.
+Paul Rougieux has been very helpful in guiding the author's proposed changes to the package - making excellent suggestions in regards to code style and formatting as well as documentation and general usability.
 
-An interview with the package author clarified that a number of of unusual functions were due to its previous linkage with the Statistical Yearbook and that the paper attached to the package had never been published and suggested that it should be tidied up and published in future.
+An interview with the Michael Kao^[Personal Communication, 2023] clarified that a number of of unusual functions were due to its previous linkage with the Statistical Yearbook and that the paper attached to the package had never been published and suggested that it should be tidied up and published in future.
 
 ## Examining the API
 
-The API is not fully documented and this is mostly because it's not really intended for interactive use. The main documentation is a JSON:API specification,^[[JSON:API](https://jsonapi.org/format/) is a standard way to describe the structure of an API as a single json document] which describes the structure perfectly, but gives no context or recommendations for use, nor does it describe output.
+The API is not fully documented and this is mostly because it is not intended for interactive use. The only official consumer of the API is the FAOstat web application itself. The main documentation is a JSON:API specification,^[[JSON:API](https://jsonapi.org/format/) is a standard way to describe the structure of an API as a single json document] which describes the structure perfectly, but gives no context or recommendations for use, nor does it describe output. This is intentional as the servers which provide the API are not equipped to handle the load that a publically available API would inflict.^[Personal communication, 2023]
 
 It was thus necessary to use this document to manually examine all the endpoints and characterise all the the data output from them.^[A full set of this examination is found in [GitLab issue #23](https://gitlab.com/paulrougieux/faostatpackage/-/issues/23)]
+
+### API structure
+
+```{mermaid}
+%%| label: fig-api-structure
+%%| fig-width: 4
+%%| fig-cap: A broad structure of the FAOstat API package
+flowchart TD
+  Group --> Domain
+  Dimensions --> Codes
+  Dimensions --> Subdimensions
+  Subdimensions --> Codes
+  Domain --> Dimensions
+  Domain --> Data
+  Domain --> BD[Bulk downloads]
+  Domain --> Metadata
+  Metadata --> Documents
+
+```
+
+The API is has two main components: dimensions and data (@fig-api-structure). Domains are the objects that hold data itself and these are clustered into groups. Groups link thematically connected domains. These groups correspond to the various internal teams within FAO that are responsible for disseminating data.^[Personal communication, 2024] Dimensions and subdimensions for the definitions for the shape of the data. These are defined separately and can be applied to multiple domains. In addition there are utility endpoints:
+
+- `/ping` - simple check to see if the server is up
+- `/datasize` - Appended to the end of queries, returns the size of the data
+
+#### Domain functions
+
+list_domain_documents
+read_domain # read information about a domain /dimensions/{domain_code}
+read_domain_definitions # 
+read_domain_metadata #/metadata/{domain_code}
+X - read_fao # /data/{domain}
+X - - alias read_domain_data
+
+bulk downloads
+
+#### Definitions functions
+
+list_definitions # /definitions/types
+read_definition # /definitions/types/{type}
+
+#### Utility
+
+datasize
+X - ping
+
+#### Search
+
+search
+suggestions
+
+## Achieving project goals
 
 ## Redesigning functions
 
@@ -188,21 +375,21 @@ It was intended that the bulk zip download files remained intact, as they were t
 
 One of the drawbacks of moving from internal data to pulling from the API is the need to read in data every time a lookup table or other piece of reference data is required. This slows down scripts as it's forced to wait for a reply from the FAOstat server. To mitigate that, caching was implemented. ^[[GitLab issue #27](https://gitlab.com/paulrougieux/faostatpackage/-/issues/27)] Now instead of pulling every time, the server is polled only once and the response is kept and referred to for subsequent queries.
 
-
 ### Metadata functions
 
-
-When using the package, it was found that certain functionalities were immediately necessary. It was nigh-impossible to practically make a request for data without knowing what datasets were available and what their column names were. As a last minute addition, functions to perform these tasks were slipped into the 2.3.0 release.^[GitLab commit: [Added functions to get dimensions](https://gitlab.com/paulrougieux/faostatpackage/-/commit/06548dd0a74e1075469aece12f0bf2f8df4a3f11)]
+When using the package, it was found that certain functionalities were immediately necessary. It was nigh-impossible to practically make a request for data without knowing what datasets were available and what their column names were. As a last minute addition, functions to perform these tasks were slipped into the 2.3.0 release.^[Commit 06548dd0](https://gitlab.com/paulrougieux/faostatpackage/-/commit/06548dd0a74e1075469aece12f0bf2f8df4a3f11)]
 
 ### Testing
 
 When making changes to a codebase it's important to make tests to assure that the function works as intended but also to report when the function breaks as a result of changes to it or its dependencies. This package uses `testthat` for its tests [@Wickham2011].
 
-Making tests is repetitive work however and many tests are structured the same way. This sort of repetitive intellectual work is perfect for an AI. The author used chatGPT to help generate tests.^[[ChatGPTv3 conversation](https://sharegpt.com/c/REwBzY6) dated 2023-03-28] It was supplied with the function code and responded with valid tests from which relevant ones were selected.
+Making tests is repetitive work however and many tests are structured the same way. This sort of repetitive intellectual work is perfect for an AI. The author used ChatGPT to help generate tests.^[[ChatGPTv3 conversation](https://sharegpt.com/c/REwBzY6) dated 2023-03-28] It was supplied with the function code and responded with valid tests from which relevant ones were selected.
 
 ### Documentation
 
 The package is documented using `roxygen2` [@Wickham2022] which allows documentation and code to be kept in the same file. Documentation has been particularly important for this project, specifically examples. As a lot of information has to be supplied to a function to get data in terms of codes, it's important that users have a clear idea of what is required as incorrect codes can result in cryptic empty responses from the server.
+
+# Examples of use
 
 <!-- # Use case -->
 
@@ -213,8 +400,11 @@ The package is documented using `roxygen2` [@Wickham2022] which allows documenta
 
 # Future work
 
-FAOSTAT 2.3 is the first step to producing the fully revamped FAOSTAT 3.0.0 which will have full integration with all aspects of the API rather than just a subset.
+API wrappers like the FAOSTAT package require a substantial amount of work and are very specific to a particular service. Furthermore, there's no standard to how they should be created, meaning that even two wrappers to the same API have completely different approaches. Another approach is to have a standardised "wrapper" for the user and develop multiple config files to each allow connecting to a different API [@Wu2023]. 
 
+:::{.callout-important}
+Maybe we should consider using a non-wrapper approach such as Web Connector
+:::
 ## Publication
 
 The FAOSTAT package has never been officially published and it's important to widely publicise it to encourage use. The following avenues are available:
@@ -229,6 +419,5 @@ The FAOSTAT package has never been officially published and it's important to wi
 This project has been funded by the Food and Agriculture Organization of the United Nations and the author is grateful for their help in reviving it.
 
 # Bibliography
-
 :::{.refs}
 :::
