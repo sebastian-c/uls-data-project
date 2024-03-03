@@ -8,4 +8,5 @@
 *.bib
 
 *_cache/
+data_project_files/
 *.zip
