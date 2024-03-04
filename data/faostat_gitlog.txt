@@ -1,0 +1,206 @@
+hash|message|author|email|timestamp
+771d82f|Added dataset metadata reads|Sebastian Campbell|sebastian-c@users.noreply.github.com|1708976809
+78f63f5|Added functions to give domain information|Sebastian Campbell|sebastian-c@users.noreply.github.com|1708799296
+9e59eac|removed old dependencies. Fixes #6|Sebastian Campbell|sebastian-c@users.noreply.github.com|1708797390
+a1c1515|Added API schema to documentation|Sebastian Campbell|sebastian-c@users.noreply.github.com|1708793820
+c2fa329|Added ping, list_groups and read_dimension_codes|Sebastian Campbell|sebastian-c@users.noreply.github.com|1708793791
+d4f3e63|Moved around change case functions|Sebastian Campbell|sebastian-c@users.noreply.github.com|1708792709
+49aacb9|Whitespace fixes in package R file|Sebastian Campbell|sebastian-c@users.noreply.github.com|1708782341
+e1f0a91|Deprecated all old functions. Fixes #20.|Sebastian Campbell|sebastian-c@users.noreply.github.com|1708641615
+6f2726a|Added FAOSTAT as alias for package help|Sebastian Campbell|sebastian-c@users.noreply.github.com|1680692509
+7812d2c|Added package startup message about API-breaking changes|Sebastian Campbell|sebastian-c@users.noreply.github.com|1680465218
+ce74271|Removed empty slash from API call in read_fao|Sebastian Campbell|sebastian-c@users.noreply.github.com|1680465202
+7085f8e|Reflowed read_fao|Sebastian Campbell|sebastian-c@users.noreply.github.com|1680193206
+2868c1d|Set world as default for countries, allow null values to mean all|Sebastian Campbell|sebastian-c@users.noreply.github.com|1680192973
+eaf93ad|Replaced all instances of data_folder with data_dir. Added deprecation warning. Fixes #14|Sebastian Campbell|sebastian-c@users.noreply.github.com|1680187535
+107a9b2|Fixed typos in deprecation warnings|Sebastian Campbell|sebastian-c@users.noreply.github.com|1680186856
+c16104c|Add stop if there are no datasets in bulk download|Sebastian Campbell|sebastian-c@users.noreply.github.com|1680186029
+833eddd|Development for next version started|Sebastian Campbell|sebastian-c@users.noreply.github.com|1680168021
+6b6c56f|Merge branch 'feature-getFAO_FENIXv1' into 'master'|Sebastian|sebastian.lm.campbell@gmail.com|1680166872
+fa4f4e1|Reduce documentation line size in read_fao to prevent NOTE|Sebastian Campbell|sebastian-c@users.noreply.github.com|1680166818
+a955f98|Add metadata example to the read_fao function|Paul Rougieux|paul.rougieux@gmail.com|1680101451
+a86fd50|Updated date to push to CRAN|Sebastian Campbell|sebastian-c@users.noreply.github.com|1680099108
+3f9526b|Merge branch 'master' into 'feature-getFAO_FENIXv1'|Sebastian|sebastian.lm.campbell@gmail.com|1680098954
+659c2f0|Added snake_case to bulk download|Sebastian Campbell|sebastian-c@users.noreply.github.com|1680096016
+06548dd|Added functions to get dimensions|Sebastian Campbell|sebastian-c@users.noreply.github.com|1680095462
+191a272|Fixed bug due to not renaming argument|Sebastian Campbell|sebastian-c@users.noreply.github.com|1680079956
+04f93f3|Added global variable for 'code'|Sebastian Campbell|sebastian-c@users.noreply.github.com|1680016415
+78650ae|Fixed formatting in bulk download docs|Sebastian Campbell|sebastian-c@users.noreply.github.com|1680016033
+9bd5e4f|Modernised tests for geogr|Sebastian Campbell|sebastian-c@users.noreply.github.com|1680013502
+af3200c|Added tests to change_case|Sebastian Campbell|sebastian-c@users.noreply.github.com|1680013488
+a4af405|Changed faostat_bulk_download to use the new API|Sebastian Campbell|sebastian-c@users.noreply.github.com|1680013451
+30d0217|Rewrote bulk download to use new API for search|Sebastian Campbell|sebastian-c@users.noreply.github.com|1680010686
+1da21a3|Switched back name as I misread documentation|Sebastian Campbell|sebastian-c@users.noreply.github.com|1680001785
+bf5f370|Minor typo correction|Sebastian Campbell|sebastian-c@users.noreply.github.com|1679995834
+f5988ef|Changed function name in accordance with tufy recommendations|Sebastian Campbell|sebastian-c@users.noreply.github.com|1679995385
+6990b6d|Remade country code translation|Sebastian Campbell|sebastian-c@users.noreply.github.com|1679497634
+6975754|Added change case option including possibility to provide a formatting function. Closes #21.|Sebastian Campbell|sebastian-c@users.noreply.github.com|1678391896
+dcdd41b|Declared column names from FAO API which were causing notes in CHECK|Sebastian Campbell|sebastian-c@users.noreply.github.com|1678377006
+abbe4f7|Merge branch 'feature-caching' into feature-getFAO_FENIXv1|Sebastian Campbell|sebastian-c@users.noreply.github.com|1678376939
+8702d9f|Added caching for search_datasets|Sebastian Campbell|sebastian-c@users.noreply.github.com|1678376761
+ef8541b|Created environment to allow caching data|Sebastian Campbell|sebastian-c@users.noreply.github.com|1678192980
+dd2820e|Typo fixes to docs|Sebastian Campbell|sebastian-c@users.noreply.github.com|1678373058
+84109b3|Removed XML from NAMESPACE now that it isn't needed|Sebastian Campbell|sebastian-c@users.noreply.github.com|1678372993
+68b77f4|Tidied up search_datasets documentation|Sebastian Campbell|sebastian-c@users.noreply.github.com|1678372963
+b05a093|Modified FAOsearch to be search_datasets. search_fao is going to be a more general search function for data columns.|Sebastian Campbell|sebastian-c@users.noreply.github.com|1678365797
+d959871|read_fao now returns a data.frame rather than a data.table. There's no need to expose the data.table dependency.|Sebastian Campbell|sebastian-c@users.noreply.github.com|1678365527
+dfa0e9f|Example with the new function name and explicit argument names|Paul Rougieux|paul.rougieux@gmail.com|1678196802
+465886a|Removed automatically generated latex files|Sebastian Campbell|sebastian-c@users.noreply.github.com|1678192115
+212ee62|Added deprecation warnings to read_fao, search_fao and check_fao|Sebastian Campbell|sebastian-c@users.noreply.github.com|1678191570
+86c5069|Moved get_fao to a generic rest file|Sebastian Campbell|sebastian-c@users.noreply.github.com|1678191524
+f6ea8b2|FAOcheck works. Uncommented its examples|Sebastian Campbell|sebastian-c@users.noreply.github.com|1678190129
+7d0ca1e|Changed FAOcheck to check_country_overlap|Sebastian Campbell|sebastian-c@users.noreply.github.com|1678189973
+1c2e1a7|Changed year to year_codes in read_fao for consistency|Sebastian Campbell|sebastian-c@users.noreply.github.com|1678189949
+c784776|Removed getFAOtoSYB as it's broken and causes checks to fail without being useful|Sebastian Campbell|sebastian-c@users.noreply.github.com|1678189910
+975abf3|Moved base_url logic into own function, removing it from read_fao|Sebastian Campbell|sebastian-c@users.noreply.github.com|1677365526
+1f40849|Replace object read with csv read. Fixes empty data problem and increases speed.|Sebastian Campbell|sebastian-c@users.noreply.github.com|1677337805
+2cadbd5|Added read_fao options to replace getFAO. Fixes #16|Sebastian Campbell|sebastian-c@users.noreply.github.com|1677335882
+1fa81b6|Roxygenised and added examples|Sebastian Campbell|sebastian-c@users.noreply.github.com|1676976358
+8c164f4|Modified getFAO to use new FAOSTAT API|Sebastian Campbell|sebastian-c@users.noreply.github.com|1676728475
+3143028|Remove travis from the README issue #15|Paul Rougieux|paul.rougieux@gmail.com|1676648075
+bb5c1cb|Bump version for CRAN submission|Paul Rougieux|paul.rougieux@gmail.com|1676313651
+b645e19|Only rename the element column if it is present in the data frame fixes #11|Paul Rougieux|paul.rougieux@gmail.com|1676313607
+6f19562|Add example of a reshape to wide format|Paul Rougieux|paul.rougieux@gmail.com|1641822858
+3f0dd3a|Document rename_element argument|Paul Rougieux|paul.rougieux@gmail.com|1641397516
+09aa7ff|Document the rename_element argument to the read_faostat_bulk function|Paul Rougieux|paul.rougieux@gmail.com|1641396654
+c43f1f4|Remove example link, documentation|Paul Rougieux|paul.rougieux@gmail.com|1641394417
+9f72aa1|Remove example link to the World Bank v2 URL, because it was unreachable by CRAN tests|Paul Rougieux|paul.rougieux@gmail.com|1641394091
+c4bb80f|Update URLS from http to https again|Paul Rougieux|paul.rougieux@gmail.com|1641383993
+6dc061e|Use only https URLS from FAOSTAT as well|Paul Rougieux|paul.rougieux@gmail.com|1641383837
+0110c2a|Use https URLS only|Paul Rougieux|paul.rougieux@gmail.com|1641383783
+7e983b0|Update FAOSTAT metadata URL to use https instead of http.|Paul Rougieux|paul.rougieux@gmail.com|1641381847
+ac980d0|Renaming of columns and elements: non alphanumeric characters are replaced by underscores.|Paul Rougieux|paul.rougieux@gmail.com|1632998672
+4b8a442|Revert changes to the import dependencies otherwise the package doesn't build|Paul Rougieux|paul.rougieux@gmail.com|1632997327
+54b45e2|Move the imports to suggestions since they are part of the legacy|Paul Rougieux|paul.rougieux@gmail.com|1632994934
+e34ffe2|latin1 seems to be the default character encoding of CSV files downloaded from FAOSTAT|Paul Rougieux|paul.rougieux@gmail.com|1632351960
+3670aa9|Clean make file|Paul Rougieux|paul.rougieux@gmail.com|1629123581
+7780bdd|Change TODO to WONTFIX in outdated functions|Paul Rougieux|paul.rougieux@gmail.com|1606143158
+162a78f|Update readme and mention the WDI package, an updated package to load World bank data|Paul Rougieux|paul.rougieux@gmail.com|1605427460
+973e87d|Use the canonical form https://CRAN.R-project.org/package=wbstats to link to the package.|Paul Rougieux|paul.rougieux@gmail.com|1605253686
+5f3a694|Rearrange the documentation|Paul Rougieux|paul.rougieux@gmail.com|1605180026
+e26c841|Update version to 2.2|Paul Rougieux|paul.rougieux@gmail.com|1605100629
+0532ea7|Update version|Paul Rougieux|paul.rougieux@gmail.com|1605100443
+ed624ff|Update installation instructions in the README|Paul Rougieux|paul.rougieux@gmail.com|1605100334
+8edbaa4|Update the demo, remove broken content and ask for contributions in all outdated sections of the vignette.|Paul Rougieux|paul.rougieux@gmail.com|1605099898
+04e4464|Use lower case names in all columns create a function to load data using the dataset code only|Paul Rougieux|paul.rougieux@gmail.com|1605092037
+7e3446f|Ignore downloaded data|Paul Rougieux|paul.rougieux@gmail.com|1605087735
+ce65603|Document the FAOsearch function parameters|Paul Rougieux|paul.rougieux@gmail.com|1605084669
+831c058|Merge pull request #6 from KrishnaTO/KrishnaTO-patch-1|Paul Rougieux|paul.rougieux@gmail.com|1605081694
+1e40c4a|Update FAOsearch.R|Krishna Udaiwal|krishna.u@hotmail.com|1605073583
+e28ad78|Updated FAOSearch function|Krishna Udaiwal|krishna.u@hotmail.com|1605072520
+c117c50|Update README with link to the issue page|Paul Rougieux|paul.rougieux@gmail.com|1605000256
+18fe7fd|Introduce the functions download_faostat_bulk and read_faostat_bulk in the demo, improve gitlab issue #2|Paul Rougieux|paul.rougieux@gmail.com|1604999475
+ddcc720|Comment on past world bank API update|Paul Rougieux|paul.rougieux@gmail.com|1604997049
+31805c1|Remove parenthesis in URL|Paul Rougieux|paul.rougieux@gmail.com|1586166801
+ede4e75|Add make file reduce title size and add <> around urls in the description|Paul Rougieux|paul.rougieux@gmail.com|1586071045
+47d074f|Rename chunk and update version|Paul Rougieux|paul.rougieux@gmail.com|1585947656
+7852bd7|Move to gitlab|Paul Rougieux|paul.rougieux@gmail.com|1585947323
+48806ca|Document new bulk download method in function doc and vignette|Paul Rougieux|paul.rougieux@gmail.com|1585945339
+f3bbc89|Update readme with warning|Paul Rougieux|paul.rougieux@gmail.com|1581672663
+3652983|Update URLs for CRAN submission|Paul Rougieux|paul.rougieux@gmail.com|1581671722
+4a29186|Add mit license|Paul Rougieux|paul.rougieux@gmail.com|1580749129
+2aa3dbc|Update version, maintainer and URL|Paul Rougieux|paul.rougieux@gmail.com|1580747220
+1e8d5de|Pass R CMD check|Paul Rougieux|paul.rougieux@gmail.com|1580747156
+2bd401d|Ignore files|Paul Rougieux|paul.rougieux@gmail.com|1580747102
+951bc1b|Update roxygen documentation to version 7|Paul Rougieux|paul.rougieux@gmail.com|1579858038
+6577f52|Document bulk download functions|Paul Rougieux|paul.rougieux@gmail.com|1579857928
+3ee31ea|Add function to load and read data from the bulk download https://gist.github.com/paulrougieux/07c2926dc898a9d90c7df99037148d43|Paul Rougieux|paul.rougieux@gmail.com|1579857866
+b625db1|update|mk|mkao006@gmail.com|1513813122
+67d3d2e|updated the README to reflect the orphaned state|mk|mkao006@gmail.com|1513813077
+bd16292|Merge pull request #16 from kendonB/master|Michael. C. J. Kao|mkao006@users.noreply.github.com|1459689825
+9647aeb|Merge pull request #21 from paul4forest/patch-2|Michael. C. J. Kao|mkao006@users.noreply.github.com|1459689807
+0fefa7c|install_github uses repo mkao006/FAOSTATpackage|Paul Rougieux|paul.rougieux@gmail.com|1459518642
+1958ae1|changed expect_that() function to expect_xx() specific function as recommended|mk|mkao006@gmail.com|1456196137
+04eda01|updated package version and dates|mk|mkao006@gmail.com|1456156822
+402dbb3|added download per month|mk|mkao006@gmail.com|1456141440
+d79b0c4|added CRAN version|mk|mkao006@gmail.com|1456137507
+55c1622|corrected syntax|mk|mkao006@gmail.com|1456137376
+7c6ee6c|added travis-ci and codecov badge|mk|mkao006@gmail.com|1456137214
+c3ea456|changed codedev default path|mk|mkao006@gmail.com|1456136470
+06bd81d|commit of the unit test for the geogr function()|mk|mkao006@gmail.com|1456135907
+569210f|corrected the DESCRIPTION and build file|mk|mkao006@gmail.com|1456135854
+23ab2c9|re-added unit test|mk|mkao006@gmail.com|1456135499
+a9009f8|moved all original R codes to an R sub folder and updated the build script|mk|mkao006@gmail.com|1456135468
+93dfd6c|added testthat to suggests|mk|mkao006@gmail.com|1456135391
+af76bd7|added covr requirement|mk|mkao006@gmail.com|1456134670
+f61a695|rebuilt package|mk|mkao006@gmail.com|1456115229
+744361e|removed dependency of the scales package|mk|mkao006@gmail.com|1456115221
+3ec3d2a|first commit of the travis file for Continuous Integration|mk|mkao006@gmail.com|1456113169
+0e49416|First commit of the unit test module|mk|mkao006@gmail.com|1456112704
+4675f49|wds changed in getFAO|filippogheri|filippogheri@hotmail.com|1442568334
+717b3e3|updating the description file|filippogheri|filippogheri@hotmail.com|1433230580
+7f91fc4|Merge branch 'master' of https://github.com/mkao006/FAOSTATpackage|filippogheri|filippogheri@hotmail.com|1432816508
+e6279ae|Version 2.0: Production server has been removed and domains, elments, and items have been updated|filippogheri|filippogheri@hotmail.com|1432806012
+d7b1b57|Update getFAO.R|kendonB|kendonB@users.noreply.github.com|1428536620
+28bd0ba|Merge pull request #15 from rockclimber112358/master|Michael. C. J. Kao|mkao006@users.noreply.github.com|1424782764
+58ea103|Validate user choices|rockclimber112358|rockclimber112358@gmail.com|1424775924
+4f3f279|Changing FAOmetaTable|filippogheri|filippogheri@hotmail.com|1415378710
+543e751|Package regenerated following the CRAN standards|filippogheri|filippogheri@hotmail.com|1414568152
+9069668|package rebuilt|filippogheri|filippogheri@hotmail.com|1412774346
+1e6046e|Package update to reflected the multiple server recovery|mkao006|mkao006@gmail.com|1411560979
+4a08119|Added second server link to meta data|mkao006|mkao006@gmail.com|1411560948
+a30c4cc|Added multiple server for server failure recovery|mkao006|mkao006@gmail.com|1411560888
+d603447|Function getFAO: converted n.a. to empty string and then to numeric|filippogheri|filippogheri@hotmail.com|1411397815
+4f83531|Global revision of the package|filippogheri|filippogheri@hotmail.com|1406704026
+f0f0923|vignettes plus Aggregation function|filippogheri|filippogheri@hotmail.com|1402997082
+ea4efb1|adding documentation for Aggregation function|filippogheri|filippogheri@hotmail.com|1402996867
+11cbdbe|fixing the Aggregation function documentation problem|filippogheri|filippogheri@hotmail.com|1402996450
+a0852d6|First commit of the UTF8 example file|mkao006|mkao006@gmail.com|1402268128
+3fd6005|add the new aggregation function|filippogheri|filippogheri@hotmail.com|1402048036
+b718ac5|Package rebuilt|filippogheri|filippogheri@hotmail.com|1402047907
+d4352a6|Update FAOcountryProfile and fix UTF8 issue|filippogheri|filippogheri@hotmail.com|1401352941
+3a9c5d0|moved Depends to Imports|mkao006|mkao006@gmail.com|1394740040
+d329154|Fixed notes from Prof Brian Ripley|mkao006|mkao006@gmail.com|1394706542
+ccbbe0c|removed inst folder and moved vignette to vignette folder|mkao006|mkao006@gmail.com|1394652295
+2891722|changing the path for the production database|filippogheri|filippogheri@hotmail.com|1384336133
+1e8ecaf|changing the path for the production database|filippogheri|filippogheri@hotmail.com|1384335801
+9b2d227|Corrected outputFormat with respect to flags, flags are only allowed for long format|mkao006|mkao006@gmail.com|1382988060
+d84f249|included returnFlag arguement to getFAOtoSYB|mkao006|mkao006@gmail.com|1382695592
+86f61c4|Updates to reflect changes in getFAO.R|mkao006|mkao006@gmail.com|1382643964
+1ce1088|Rebuild package to reflect changes in getFAO.R|mkao006|mkao006@gmail.com|1382643157
+fbb6748|Add query for flags and also clean up the code slightly|mkao006|mkao006@gmail.com|1382642757
+070f85b|Changing again the FAOSTATprod base|filippogheri|filippogheri@hotmail.com|1378374379
+d2d12ec|Removing the 50% restriction in the geometric growth rate function|filippogheri|filippogheri@hotmail.com|1374131036
+093ae69|In the CHMT function the curly braces were missing after the first if condition. As a result, the function was performing the computation for all the variables.|filippogheri|filippogheri@hotmail.com|1373966249
+af2168d|updating again FAOmetaTable removing the first row exclusion in domain and item|filippogheri|filippogheri@hotmail.com|1373356711
+813165f|updating the FAOmetaTable|filippogheri|filippogheri@hotmail.com|1373356354
+2bb36c1|returnNames argument added to the function getFAO. changed API base and database in getFAO and FAOSTATbuild in order to reflect the new changes in faostat server|filippogheri|filippogheri@hotmail.com|1372847576
+f631529|updated demo section|mkao006|mkao006@gmail.com|1372702796
+9feae64|First commit of the demo folder|mkao006|mkao006@gmail.com|1372702677
+c5705ee|Updated the dates and added the URL|mkao006|mkao006@gmail.com|1372702295
+0f68f09|First commit of the demo file|mkao006|mkao006@gmail.com|1372702261
+fd2f6b0|Modified the section for demo|mkao006|mkao006@gmail.com|1372702231
+4d9b3fe|Added message where the object is saved|mkao006|mkao006@gmail.com|1372702202
+6df2086|added another silent = TRUE to the lsgr function|filippogheri|filippogheri@hotmail.com|1370439872
+8376849|added silent = TRUE in a try error of the lsgr function|filippogheri|filippogheri@hotmail.com|1370437888
+b80596c|updated version and creation date|filippogheri|filippogheri@hotmail.com|1370422756
+18d4251|I did a mistake changing the server. Updating again|filippogheri|filippogheri@hotmail.com|1370419908
+2078052|just checking how github works|filippogheri|filippogheri@hotmail.com|1370417364
+949be25|using ours to resolve the conflict|filippogheri|filippogheri@hotmail.com|1370417037
+a53ac0e|I changed the server for faostatprod because the one we were using was instable|filippogheri|filippogheri@hotmail.com|1370415711
+033a71a|added installation information and vignette|mkao006|mkao006@gmail.com|1369921278
+6e6dd29|Rebuild|mkao006|mkao006@gmail.com|1369920633
+464cec9|Updated the dates and add Filippo Gheri as a contributor|mkao006|mkao006@gmail.com|1369920620
+84b9df1|adding README file|filippogheri|filippogheri@hotmail.com|1369905652
+ab1fa76|changed Channel Islands in FAOcountryProfile (MOTHER_FAOST_CODE)|filippogheri|filippogheri@hotmail.com|1369846997
+91ecf26|resolve conflicts using local files|filippogheri|filippogheri@hotmail.com|1369846173
+5e69ede|new version|filippogheri|filippogheri@hotmail.com|1369843483
+d68209e|Removing test|mkao006|mkao006@gmail.com|1369843325
+da921a1|Testing|mkao006|mkao006@gmail.com|1369843112
+e8e8226|changed api|filippogheri|filippogheri@hotmail.com|1369732628
+910dfec|try 3|filippogheri|filippogheri@hotmail.com|1369061110
+94c1a3f|try to rebuild the package|filippogheri|filippogheri@hotmail.com|1368786314
+431f3d6|trying to re-build the package|filippogheri|filippogheri@hotmail.com|1368784800
+627bf8d|Change to version 1.4|mkao006|mkao006@gmail.com|1368082573
+8cba4cd|Removed example|mkao006|mkao006@gmail.com|1368082562
+e05227b|First commit of the R data files for country profiles and meta table|mkao006|mkao006@gmail.com|1368044164
+d9846cc|tests|mkao006|mkao006@gmail.com|1368029802
+30be7ad|Changed the ifelse|mkao006|mkao006@gmail.com|1368029790
+1857871|Improved to ifelse statement|mkao006|mkao006@gmail.com|1367843245
+a528136|Changed check setting|mkao006|mkao006@gmail.com|1367835799
+ea1f699|First commit of the documentations|mkao006|mkao006@gmail.com|1367835759
+3e85ae2|Change package version|mkao006|mkao006@gmail.com|1367835688
+f1e450e|Reflect changes in globalVariables function|mkao006|mkao006@gmail.com|1367835662
+acaf760|Add globalVariable function to avoid global binding issue in R CMD checks|mkao006|mkao006@gmail.com|1367835571
+a037c0e|Changed package version|mkao006|mkao006@gmail.com|1367835540
+62a217e|First commit|mkao006|mkao006@gmail.com|1367263531

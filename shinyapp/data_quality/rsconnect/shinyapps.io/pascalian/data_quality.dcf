@@ -1,0 +1,13 @@
+name: data_quality
+title: data_quality
+username:
+account: pascalian
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 8771738
+bundleId: 7052619
+url: https://pascalian.shinyapps.io/data_quality/
+when: 1680700583.31018
+lastSyncTime: 1680700583.3102
+asMultiple: FALSE
+asStatic: FALSE
