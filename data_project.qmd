@@ -20,7 +20,7 @@ bibliography: FAOSTAT.bib
 ---
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(echo = FALSE, cache = TRUE)
+knitr::opts_chunk$set(echo = FALSE, cache = FALSE)
 library(ggplot2)
 library(forcats)
 library(data.table)
@@ -29,7 +29,7 @@ library(data.table)
 ---
 abstract: |
 
-  The `FAOSTAT` package is an important part of the Food and Agriculture Organization (FAO)'s image that is being maintained, but requires a makeover. Here an updated version, 2.3.0, of the package is presented with repaired access to FAO's API, new functions and preparation for a complete overhaul in 3.0.0. The package has been modernised according to new coding conventions with improved dependencies, documentation and tests. Old useless functions have been pruned and the package is now firmly focused on providing an interface to FAO data to users of R.
+  The `FAOSTAT` package is an important part of the Food and Agriculture Organization (FAO)'s image that is being maintained, but requires a makeover. Here an updated version, 3.0.0, of the package is presented with repaired access to FAO's API, new functions modernisation according to new coding conventions with improved dependencies, documentation and tests. Outdated functions have been pruned and the package is now firmly focused on providing an interface to FAO data to users of R.
 ---
 
 ::: {.callout-important}
@@ -263,7 +263,6 @@ There are four main goals of this project:
 - Characterise relevant aspects of the new API to wrap
 - Transfer maintainership
 
-
 ## Fix core functions
 
 The first priority to restore the `FAOSTAT` package is to repair the most basic and most used functions. These are the functions that work directly with the API and that provide data to the user.^[This was completed in `FAOSTAT` 2.3.0] After this point, functions should not only be repaired but also renamed to have a consistent naming system. The existing functions _do_ have a naming convention (Camel case, consistent use of verbs) but it doesn't reflect the terminology used in the API and there's no internal hierarchy to naming. 
@@ -363,7 +362,9 @@ Obsolete dependencies result from three major sources. The packages attached to 
 
 The use of unit tests ensured there was no regression after removing these dependencies. The origin of these dependencies was difficult to track down as they were not added over time. Rather, they were all added in the first commit of the project.^[] The conventional wisdom is to "Commit early, commit often." This makes these changes granular, so it is easier to tease apart the individual changes in any commit (@Eloe2021).
 
-## Learning package context
+## Solutions to other problems
+
+### Learning package context
 
 The two most important developers of the `FAOSTAT` package are the package author, Michael Kao and the current maintainer, Paul Rougieux.
 
@@ -371,7 +372,7 @@ Paul Rougieux has been very helpful in guiding the author's proposed changes to 
 
 An interview with the Michael Kao^[Personal Communication, 2023] confirmed that a number of of unusual functions were due to its previous linkage with the Statistical Yearbook and that the paper attached to the package had never been published and suggested that it should be tidied up and published in future.
 
-## Redesigning functions
+### Redesigning functions
 
 The existing functions to be refactored to read data from the new API. `FAOSTAT` 2.3.0 only had these core functions in scope.^[A full list of functions to be refactored or discarded is in [GitLab issue #20](https://gitlab.com/paulrougieux/faostatpackage/-/issues/20)] The most core functions include:
 
@@ -380,12 +381,40 @@ The existing functions to be refactored to read data from the new API. `FAOSTAT`
 - `translateCountryCode`^[[GitLab issue #28](https://gitlab.com/paulrougieux/faostatpackage/-/issues/28)] - Translates country codes between formats. Renamed to `translate_countrycodes`
 - `download_faostat_bulk` - Downloads bulk zip files - We opted not to change the API of this function as it has been a backbone of the package since the shutdown of the FAOstat API.
 
-The functions were all modified for `FAOSTAT` 2.3.0, but it remained to modify all of the remaining functions so they had a consistent naming 
+The functions were all modified for `FAOSTAT` 2.3.0, but it remained to modify all of the remaining functions so they had a consistent naming. The functions were mapped to more closely match the API. Each API object has a subset of functions which are similar between different objects. They have the following pattern:
+
+- Groups
+  - `list_groups`
+- Domains
+  - `list_domains` - Lists domains in a particular group. To list all domains, there is also a `list_domains_all`. 
+  - `read_fao` - an exception to the usual rule as it's effectively the main function of the 
+  - `read_domain_dimension`
+- Dimensions
+  - `read_dimension_code`
+  - `read_dimension_metadata`
+- Utilities
+  - Ping - `ping`
+  - Search - `search_domain`
+- Bulk downloads
+  - `download_faostat_bulk` - we have opted not to change the name for now, but we may add `read_bulk` and `read_bulk_metadata`.
+  
+Where possible, we have retained the old names of functions and simply redirected them to point to the new ones.
 
 ### Function regression  
 
 It was intended that the bulk zip download files remained intact, as they were the most functional part of the package. However, it depends on `FAOsearch`/`search_fao` which was changed as part of the 2.3.0 release. As a result, it was necessary to refactor some of the bulk download code to restore functionality.
   
+### Marking functions as obsolete
+
+Regardless of the level of care in ensuring that only functions that don't serve a purpose to most users are removed, there may still be cases where a user has their workflow broken by this removal. We have opted to mark these functions as "defunct". They are not exported and attempting to use them gives the following error:
+
+```
+Error: 'function' is defunct.
+See help("Defunct")
+```
+
+Their help page is still intact which greatly assists in recovering from such an error and also allows advanced users to examine the defunct code and modify it to suit their needs as required.
+
 ### Caching
 
 One of the drawbacks of moving from internal data to pulling from the API is the need to read in data every time a lookup table or other piece of reference data is required. This slows down scripts as it is forced to wait for a reply from the FAOstat server. To mitigate that, caching was implemented. ^[[GitLab issue #27](https://gitlab.com/paulrougieux/faostatpackage/-/issues/27)] Now instead of pulling every time, the server is polled only once and the response is kept and referred to for subsequent queries.
@@ -403,15 +432,6 @@ Making tests is repetitive work however and many tests are structured the same w
 ### Documentation
 
 The package is documented using `roxygen2` [@Wickham2022] which allows documentation and code to be kept in the same file. Documentation has been particularly important for this project, specifically examples. As a lot of information has to be supplied to a function to get data in terms of codes, it is important that users have a clear idea of what is required as incorrect codes can result in cryptic empty responses from the server.
-
-# Examples of use
-
-<!-- # Use case -->
-
-<!-- - Check health of zip data -->
-<!-- - Display availability of certain country data (shiny app) -->
-<!--   - Graph per country -->
-<!--   - Colour by flag -->
 
 # Future work
 

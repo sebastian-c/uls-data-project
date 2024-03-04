@@ -150,17 +150,18 @@ div.csl-indent {
   <li><a href="#stewardship-1" id="toc-stewardship-1" class="nav-link" data-scroll-target="#stewardship-1">Stewardship</a></li>
   <li><a href="#obsolete-dependencies-1" id="toc-obsolete-dependencies-1" class="nav-link" data-scroll-target="#obsolete-dependencies-1">Obsolete dependencies</a></li>
   </ul></li>
-  <li><a href="#learning-package-context" id="toc-learning-package-context" class="nav-link" data-scroll-target="#learning-package-context">Learning package context</a></li>
-  <li><a href="#redesigning-functions" id="toc-redesigning-functions" class="nav-link" data-scroll-target="#redesigning-functions">Redesigning functions</a>
+  <li><a href="#solutions-to-other-problems" id="toc-solutions-to-other-problems" class="nav-link" data-scroll-target="#solutions-to-other-problems">Solutions to other problems</a>
   <ul class="collapse">
+  <li><a href="#learning-package-context" id="toc-learning-package-context" class="nav-link" data-scroll-target="#learning-package-context">Learning package context</a></li>
+  <li><a href="#redesigning-functions" id="toc-redesigning-functions" class="nav-link" data-scroll-target="#redesigning-functions">Redesigning functions</a></li>
   <li><a href="#function-regression" id="toc-function-regression" class="nav-link" data-scroll-target="#function-regression">Function regression</a></li>
+  <li><a href="#marking-functions-as-obsolete" id="toc-marking-functions-as-obsolete" class="nav-link" data-scroll-target="#marking-functions-as-obsolete">Marking functions as obsolete</a></li>
   <li><a href="#caching" id="toc-caching" class="nav-link" data-scroll-target="#caching">Caching</a></li>
   <li><a href="#metadata-functions" id="toc-metadata-functions" class="nav-link" data-scroll-target="#metadata-functions">Metadata functions</a></li>
   <li><a href="#testing" id="toc-testing" class="nav-link" data-scroll-target="#testing">Testing</a></li>
   <li><a href="#documentation" id="toc-documentation" class="nav-link" data-scroll-target="#documentation">Documentation</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#examples-of-use" id="toc-examples-of-use" class="nav-link" data-scroll-target="#examples-of-use">Examples of use</a></li>
   <li><a href="#future-work" id="toc-future-work" class="nav-link" data-scroll-target="#future-work">Future work</a>
   <ul class="collapse">
   <li><a href="#using-webconnector" id="toc-using-webconnector" class="nav-link" data-scroll-target="#using-webconnector">Using Webconnector</a></li>
@@ -204,7 +205,7 @@ div.csl-indent {
 <div>
   <div class="abstract">
     <div class="block-title">Abstract</div>
-    <p>The <code>FAOSTAT</code> package is an important part of the Food and Agriculture Organization (FAO)’s image that is being maintained, but requires a makeover. Here an updated version, 2.3.0, of the package is presented with repaired access to FAO’s API, new functions and preparation for a complete overhaul in 3.0.0. The package has been modernised according to new coding conventions with improved dependencies, documentation and tests. Old useless functions have been pruned and the package is now firmly focused on providing an interface to FAO data to users of R.</p>
+    <p>The <code>FAOSTAT</code> package is an important part of the Food and Agriculture Organization (FAO)’s image that is being maintained, but requires a makeover. Here an updated version, 3.0.0, of the package is presented with repaired access to FAO’s API, new functions modernisation according to new coding conventions with improved dependencies, documentation and tests. Outdated functions have been pruned and the package is now firmly focused on providing an interface to FAO data to users of R.</p>
   </div>
 </div>
 
@@ -557,14 +558,16 @@ Figure&nbsp;6: A broad structure of the FAOstat API package
 <p>The use of unit tests ensured there was no regression after removing these dependencies. The origin of these dependencies was difficult to track down as they were not added over time. Rather, they were all added in the first commit of the project.<a href="#fn33" class="footnote-ref" id="fnref33" role="doc-noteref"><sup>33</sup></a> The conventional wisdom is to “Commit early, commit often.” This makes these changes granular, so it is easier to tease apart the individual changes in any commit (<span class="citation" data-cites="Eloe2021">Eloe (<a href="#ref-Eloe2021" role="doc-biblioref">2021</a>)</span>).</p>
 <div class="no-row-height column-margin column-container"></div></section>
 </section>
-<section id="learning-package-context" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="learning-package-context">Learning package context</h2>
+<section id="solutions-to-other-problems" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="solutions-to-other-problems">Solutions to other problems</h2>
+<section id="learning-package-context" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="learning-package-context">Learning package context</h3>
 <p>The two most important developers of the <code>FAOSTAT</code> package are the package author, Michael Kao and the current maintainer, Paul Rougieux.</p>
 <p>Paul Rougieux has been very helpful in guiding the author’s proposed changes to the package - making excellent suggestions in regards to code style and formatting as well as documentation and general usability.</p>
 <p>An interview with the Michael Kao<a href="#fn34" class="footnote-ref" id="fnref34" role="doc-noteref"><sup>34</sup></a> confirmed that a number of of unusual functions were due to its previous linkage with the Statistical Yearbook and that the paper attached to the package had never been published and suggested that it should be tidied up and published in future.</p>
 <div class="no-row-height column-margin column-container"><p><sup>34</sup>&nbsp;Personal Communication, 2023</p></div></section>
-<section id="redesigning-functions" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="redesigning-functions">Redesigning functions</h2>
+<section id="redesigning-functions" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="redesigning-functions">Redesigning functions</h3>
 <p>The existing functions to be refactored to read data from the new API. <code>FAOSTAT</code> 2.3.0 only had these core functions in scope.<a href="#fn35" class="footnote-ref" id="fnref35" role="doc-noteref"><sup>35</sup></a> The most core functions include:</p>
 <div class="no-row-height column-margin column-container"><p><sup>35</sup>&nbsp;A full list of functions to be refactored or discarded is in <a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/20">GitLab issue #20</a></p></div><ul>
 <li><code>getFAO</code><a href="#fn36" class="footnote-ref" id="fnref36" role="doc-noteref"><sup>36</sup></a> - The heart of the package, pulls a custom slice of data from FAOstat. Renamed to <code>read_fao</code></li>
@@ -572,10 +575,45 @@ Figure&nbsp;6: A broad structure of the FAOstat API package
 <li><code>translateCountryCode</code><a href="#fn38" class="footnote-ref" id="fnref38" role="doc-noteref"><sup>38</sup></a> - Translates country codes between formats. Renamed to <code>translate_countrycodes</code></li>
 <li><code>download_faostat_bulk</code> - Downloads bulk zip files - We opted not to change the API of this function as it has been a backbone of the package since the shutdown of the FAOstat API.</li>
 </ul>
-<div class="no-row-height column-margin column-container"><p><sup>36</sup>&nbsp;<a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/16">GitLab issue #16</a></p><p><sup>37</sup>&nbsp;<a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/22">GitLab issue #22</a></p><p><sup>38</sup>&nbsp;<a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/28">GitLab issue #28</a></p></div><p>The functions were all modified for <code>FAOSTAT</code> 2.3.0, but it remained to modify all of the remaining functions so they had a consistent naming</p>
+<div class="no-row-height column-margin column-container"><p><sup>36</sup>&nbsp;<a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/16">GitLab issue #16</a></p><p><sup>37</sup>&nbsp;<a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/22">GitLab issue #22</a></p><p><sup>38</sup>&nbsp;<a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/28">GitLab issue #28</a></p></div><p>The functions were all modified for <code>FAOSTAT</code> 2.3.0, but it remained to modify all of the remaining functions so they had a consistent naming. The functions were mapped to more closely match the API. Each API object has a subset of functions which are similar between different objects. They have the following pattern:</p>
+<ul>
+<li>Groups
+<ul>
+<li><code>list_groups</code></li>
+</ul></li>
+<li>Domains
+<ul>
+<li><code>list_domains</code> - Lists domains in a particular group. To list all domains, there is also a <code>list_domains_all</code>.</li>
+<li><code>read_fao</code> - an exception to the usual rule as it’s effectively the main function of the</li>
+<li><code>read_domain_dimension</code></li>
+</ul></li>
+<li>Dimensions
+<ul>
+<li><code>read_dimension_code</code></li>
+<li><code>read_dimension_metadata</code></li>
+</ul></li>
+<li>Utilities
+<ul>
+<li>Ping - <code>ping</code></li>
+<li>Search - <code>search_domain</code></li>
+</ul></li>
+<li>Bulk downloads
+<ul>
+<li><code>download_faostat_bulk</code> - we have opted not to change the name for now, but we may add <code>read_bulk</code> and <code>read_bulk_metadata</code>.</li>
+</ul></li>
+</ul>
+<p>Where possible, we have retained the old names of functions and simply redirected them to point to the new ones.</p>
+</section>
 <section id="function-regression" class="level3">
 <h3 class="anchored" data-anchor-id="function-regression">Function regression</h3>
 <p>It was intended that the bulk zip download files remained intact, as they were the most functional part of the package. However, it depends on <code>FAOsearch</code>/<code>search_fao</code> which was changed as part of the 2.3.0 release. As a result, it was necessary to refactor some of the bulk download code to restore functionality.</p>
+</section>
+<section id="marking-functions-as-obsolete" class="level3">
+<h3 class="anchored" data-anchor-id="marking-functions-as-obsolete">Marking functions as obsolete</h3>
+<p>Regardless of the level of care in ensuring that only functions that don’t serve a purpose to most users are removed, there may still be cases where a user has their workflow broken by this removal. We have opted to mark these functions as “defunct”. They are not exported and attempting to use them gives the following error:</p>
+<pre><code>Error: 'function' is defunct.
+See help("Defunct")</code></pre>
+<p>Their help page is still intact which greatly assists in recovering from such an error and also allows advanced users to examine the defunct code and modify it to suit their needs as required.</p>
 </section>
 <section id="caching" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="caching">Caching</h3>
@@ -595,14 +633,6 @@ Figure&nbsp;6: A broad structure of the FAOstat API package
 <p>The package is documented using <code>roxygen2</code> <span class="citation" data-cites="Wickham2022">(<a href="#ref-Wickham2022" role="doc-biblioref">Wickham et al. 2022</a>)</span> which allows documentation and code to be kept in the same file. Documentation has been particularly important for this project, specifically examples. As a lot of information has to be supplied to a function to get data in terms of codes, it is important that users have a clear idea of what is required as incorrect codes can result in cryptic empty responses from the server.</p>
 </section>
 </section>
-</section>
-<section id="examples-of-use" class="level1">
-<h1>Examples of use</h1>
-<!-- # Use case -->
-<!-- - Check health of zip data -->
-<!-- - Display availability of certain country data (shiny app) -->
-<!--   - Graph per country -->
-<!--   - Colour by flag -->
 </section>
 <section id="future-work" class="level1">
 <h1>Future work</h1>
@@ -686,12 +716,11 @@ Wu, Weiyuan, Pei Wang, Yi Xie, Yejia Liu, George Chow, and Jiannan Wang. 2023. <
   langid = {en},
   abstract = {The `FAOSTAT` package is an important part of the Food and
     Agriculture Organization (FAO)’s image that is being maintained, but
-    requires a makeover. Here an updated version, 2.3.0, of the package
-    is presented with repaired access to FAO’s API, new functions and
-    preparation for a complete overhaul in 3.0.0. The package has been
-    modernised according to new coding conventions with improved
-    dependencies, documentation and tests. Old useless functions have
-    been pruned and the package is now firmly focused on providing an
+    requires a makeover. Here an updated version, 3.0.0, of the package
+    is presented with repaired access to FAO’s API, new functions
+    modernisation according to new coding conventions with improved
+    dependencies, documentation and tests. Outdated functions have been
+    pruned and the package is now firmly focused on providing an
     interface to FAO data to users of R.}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-campbell2024" class="csl-entry quarto-appendix-citeas" role="listitem">
