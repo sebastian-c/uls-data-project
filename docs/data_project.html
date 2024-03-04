@@ -213,19 +213,6 @@ div.csl-indent {
 </header>
 
 
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The abstract needs to be updated to 3.0</p>
-</div>
-</div>
 <section id="other-formats" class="level2">
 <h2 class="anchored" data-anchor-id="other-formats">Other formats</h2>
 <p><a href="data_project.html"><i class="fa-solid fa-file-code" aria-label="file-code"></i> HTML report</a> | <a href="data_project.pdf"><i class="fa-solid fa-file-pdf" aria-label="file-pdf"></i> PDF report</a> | <a href="data_project_presentation.html"><i class="fa-solid fa-expand" aria-label="expand"></i> Presentation</a> | <a href="https://github.com/sebastian-c/uls-data-project"><i class="fa-brands fa-github" aria-label="github"></i> GitHub</a></p>
@@ -528,8 +515,8 @@ Figure&nbsp;6: A broad structure of the FAOstat API package
 </section>
 <section id="obsolete-dependencies-1" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="obsolete-dependencies-1">Obsolete dependencies</h3>
-<p>Obsolete dependencies result from three major sources. The packages attached to each point are dependencies that have been removed from <code>FAOSTAT</code><sup>[<a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/6">GitLab issue #6</a>]</sup>[<a href="https://gitlab.com/paulrougieux/faostatpackage/-/commit/9e59eac14a0f23c8a904dedda57a9999959d54b8">Commit a1c15150</a>]:</p>
-<ol type="1">
+<p>Obsolete dependencies result from three major sources. The packages attached to each point are dependencies that have been removed from <code>FAOSTAT</code><a href="#fn32" class="footnote-ref" id="fnref32" role="doc-noteref"><sup>32</sup></a>:</p>
+<div class="no-row-height column-margin column-container"><p><sup>32</sup>&nbsp;<a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/6">GitLab issue #6</a>, <a href="https://gitlab.com/paulrougieux/faostatpackage/-/commit/9e59eac14a0f23c8a904dedda57a9999959d54b8">Commit a1c15150</a></p></div><ol type="1">
 <li>Packages which were once used and are no longer used even before the author commenced work on the package</li>
 </ol>
 <ul>
@@ -541,10 +528,10 @@ Figure&nbsp;6: A broad structure of the FAOstat API package
 <ul>
 <li><code>plyr (&gt;= 1.7.1)</code>
 <ul>
-<li>Not only have its capabilities been surpassed by <code>dplyr</code>, <code>FAOSTAT</code> also depends on <code>data.table</code> which covers many of the same data manipulations tasks.<a href="#fn32" class="footnote-ref" id="fnref32" role="doc-noteref"><sup>32</sup></a></li>
+<li>Not only have its capabilities been surpassed by <code>dplyr</code>, <code>FAOSTAT</code> also depends on <code>data.table</code> which covers many of the same data manipulations tasks.<a href="#fn33" class="footnote-ref" id="fnref33" role="doc-noteref"><sup>33</sup></a></li>
 </ul></li>
 </ul>
-<div class="no-row-height column-margin column-container"><p><sup>32</sup>&nbsp;And is, in the opinion of the author, a generally superior package</p></div><ol start="3" type="1">
+<div class="no-row-height column-margin column-container"><p><sup>33</sup>&nbsp;And is, in the opinion of the author, a generally superior package</p></div><ol start="3" type="1">
 <li>Packages which are now obsolete because the functions that relied on them were removed as part of the deletion of functionality locked to the Statistical Yearbook</li>
 </ol>
 <ul>
@@ -555,7 +542,7 @@ Figure&nbsp;6: A broad structure of the FAOstat API package
 <li><code>classInt (&gt;= 0.1-19)</code></li>
 <li><code>labeling (&gt;= 0.1)</code></li>
 </ul>
-<p>The use of unit tests ensured there was no regression after removing these dependencies. The origin of these dependencies was difficult to track down as they were not added over time. Rather, they were all added in the first commit of the project.<a href="#fn33" class="footnote-ref" id="fnref33" role="doc-noteref"><sup>33</sup></a> The conventional wisdom is to “Commit early, commit often.” This makes these changes granular, so it is easier to tease apart the individual changes in any commit (<span class="citation" data-cites="Eloe2021">Eloe (<a href="#ref-Eloe2021" role="doc-biblioref">2021</a>)</span>).</p>
+<p>The use of unit tests ensured there was no regression after removing these dependencies. The origin of these dependencies was difficult to track down as they were not added over time. Rather, they were all added in the first commit of the project.<a href="#fn34" class="footnote-ref" id="fnref34" role="doc-noteref"><sup>34</sup></a> The conventional wisdom is to “Commit early, commit often.” This makes these changes granular, so it is easier to tease apart the individual changes in any commit (<span class="citation" data-cites="Eloe2021">Eloe (<a href="#ref-Eloe2021" role="doc-biblioref">2021</a>)</span>).</p>
 <div class="no-row-height column-margin column-container"></div></section>
 </section>
 <section id="solutions-to-other-problems" class="level2 page-columns page-full">
@@ -564,18 +551,18 @@ Figure&nbsp;6: A broad structure of the FAOstat API package
 <h3 class="anchored" data-anchor-id="learning-package-context">Learning package context</h3>
 <p>The two most important developers of the <code>FAOSTAT</code> package are the package author, Michael Kao and the current maintainer, Paul Rougieux.</p>
 <p>Paul Rougieux has been very helpful in guiding the author’s proposed changes to the package - making excellent suggestions in regards to code style and formatting as well as documentation and general usability.</p>
-<p>An interview with the Michael Kao<a href="#fn34" class="footnote-ref" id="fnref34" role="doc-noteref"><sup>34</sup></a> confirmed that a number of of unusual functions were due to its previous linkage with the Statistical Yearbook and that the paper attached to the package had never been published and suggested that it should be tidied up and published in future.</p>
-<div class="no-row-height column-margin column-container"><p><sup>34</sup>&nbsp;Personal Communication, 2023</p></div></section>
+<p>An interview with the Michael Kao<a href="#fn35" class="footnote-ref" id="fnref35" role="doc-noteref"><sup>35</sup></a> confirmed that a number of of unusual functions were due to its previous linkage with the Statistical Yearbook and that the paper attached to the package had never been published and suggested that it should be tidied up and published in future.</p>
+<div class="no-row-height column-margin column-container"><p><sup>35</sup>&nbsp;Personal Communication, 2023</p></div></section>
 <section id="redesigning-functions" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="redesigning-functions">Redesigning functions</h3>
-<p>The existing functions to be refactored to read data from the new API. <code>FAOSTAT</code> 2.3.0 only had these core functions in scope.<a href="#fn35" class="footnote-ref" id="fnref35" role="doc-noteref"><sup>35</sup></a> The most core functions include:</p>
-<div class="no-row-height column-margin column-container"><p><sup>35</sup>&nbsp;A full list of functions to be refactored or discarded is in <a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/20">GitLab issue #20</a></p></div><ul>
-<li><code>getFAO</code><a href="#fn36" class="footnote-ref" id="fnref36" role="doc-noteref"><sup>36</sup></a> - The heart of the package, pulls a custom slice of data from FAOstat. Renamed to <code>read_fao</code></li>
-<li><code>FAOsearch</code><a href="#fn37" class="footnote-ref" id="fnref37" role="doc-noteref"><sup>37</sup></a> - Allows a user to find the dataset they’re looking for using the directory in FAOstat. Renamed to <code>search_fao</code></li>
-<li><code>translateCountryCode</code><a href="#fn38" class="footnote-ref" id="fnref38" role="doc-noteref"><sup>38</sup></a> - Translates country codes between formats. Renamed to <code>translate_countrycodes</code></li>
+<p>The existing functions to be refactored to read data from the new API. <code>FAOSTAT</code> 2.3.0 only had these core functions in scope.<a href="#fn36" class="footnote-ref" id="fnref36" role="doc-noteref"><sup>36</sup></a> The most core functions include:</p>
+<div class="no-row-height column-margin column-container"><p><sup>36</sup>&nbsp;A full list of functions to be refactored or discarded is in <a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/20">GitLab issue #20</a></p></div><ul>
+<li><code>getFAO</code><a href="#fn37" class="footnote-ref" id="fnref37" role="doc-noteref"><sup>37</sup></a> - The heart of the package, pulls a custom slice of data from FAOstat. Renamed to <code>read_fao</code></li>
+<li><code>FAOsearch</code><a href="#fn38" class="footnote-ref" id="fnref38" role="doc-noteref"><sup>38</sup></a> - Allows a user to find the dataset they’re looking for using the directory in FAOstat. Renamed to <code>search_fao</code></li>
+<li><code>translateCountryCode</code><a href="#fn39" class="footnote-ref" id="fnref39" role="doc-noteref"><sup>39</sup></a> - Translates country codes between formats. Renamed to <code>translate_countrycodes</code></li>
 <li><code>download_faostat_bulk</code> - Downloads bulk zip files - We opted not to change the API of this function as it has been a backbone of the package since the shutdown of the FAOstat API.</li>
 </ul>
-<div class="no-row-height column-margin column-container"><p><sup>36</sup>&nbsp;<a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/16">GitLab issue #16</a></p><p><sup>37</sup>&nbsp;<a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/22">GitLab issue #22</a></p><p><sup>38</sup>&nbsp;<a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/28">GitLab issue #28</a></p></div><p>The functions were all modified for <code>FAOSTAT</code> 2.3.0, but it remained to modify all of the remaining functions so they had a consistent naming. The functions were mapped to more closely match the API. Each API object has a subset of functions which are similar between different objects. They have the following pattern:</p>
+<div class="no-row-height column-margin column-container"><p><sup>37</sup>&nbsp;<a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/16">GitLab issue #16</a></p><p><sup>38</sup>&nbsp;<a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/22">GitLab issue #22</a></p><p><sup>39</sup>&nbsp;<a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/28">GitLab issue #28</a></p></div><p>The functions were all modified for <code>FAOSTAT</code> 2.3.0, but it remained to modify all of the remaining functions so they had a consistent naming. The functions were mapped to more closely match the API. Each API object has a subset of functions which are similar between different objects. They have the following pattern:</p>
 <ul>
 <li>Groups
 <ul>
@@ -617,17 +604,17 @@ See help("Defunct")</code></pre>
 </section>
 <section id="caching" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="caching">Caching</h3>
-<p>One of the drawbacks of moving from internal data to pulling from the API is the need to read in data every time a lookup table or other piece of reference data is required. This slows down scripts as it is forced to wait for a reply from the FAOstat server. To mitigate that, caching was implemented. <a href="#fn39" class="footnote-ref" id="fnref39" role="doc-noteref"><sup>39</sup></a> Now instead of pulling every time, the server is polled only once and the response is kept and referred to for subsequent queries.</p>
-<div class="no-row-height column-margin column-container"><p><sup>39</sup>&nbsp;<a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/27">GitLab issue #27</a></p></div></section>
+<p>One of the drawbacks of moving from internal data to pulling from the API is the need to read in data every time a lookup table or other piece of reference data is required. This slows down scripts as it is forced to wait for a reply from the FAOstat server. To mitigate that, caching was implemented. <a href="#fn40" class="footnote-ref" id="fnref40" role="doc-noteref"><sup>40</sup></a> Now instead of pulling every time, the server is polled only once and the response is kept and referred to for subsequent queries.</p>
+<div class="no-row-height column-margin column-container"><p><sup>40</sup>&nbsp;<a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/27">GitLab issue #27</a></p></div></section>
 <section id="metadata-functions" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="metadata-functions">Metadata functions</h3>
-<p>When using the package, it was found that certain functionalities were immediately necessary. It was nigh-impossible to practically make a request for data without knowing what datasets were available and what their column names were. As a last minute addition, functions to perform these tasks were slipped into the 2.3.0 release.<a href="#fn40" class="footnote-ref" id="fnref40" role="doc-noteref"><sup>40</sup></a></p>
-<div class="no-row-height column-margin column-container"><p><sup>40</sup>&nbsp;<a href="https://gitlab.com/paulrougieux/faostatpackage/-/commit/06548dd0a74e1075469aece12f0bf2f8df4a3f11">Commit 06548dd0</a></p></div></section>
+<p>When using the package, it was found that certain functionalities were immediately necessary. It was nigh-impossible to practically make a request for data without knowing what datasets were available and what their column names were. As a last minute addition, functions to perform these tasks were slipped into the 2.3.0 release.<a href="#fn41" class="footnote-ref" id="fnref41" role="doc-noteref"><sup>41</sup></a></p>
+<div class="no-row-height column-margin column-container"><p><sup>41</sup>&nbsp;<a href="https://gitlab.com/paulrougieux/faostatpackage/-/commit/06548dd0a74e1075469aece12f0bf2f8df4a3f11">Commit 06548dd0</a></p></div></section>
 <section id="testing" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="testing">Testing</h3>
 <p>When making changes to a codebase it is important to make tests to assure that the function works as intended but also to report when the function breaks as a result of changes to it or its dependencies. This package uses <code>testthat</code> for its tests <span class="citation" data-cites="Wickham2011">(<a href="#ref-Wickham2011" role="doc-biblioref">Wickham 2011</a>)</span>.</p>
-<p>Making tests is repetitive work however and many tests are structured the same way. This sort of repetitive intellectual work is perfect for an AI. The author used ChatGPT to help generate tests.<a href="#fn41" class="footnote-ref" id="fnref41" role="doc-noteref"><sup>41</sup></a> It was supplied with the function code and responded with valid tests from which relevant ones were selected.</p>
-<div class="no-row-height column-margin column-container"><p><sup>41</sup>&nbsp;<a href="https://sharegpt.com/c/REwBzY6">ChatGPTv3 conversation</a> dated 2023-03-28</p></div></section>
+<p>Making tests is repetitive work however and many tests are structured the same way. This sort of repetitive intellectual work is perfect for an AI. The author used ChatGPT to help generate tests.<a href="#fn42" class="footnote-ref" id="fnref42" role="doc-noteref"><sup>42</sup></a> It was supplied with the function code and responded with valid tests from which relevant ones were selected.</p>
+<div class="no-row-height column-margin column-container"><p><sup>42</sup>&nbsp;<a href="https://sharegpt.com/c/REwBzY6">ChatGPTv3 conversation</a> dated 2023-03-28</p></div></section>
 <section id="documentation" class="level3">
 <h3 class="anchored" data-anchor-id="documentation">Documentation</h3>
 <p>The package is documented using <code>roxygen2</code> <span class="citation" data-cites="Wickham2022">(<a href="#ref-Wickham2022" role="doc-biblioref">Wickham et al. 2022</a>)</span> which allows documentation and code to be kept in the same file. Documentation has been particularly important for this project, specifically examples. As a lot of information has to be supplied to a function to get data in terms of codes, it is important that users have a clear idea of what is required as incorrect codes can result in cryptic empty responses from the server.</p>

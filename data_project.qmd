@@ -32,10 +32,6 @@ abstract: |
   The `FAOSTAT` package is an important part of the Food and Agriculture Organization (FAO)'s image that is being maintained, but requires a makeover. Here an updated version, 3.0.0, of the package is presented with repaired access to FAO's API, new functions modernisation according to new coding conventions with improved dependencies, documentation and tests. Outdated functions have been pruned and the package is now firmly focused on providing an interface to FAO data to users of R.
 ---
 
-::: {.callout-important}
-The abstract needs to be updated to 3.0
-::: 
-
 ## Other formats
 
 [{{< fa file-code >}} HTML report](data_project.html) | [{{< fa file-pdf >}} PDF report](data_project.pdf) | [{{< fa expand >}} Presentation](data_project_presentation.html) | [{{< fa brands github >}} GitHub](https://github.com/sebastian-c/uls-data-project) 
@@ -347,7 +343,7 @@ The author has worked as a consultant for FAO and is currently in contact with t
 
 ### Obsolete dependencies
 
-Obsolete dependencies result from three major sources. The packages attached to each point are dependencies that have been removed from `FAOSTAT`^[[GitLab issue #6](https://gitlab.com/paulrougieux/faostatpackage/-/issues/6)]^[[Commit a1c15150](https://gitlab.com/paulrougieux/faostatpackage/-/commit/9e59eac14a0f23c8a904dedda57a9999959d54b8)]:
+Obsolete dependencies result from three major sources. The packages attached to each point are dependencies that have been removed from `FAOSTAT`^[[GitLab issue #6](https://gitlab.com/paulrougieux/faostatpackage/-/issues/6), [Commit a1c15150](https://gitlab.com/paulrougieux/faostatpackage/-/commit/9e59eac14a0f23c8a904dedda57a9999959d54b8)]:
 
 1. Packages which were once used and are no longer used even before the author commenced work on the package
   - `ggplot2 (>= 0.9.3)`
