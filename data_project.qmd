@@ -1,22 +1,31 @@
 ---
-title: "`FAOSTAT` 3.0"
-subtitle: "A revitalisation of a wrapper for the FAOstat API"
-author: Sebastian Campbell
-affiliation: UniLaSalle Rouen
-date: "2024-03-01"
-date-format: long
 search: false
 format:
     pdf: 
-      mainfont: Cambria
+      mainfont: Verdana
+      linestretch: 1.5
+      margin-left: "2.5cm"
+      margin-right: "2.5cm"
+      margin-top: "2.5cm"
+      margin-bottom: "2.5cm"
     html: 
+      title: "`FAOSTAT` 3.0"
+      subtitle: "A revitalisation of a wrapper for the FAOstat API"
+      author: Sebastian Campbell
+      affiliation: UniLaSalle Rouen
+      date: "2024-03-08"
+      date-format: long
+      #cap-location: margin
+      #reference-location: margin
       include-in-header: lib/html/favicon.html
-      toc: true
       self-contained: false
-reference-location: margin
-cap-location: margin
+toc: true
 citation: true
 bibliography: FAOSTAT.bib
+biblio-title: Bibliography
+link-citations: true
+link-bibliography: true
+#csl: chicago-author-date.csl
 ---
 
 ```{r setup, include = FALSE}
@@ -26,15 +35,12 @@ library(forcats)
 library(data.table)
 ```
 
----
-abstract: |
-
-  The `FAOSTAT` package is an important part of the Food and Agriculture Organization (FAO)'s image that is being maintained, but requires a makeover. Here an updated version, 3.0.0, of the package is presented with repaired access to FAO's API, new functions modernisation according to new coding conventions with improved dependencies, documentation and tests. Outdated functions have been pruned and the package is now firmly focused on providing an interface to FAO data to users of R.
----
 
 ## Other formats
 
 [{{< fa file-code >}} HTML report](data_project.html) | [{{< fa file-pdf >}} PDF report](data_project.pdf) | [{{< fa expand >}} Presentation](data_project_presentation.html) | [{{< fa brands github >}} GitHub](https://github.com/sebastian-c/uls-data-project) 
+
+{{< pagebreak >}}
 
 # Project background
 
@@ -79,9 +85,27 @@ In modern parlance, when we refer to an API, we usually mean a REST^[REpresentat
 
 The key innovation that REST introduces is _statelessness_. The server does not have to keep track of any previous requests. Each request is atomic and is considered in isolation. This distinguishes it from other API patterns such as SOAP^[Simple Object Access Protocol] (@Halili2018).
 
+# Food and Agriculture Organization
+
+The FAO^[Food and Agriculture Organization of the United Nations] is a specialised agency of the UN^[United Nations]. This means that it is not a direct organ of the UN, but reports to the UN Economic and Social Council^[For more details, the UN website has an [excellent organigram](https://www.un.org/sites/un2.un.org/files/un_system_chart.pdf)]. Its goal is to:
+
+> ...achieve food security for all and make sure that people have regular access to enough high-quality food to lead active, healthy lives. (@FAO2024)
+
+As part of its mission, it collects food statistics from all member countries of the UN. It published its first account of the world food supply in 1946 with the publication of the World Food Survey (@FAO1946). This mission of collecting food statistics has continued today with the Statistics Division in FAO. This division has three main goals (@FAO2024ESS):
+
+> Produce updated statistics on food and nutrition security, sustainable agriculture and rural development at national and international levels;
+
+> Develop and promote international food and agricultural statistical standards, as well as methods and tools for collecting, analyzing and disseminating data;
+
+> Work directly with countries to develop national statistical strategies, strengthen institutional and technical capacities and improve statistical systems.
+
+In order to disseminate these produced statistics, one requires a tool. This tool is FAOstat.
+
 # FAOstat
 
-FAOstat is FAO's web-based statistical platform for the free dissemination of food and agriculture statistics. This data is obtained from questionnaires that FAO distributes throughout the world every year [@FAO2019]. Some of its data also comes from imputations and models where data is not available, but official country data takes precedence.
+FAOstat^[Food and Agriculture Organization Corporate Statistical Database] is FAO's web-based statistical platform for the free dissemination of food and agriculture statistics. This data is obtained from questionnaires that FAO distributes throughout the world every year [@FAO2019]. Some of its data also comes from imputations and models where data is not available, but official country data takes precedence.
+
+FAOstat was first released in 1997. As the internet was not as widespread as today, it was largely distributed as a database on CD-ROM, continuing until at 2005 at the latest (@UN2005). It is currently a 1.5 GB download (@FAO2023). It now also includes methods of displaying data and interacting with them using javascript libraries Leaflet^[[Leaflet](https://leafletjs.com/) is an interactive map library] and Highchart^[[Highchart](https://www.highcharts.com/) is a charting library allowing the construction of interactive graphs of multiple different kinds].
 
 ```{r}
 #| label: fig-faostat_mentions
@@ -123,7 +147,7 @@ It is a reasonably popular package; in the 86th percentile of all packages on CR
 ```{mermaid}
 %%| label: fig-timeline
 %%| fig-cap: A timeline of the `FAOSTAT` package from its creation to today
-%%| fig-width: 4
+%%| fig-width: 6
 %%{init: {'timeline': {'disableMulticolor': true} } }%%
 timeline
     title History of the FAOSTAT package
@@ -356,7 +380,7 @@ Obsolete dependencies result from three major sources. The packages attached to 
   - `classInt (>= 0.1-19)`
   - `labeling (>= 0.1)`
 
-The use of unit tests ensured there was no regression after removing these dependencies. The origin of these dependencies was difficult to track down as they were not added over time. Rather, they were all added in the first commit of the project.^[] The conventional wisdom is to "Commit early, commit often." This makes these changes granular, so it is easier to tease apart the individual changes in any commit (@Eloe2021).
+The use of unit tests ensured there was no regression after removing these dependencies. The origin of these dependencies was difficult to track down as they were not added over time. Rather, they were all added in the first commit of the project.^[[Commit 62a217e3](https://gitlab.com/paulrougieux/faostatpackage/-/commit/62a217e33b96134d1c2dfc180388d13d330938b9)] The conventional wisdom is to "Commit early, commit often." This makes these changes granular, so it is easier to tease apart the individual changes in any commit (@Eloe2021).
 
 ## Solutions to other problems
 
@@ -437,7 +461,7 @@ API wrappers like the `FAOSTAT` package require a substantial amount of work and
 
 ## Publication
 
-The `FAOSTAT` package has never been officially published and it is important to widely publicise it to encourage use. The following avenues are available:
+The `FAOSTAT` package has never been officially published in a way that has been fully sponsored by FAO. However, it is important to widely publicise it to encourage use. The following avenues are available:
 
 - Publishing a paper in [JOSS](https://joss.theoj.org/papers/published) - JOSS is an online journal with peer review entirely managed by github issues
 - Publish news in [rweekly](https://rweekly.org/) - Rweekly is a weekly newsletter that publishes news about R in the last week
@@ -449,6 +473,6 @@ The `FAOSTAT` package has never been officially published and it is important to
 
 This project has been funded by the Food and Agriculture Organization of the United Nations and the author is grateful for their help in reviving it.
 
+{{< pagebreak >}}
+
 # Bibliography
-:::{.refs}
-:::

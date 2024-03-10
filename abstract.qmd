@@ -1,0 +1,15 @@
+---
+format: 
+    pdf: 
+      mainfont: Verdana
+
+---
+
+# English
+
+  The `FAOSTAT` package is an important part of the Food and Agriculture Organization (FAO)'s image that is being maintained, but requires renovation. It no longer functions with the existing API and has a number of outdated dependencies and vestigial functionality. Here an updated version, 3.0.0, of the package is presented with repaired access to FAO's API, new functions, modernisation according to new coding conventions with improved dependencies, documentation and tests. Outdated functions and dependencies have been pruned and the package is now firmly focused on providing an interface to FAO data to users of R.
+
+# Français
+
+Le package FAOSTAT contribue fortement à l'image que renvoie l'Organisation des Nations Unies pour l'Alimentation et l'Agriculture (ONUAA, plus souvent "FAO", son acronyme anglais) et a sérieusement besoin d'une mise à jour.
+Il ne fonctionne plus avec l'ancien API et possède un certain nombre de dépendances obsolètes et de fonctionnalités résiduelles. Je vous présente ici une version mise à jour 3.0.0 du package avec un accès rétabli à l'API de FAO ainsi que de nouvelles fonctionnalités. Il a été modernisé selon les règles de codage de façon à intégrer de nouvelles dépendances, une nouvelle documentation et de nouveaux tests. Les fonctions et dépendances obsolètes ont été retirées et l'objectif du package est désormais clairement défini : fournir aux usagers de R une interface pour les données de FAO.

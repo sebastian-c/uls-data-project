@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.4.551">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Sebastian Campbell">
-<meta name="dcterms.date" content="2024-03-01">
+<meta name="dcterms.date" content="2024-03-08">
 
 <title>data_project - FAOSTAT 3.0</title>
 <style>
@@ -90,6 +90,7 @@ div.csl-indent {
   }
 }</script>
 <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
+
 <script src="site_libs/quarto-diagram/mermaid.min.js"></script>
 <script src="site_libs/quarto-diagram/mermaid-init.js"></script>
 <link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
@@ -114,6 +115,7 @@ div.csl-indent {
   <ul class="collapse">
   <li><a href="#what-is-an-api" id="toc-what-is-an-api" class="nav-link" data-scroll-target="#what-is-an-api">What is an API?</a></li>
   </ul></li>
+  <li><a href="#food-and-agriculture-organization" id="toc-food-and-agriculture-organization" class="nav-link" data-scroll-target="#food-and-agriculture-organization">Food and Agriculture Organization</a></li>
   <li><a href="#faostat" id="toc-faostat" class="nav-link" data-scroll-target="#faostat">FAOstat</a></li>
   <li><a href="#faostat-package" id="toc-faostat-package" class="nav-link" data-scroll-target="#faostat-package"><code>FAOSTAT</code> package</a>
   <ul class="collapse">
@@ -173,7 +175,7 @@ div.csl-indent {
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="data_project.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content page-columns page-full" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -195,19 +197,13 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 1, 2024</p>
+      <p class="date">March 8, 2024</p>
     </div>
   </div>
   
     
   </div>
   
-<div>
-  <div class="abstract">
-    <div class="block-title">Abstract</div>
-    <p>The <code>FAOSTAT</code> package is an important part of the Food and Agriculture Organization (FAO)’s image that is being maintained, but requires a makeover. Here an updated version, 3.0.0, of the package is presented with repaired access to FAO’s API, new functions modernisation according to new coding conventions with improved dependencies, documentation and tests. Outdated functions have been pruned and the package is now firmly focused on providing an interface to FAO data to users of R.</p>
-  </div>
-</div>
 
 
 </header>
@@ -216,17 +212,18 @@ div.csl-indent {
 <section id="other-formats" class="level2">
 <h2 class="anchored" data-anchor-id="other-formats">Other formats</h2>
 <p><a href="data_project.html"><i class="fa-solid fa-file-code" aria-label="file-code"></i> HTML report</a> | <a href="data_project.pdf"><i class="fa-solid fa-file-pdf" aria-label="file-pdf"></i> PDF report</a> | <a href="data_project_presentation.html"><i class="fa-solid fa-expand" aria-label="expand"></i> Presentation</a> | <a href="https://github.com/sebastian-c/uls-data-project"><i class="fa-brands fa-github" aria-label="github"></i> GitHub</a></p>
+<div style="page-break-after: always;"></div>
 </section>
-<section id="project-background" class="level1 page-columns page-full">
+<section id="project-background" class="level1">
 <h1>Project background</h1>
 <p>The motivation for this project came from a Data Mining project from UniLaSalle. It was suggested that we use FAO<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> data from their statistical platform FAOstat<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. As R was the language of choice, the obvious port of call was the <code>FAOSTAT</code> package<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> <span class="citation" data-cites="Kao2022a">(<a href="#ref-Kao2022a" role="doc-biblioref">Kao, Gheri, and Gesmann 2022</a>)</span>, developed by employees at FAO.</p>
-<div class="no-row-height column-margin column-container"><p><sup>1</sup>&nbsp;Food and Agriculture Organization of the United Nations</p><p><sup>2</sup>&nbsp;Food and Agriculture Organization Corporate Statistical Database</p><p><sup>3</sup>&nbsp;For the purposes of clarity, this document will use the style <code>FAOSTAT</code> in monospace for the R package<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> and “FAOstat” for the statistical platform</p><p><sup>4</sup>&nbsp;Application Programming Interface</p><p><sup>5</sup>&nbsp;This discrepancy has been fixed as of 2023-03-10</p></div><p>However, the <code>FAOSTAT</code> package did not work. It could not download data from the API<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> and could only download bulk data with the entirety of a dataset in one go. For the particular dataset we were interested in, we found that there was a discrepancy between the data in the bulk download and the data on the web platform.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<p>However, the <code>FAOSTAT</code> package did not work. It could not download data from the API<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> and could only download bulk data with the entirety of a dataset in one go. For the particular dataset we were interested in, we found that there was a discrepancy between the data in the bulk download and the data on the web platform.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
 <p>Eventually it became necessary to use the same API that the FAOstat website uses to pull data. This method worked and it became clear that it could be used to revitalise the <code>FAOSTAT</code> package and part of an effort to restore it to full functionality.</p>
 <p>A first update, <code>FAOSTAT</code> 2.3.0 was released by the author in May 2023. <code>FAOSTAT</code> 3.0 is a continuation of that effort and realises many of the goals that it set out.</p>
-<section id="what-is-an-api" class="level2 page-columns page-full">
+<section id="what-is-an-api" class="level2">
 <h2 class="anchored" data-anchor-id="what-is-an-api">What is an API?</h2>
 <p>An API<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> is a method for a host application to allow a client to send it commands in a way the client understands. The API is a layer that converts these client commands to ones that the host understands. To use a metaphor, you could in theory drive a car by manually turning the axle to got left and start it by hitting a spark plug yourself. However, the key (or start button, if you have a newer model) and steering wheel are a much more natural and intuitive way to direct a car for a human being. However, from the car’s perspective the axle gets turned and the spark plug is struck. The steering wheel and key essentially work as an API between the server (the car) and the client (the person).</p>
-<div class="no-row-height column-margin column-container"><p><sup>6</sup>&nbsp;Application Programming Interface</p><p><sup>7</sup>&nbsp;REpresentative State Transfer</p><p><sup>8</sup>&nbsp;HyperText Transfer Protocol</p><p><sup>9</sup>&nbsp;There are other verbs (HEAD, CONNECT, OPTIONS, TRACE and PATCH), but they are of much lower importance</p></div><p>In modern parlance, when we refer to an API, we usually mean a REST<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> API. This is a type of API run over the web via HTTP<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>, the same protocol that serves web pages. These APIs are a method of exchanging data and use the following major verbs<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> from HTTP:</p>
+<p>In modern parlance, when we refer to an API, we usually mean a REST<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> API. This is a type of API run over the web via HTTP<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>, the same protocol that serves web pages. These APIs are a method of exchanging data and use the following major verbs<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> from HTTP:</p>
 <p><strong>GET</strong> - Request data from the server</p>
 <ul>
 <li>Request: <code>GET https://example.com/johnsmith/info</code></li>
@@ -252,19 +249,38 @@ div.csl-indent {
 <li>Response: None</li>
 </ul>
 <p>The key innovation that REST introduces is <em>statelessness</em>. The server does not have to keep track of any previous requests. Each request is atomic and is considered in isolation. This distinguishes it from other API patterns such as SOAP<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> (<span class="citation" data-cites="Halili2018">Halili and Ramadani (<a href="#ref-Halili2018" role="doc-biblioref">2018</a>)</span>).</p>
-<div class="no-row-height column-margin column-container"><p><sup>10</sup>&nbsp;Simple Object Access Protocol</p></div></section>
 </section>
-<section id="faostat" class="level1 page-columns page-full">
+</section>
+<section id="food-and-agriculture-organization" class="level1">
+<h1>Food and Agriculture Organization</h1>
+<p>The FAO<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> is a specialised agency of the UN<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>. This means that it is not a direct organ of the UN, but reports to the UN Economic and Social Council<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>. Its goal is to:</p>
+<blockquote class="blockquote">
+<p>…achieve food security for all and make sure that people have regular access to enough high-quality food to lead active, healthy lives. (<span class="citation" data-cites="FAO2024">FAO (<a href="#ref-FAO2024" role="doc-biblioref">2024a</a>)</span>)</p>
+</blockquote>
+<p>As part of its mission, it collects food statistics from all member countries of the UN. It published its first account of the world food supply in 1946 with the publication of the World Food Survey (<span class="citation" data-cites="FAO1946">FAO (<a href="#ref-FAO1946" role="doc-biblioref">1946</a>)</span>). This mission of collecting food statistics has continued today with the Statistics Division in FAO. This division has three main goals (<span class="citation" data-cites="FAO2024ESS">FAO (<a href="#ref-FAO2024ESS" role="doc-biblioref">2024b</a>)</span>):</p>
+<blockquote class="blockquote">
+<p>Produce updated statistics on food and nutrition security, sustainable agriculture and rural development at national and international levels;</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Develop and promote international food and agricultural statistical standards, as well as methods and tools for collecting, analyzing and disseminating data;</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Work directly with countries to develop national statistical strategies, strengthen institutional and technical capacities and improve statistical systems.</p>
+</blockquote>
+<p>In order to disseminate these produced statistics, one requires a tool. This tool is FAOstat.</p>
+</section>
+<section id="faostat" class="level1">
 <h1>FAOstat</h1>
-<p>FAOstat is FAO’s web-based statistical platform for the free dissemination of food and agriculture statistics. This data is obtained from questionnaires that FAO distributes throughout the world every year <span class="citation" data-cites="FAO2019">(<a href="#ref-FAO2019" role="doc-biblioref">Food and Agriculture Organization of the United Nations 2019</a>)</span>. Some of its data also comes from imputations and models where data is not available, but official country data takes precedence.</p>
-<div class="cell page-columns page-full">
-<div class="cell-output-display page-columns page-full">
-<div id="fig-faostat_mentions" class="quarto-figure quarto-figure-center quarto-float anchored page-columns page-full">
-<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<p>FAOstat<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a> is FAO’s web-based statistical platform for the free dissemination of food and agriculture statistics. This data is obtained from questionnaires that FAO distributes throughout the world every year <span class="citation" data-cites="FAO2019">(<a href="#ref-FAO2019" role="doc-biblioref">FAO 2019</a>)</span>. Some of its data also comes from imputations and models where data is not available, but official country data takes precedence.</p>
+<p>FAOstat was first released in 1997. As the internet was not as widespread as today, it was largely distributed as a database on CD-ROM, continuing until at 2005 at the latest (<span class="citation" data-cites="UN2005">United Nations (<a href="#ref-UN2005" role="doc-biblioref">2005</a>)</span>). It is currently a 1.5 GB download (<span class="citation" data-cites="FAO2023">FAO (<a href="#ref-FAO2023" role="doc-biblioref">2023</a>)</span>). It now also includes methods of displaying data and interacting with them using javascript libraries Leaflet<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a> and Highchart<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-faostat_mentions" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-faostat_mentions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="data_project_files/figure-html/fig-faostat_mentions-1.png" class="img-fluid figure-img" width="672">
 </div>
-<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-faostat_mentions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-faostat_mentions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Academic papers referencing <code>FAOSTAT</code> over the last 25 years <span class="citation" data-cites="Strobel2018">(<a href="#ref-Strobel2018" role="doc-biblioref">Strobel 2018</a>)</span>
 </figcaption>
 </figure>
@@ -272,31 +288,31 @@ Figure&nbsp;1: Academic papers referencing <code>FAOSTAT</code> over the last 25
 </div>
 </div>
 <p>The FAOstat service is a public-facing aspect of FAO, with an overall trend of increasing citations in academic papers year on year with 21400 citations by 2021 (<a href="#fig-faostat_mentions" class="quarto-xref">Figure&nbsp;1</a>).</p>
-<div id="fig-faostat_interface" class="quarto-figure quarto-figure-center quarto-float anchored page-columns page-full">
-<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div id="fig-faostat_interface" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-faostat_interface-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="img/faostat.png" class="img-fluid figure-img">
 </div>
-<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-faostat_interface-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-faostat_interface-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: FAOstat interface for exploration of country data
 </figcaption>
 </figure>
 </div>
 <p>This platform uses a REST API internally to communicate with its database as well as providing a set of zip files with the entirety of certain datasets in order to reduce the load on the database. This REST API allows the website to generate CSVs as well as to allow exploration of the data via interactive graphs (<a href="#fig-faostat_interface" class="quarto-xref">Figure&nbsp;2</a>).</p>
 </section>
-<section id="faostat-package" class="level1 page-columns page-full">
+<section id="faostat-package" class="level1">
 <h1><code>FAOSTAT</code> package</h1>
-<p>The <code>FAOSTAT</code> package is an API wrapper to pull data from FAOstat into a R session. It can also perform small necessary tasks such as country code conversion and coalescing data from different country groups.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a></p>
-<div class="no-row-height column-margin column-container"><p><sup>11</sup>&nbsp;For example, China may be just the mainland or may include Taiwan (Chinese Taipei), Hong Kong and Macao</p></div><section id="history" class="level2 page-columns page-full">
+<p>The <code>FAOSTAT</code> package is an API wrapper to pull data from FAOstat into a R session. It can also perform small necessary tasks such as country code conversion and coalescing data from different country groups.<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a></p>
+<section id="history" class="level2">
 <h2 class="anchored" data-anchor-id="history">History</h2>
-<p>The <code>FAOSTAT</code> package was originally developed in 2013 as a tool to source data for the SYB<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a> project. The yearbooks are yearly summaries of the worldwide state of agriculture for that year. At the time, they were manually typeset and compiled. The new SYB project was to use a combination of <code>LaTeX</code>, <code>knitr</code> and <code>R</code> to automatically pull data from FAOstat and other data sources such as the World Bank. This data would be then be transformed and processed to create graphs and tables before finally formatting and typesetting to create a finished product which could then be printed.<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>. Given that this use case no longer exists, the primary use of this package is for researchers and other R users to read data from FAOstat in a clean way that makes it easier to move to analysis afterwards.</p>
-<div class="no-row-height column-margin column-container"><p><sup>12</sup>&nbsp;Statistical Year Book</p><p><sup>13</sup>&nbsp;The author has no insight into the current production of the SYB, but they are still being produced and can be found on the <a href="https://www.fao.org/documents/card/en/c/cc2211en">FAO website</a></p></div><p>It is a reasonably popular package; in the 86th percentile of all packages on CRAN on 2023-04-01 by downloads. In total, the package has been downloaded over 50 000 times with a peak 121 daily downloads on 2019-05-15. <span class="citation" data-cites="Li2023">(<a href="#ref-Li2023" role="doc-biblioref">Li 2023</a>)</span></p>
-<section id="maintainership" class="level3 page-columns page-full">
+<p>The <code>FAOSTAT</code> package was originally developed in 2013 as a tool to source data for the SYB<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a> project. The yearbooks are yearly summaries of the worldwide state of agriculture for that year. At the time, they were manually typeset and compiled. The new SYB project was to use a combination of <code>LaTeX</code>, <code>knitr</code> and <code>R</code> to automatically pull data from FAOstat and other data sources such as the World Bank. This data would be then be transformed and processed to create graphs and tables before finally formatting and typesetting to create a finished product which could then be printed.<a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a>. Given that this use case no longer exists, the primary use of this package is for researchers and other R users to read data from FAOstat in a clean way that makes it easier to move to analysis afterwards.</p>
+<p>It is a reasonably popular package; in the 86th percentile of all packages on CRAN on 2023-04-01 by downloads. In total, the package has been downloaded over 50 000 times with a peak 121 daily downloads on 2019-05-15. <span class="citation" data-cites="Li2023">(<a href="#ref-Li2023" role="doc-biblioref">Li 2023</a>)</span></p>
+<section id="maintainership" class="level3">
 <h3 class="anchored" data-anchor-id="maintainership">Maintainership</h3>
-<div class="cell page-columns page-full" data-fig-width="4" data-layout-align="default">
-<div class="cell-output-display page-columns page-full">
-<div id="fig-timeline" class="quarto-figure quarto-figure-center quarto-float anchored page-columns page-full">
-<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div class="cell" data-fig-width="6" data-layout-align="default">
+<div class="cell-output-display">
+<div id="fig-timeline" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-timeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div>
 <pre class="mermaid mermaid-js" data-label="fig-timeline">%%{init: {'timeline': {'disableMulticolor': true} } }%%
@@ -311,7 +327,7 @@ timeline
 </pre>
 </div>
 </div>
-<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-timeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-timeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3: A timeline of the <code>FAOSTAT</code> package from its creation to today
 </figcaption>
 </figure>
@@ -320,14 +336,14 @@ Figure&nbsp;3: A timeline of the <code>FAOSTAT</code> package from its creation 
 </div>
 <p>The package was maintained by Michael Kao, the author, from 2013 to 2014. In 2014, it was maintained by Filippo Gheri before passing to Paul Rougieux (the current maintainer) in 2020 (<a href="#fig-timeline" class="quarto-xref">Figure&nbsp;3</a>).</p>
 <p>While it was <a href="https://github.com/mkao006/FAOSTATpackage">originally hosted on Github</a> under Michael Kao’s personal account, It is <a href="https://gitlab.com/paulrougieux/faostatpackage/">currently hosted on GitLab</a> under Paul Rougieux’s personal account.</p>
-<div class="cell page-columns page-full">
-<div class="cell-output-display page-columns page-full">
-<div id="fig-git-contributions" class="quarto-figure quarto-figure-center quarto-float anchored page-columns page-full">
-<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-git-contributions" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-git-contributions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="data_project_files/figure-html/fig-git-contributions-1.png" class="img-fluid figure-img" width="672">
 </div>
-<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-git-contributions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-git-contributions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;4: Contributions to the <code>FAOSTAT</code> git repository by number of commits and by number of lines contributed that remain in the current master branch. Snapshot taken on 2024-02-26
 </figcaption>
 </figure>
@@ -335,14 +351,14 @@ Figure&nbsp;4: Contributions to the <code>FAOSTAT</code> git repository by numbe
 </div>
 </div>
 <p>While there have been other contributors, they have only provided occasional commits and very little of that code remains in the codebase (<a href="#fig-git-contributions" class="quarto-xref">Figure&nbsp;4</a>). The major four maintainers (Kao, Gheri, Rougieux and Campbell) are by far the main contributors.</p>
-<div class="cell page-columns page-full">
-<div class="cell-output-display page-columns page-full">
-<div id="fig-git-timeline" class="quarto-figure quarto-figure-center quarto-float anchored page-columns page-full">
-<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-git-timeline" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-git-timeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="data_project_files/figure-html/fig-git-timeline-1.png" class="img-fluid figure-img" width="672">
 </div>
-<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-git-timeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-git-timeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;5: Contributions to the <code>FAOSTAT</code> git repository over time by author. Snapshot taken on 2024-02-26
 </figcaption>
 </figure>
@@ -351,12 +367,12 @@ Figure&nbsp;5: Contributions to the <code>FAOSTAT</code> git repository over tim
 </div>
 <p>The package’s development can be split into two major periods. Between 2013 and 2017 (<a href="#fig-git-timeline" class="quarto-xref">Figure&nbsp;5</a>), the package is focused on the Statistical Yearbooks and the FAOSTAT3 API. However, as the package is no longer used for the yearbook and the API is discontinued, the focus is changed to the bulk download functionality to download whole datasets at once.</p>
 </section>
-<section id="api-structure" class="level3 page-columns page-full">
+<section id="api-structure" class="level3">
 <h3 class="anchored" data-anchor-id="api-structure">API structure</h3>
-<div class="cell page-columns page-full" data-fig-width="4" data-layout-align="default">
-<div class="cell-output-display page-columns page-full">
-<div id="fig-api-structure" class="quarto-figure quarto-figure-center quarto-float anchored page-columns page-full">
-<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div class="cell" data-fig-width="4" data-layout-align="default">
+<div class="cell-output-display">
+<div id="fig-api-structure" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-api-structure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div>
 <pre class="mermaid mermaid-js" data-label="fig-api-structure">flowchart TD
@@ -373,35 +389,35 @@ Figure&nbsp;5: Contributions to the <code>FAOSTAT</code> git repository over tim
 </pre>
 </div>
 </div>
-<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-api-structure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-api-structure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;6: A broad structure of the FAOstat API package
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>The API is has two main components: dimensions and data (<a href="#fig-api-structure" class="quarto-xref">Figure&nbsp;6</a>). Domains are the objects that hold data itself and these are clustered into groups. Groups link thematically connected domains. These groups correspond to the various internal teams within FAO that are responsible for disseminating data.<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a> Dimensions and subdimensions for the definitions for the shape of the data. These are defined separately and can be applied to multiple domains. In addition there are utility endpoints:</p>
-<div class="no-row-height column-margin column-container"><p><sup>14</sup>&nbsp;Personal communication, 2024</p></div><ul>
+<p>The API is has two main components: dimensions and data (<a href="#fig-api-structure" class="quarto-xref">Figure&nbsp;6</a>). Domains are the objects that hold data itself and these are clustered into groups. Groups link thematically connected domains. These groups correspond to the various internal teams within FAO that are responsible for disseminating data.<a href="#fn20" class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a> Dimensions and subdimensions for the definitions for the shape of the data. These are defined separately and can be applied to multiple domains. In addition there are utility endpoints:</p>
+<ul>
 <li><code>/ping</code> - simple check to see if the server is up</li>
 <li><code>/datasize</code> - Appended to the end of queries, returns the size of the data</li>
 </ul>
 </section>
 </section>
 </section>
-<section id="identified-problems" class="level1 page-columns page-full">
+<section id="identified-problems" class="level1">
 <h1>Identified problems</h1>
-<p>The <code>FAOSTAT</code> package has only a shadow of its former functionality. While it has retained the ability to download and process zip files (bulk downloads) and country code processing functions,<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a> its capacities are limited by the following issues:</p>
-<div class="no-row-height column-margin column-container"><p><sup>15</sup>&nbsp;For a full description of the status of individual issues, please see the GitLab issue <a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/20">#20 Remove functions linked to defunct uses of FAOSTAT</a></p></div><section id="functionality-locked-to-the-statistical-yearbook" class="level2">
+<p>The <code>FAOSTAT</code> package has only a shadow of its former functionality. While it has retained the ability to download and process zip files (bulk downloads) and country code processing functions,<a href="#fn21" class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a> its capacities are limited by the following issues:</p>
+<section id="functionality-locked-to-the-statistical-yearbook" class="level2">
 <h2 class="anchored" data-anchor-id="functionality-locked-to-the-statistical-yearbook">Functionality locked to the Statistical Yearbook</h2>
 <p>A number of functions are simply designed to pull in data from other sources such as the World Bank and to process that data into a format easily consumed by the Statistical Yearbook. As the yearbook no longer uses the <code>FAOSTAT</code> package, these functions have no further purpose, serving only to clog up the package and its help files.</p>
 </section>
-<section id="functionality-powered-by-local-files" class="level2 page-columns page-full">
+<section id="functionality-powered-by-local-files" class="level2">
 <h2 class="anchored" data-anchor-id="functionality-powered-by-local-files">Functionality powered by local files</h2>
 <p>Many uses of FAOSTAT require data outside of the data that comes directly from FAOstat The major use case is for code conversions. There are two main code types that require conversion:</p>
 <ul>
 <li>Country codes
 <ul>
-<li><strong>FAO</strong>: FAO’s internal codes for countries<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a></li>
+<li><strong>FAO</strong>: FAO’s internal codes for countries<a href="#fn22" class="footnote-ref" id="fnref22" role="doc-noteref"><sup>22</sup></a></li>
 <li><strong>M49</strong>: The UN standard country codes</li>
 <li><strong>ISO2 &amp; ISO3</strong>: 2 and 3 letter country codes</li>
 </ul></li>
@@ -411,16 +427,16 @@ Figure&nbsp;6: A broad structure of the FAOstat API package
 <li><strong>CPC</strong>: Central Product Classification code <span class="citation" data-cites="UNSD2015">(<a href="#ref-UNSD2015" role="doc-biblioref">United Nations Statistical Division 2015</a>)</span></li>
 </ul></li>
 </ul>
-<div class="no-row-height column-margin column-container"><p><sup>16</sup>&nbsp;For further details about FAO and how it handles country identification, see <a href="https://www.fao.org/nocs/en">FAO’s NOCS database</a></p></div><p>The conversions are not dynamically taken from the API but rather stored in a fixed file. This makes them vulnerable to code or name changes in the future such as the name change of Swaziland to Eswatini in 2018 <span class="citation" data-cites="UN2018">(<a href="#ref-UN2018" role="doc-biblioref">United Nations 2018</a>)</span>.</p>
+<p>The conversions are not dynamically taken from the API but rather stored in a fixed file. This makes them vulnerable to code or name changes in the future such as the name change of Swaziland to Eswatini in 2018 <span class="citation" data-cites="UN2018">(<a href="#ref-UN2018" role="doc-biblioref">United Nations 2018</a>)</span>.</p>
 </section>
-<section id="inactive-api" class="level2 page-columns page-full">
+<section id="inactive-api" class="level2">
 <h2 class="anchored" data-anchor-id="inactive-api">Inactive API</h2>
-<p>The <code>FAOSTAT</code> package is currently configured to access a now-defunct API<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a> (FAOSTAT3). As a result, it has no methods of retrieving data from the FAOstat platform with the sole exception of the bulk zip downloads which have been since adapted to use the current platform.</p>
-<div class="no-row-height column-margin column-container"><p><sup>17</sup>&nbsp;Originally hosted at faostat3.fao.org</p></div></section>
-<section id="limited-extensibility-for-queries" class="level2 page-columns page-full">
+<p>The <code>FAOSTAT</code> package is currently configured to access a now-defunct API<a href="#fn23" class="footnote-ref" id="fnref23" role="doc-noteref"><sup>23</sup></a> (FAOSTAT3). As a result, it has no methods of retrieving data from the FAOstat platform with the sole exception of the bulk zip downloads which have been since adapted to use the current platform.</p>
+</section>
+<section id="limited-extensibility-for-queries" class="level2">
 <h2 class="anchored" data-anchor-id="limited-extensibility-for-queries">Limited extensibility for queries</h2>
-<p>When making a query using the API, the request <em>must</em> contain exactly four dimensions (area, item, element and year). This means that it cannot be used for domains that do not meet these strict design requirements. For example, the GFDI<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a> domain has 6 dimensions (area, category, industry, factor, element, year)</p>
-<div class="no-row-height column-margin column-container"><p><sup>18</sup>&nbsp;<a href="https://www.fao.org/faostat/en/#data/GFDI">Value shares by industry and primary factors</a></p></div></section>
+<p>When making a query using the API, the request <em>must</em> contain exactly four dimensions (area, item, element and year). This means that it cannot be used for domains that do not meet these strict design requirements. For example, the GFDI<a href="#fn24" class="footnote-ref" id="fnref24" role="doc-noteref"><sup>24</sup></a> domain has 6 dimensions (area, category, industry, factor, element, year)</p>
+</section>
 <section id="stewardship" class="level2">
 <h2 class="anchored" data-anchor-id="stewardship">Stewardship</h2>
 <p>The <code>FAOSTAT</code> package is currently maintained by Paul Rougieux who has done an excellent job of keeping the package afloat. However, it is a small project done in his free time, so he has not been able to make the time to do a full overhaul. In addition, he is not an employee of FAO, but rather of the European Commission. As a face that FAO shows to the world, it seems reasonable that it be placed under its guidance.</p>
@@ -430,7 +446,7 @@ Figure&nbsp;6: A broad structure of the FAOstat API package
 <p>As the package is old, it also has a number of dependencies that are unused or will be, after redundant functions are removed. Other dependencies are simply no longer developed or have been superseded by newer packages. This means that installing the packages automatically installs a number of other packages that are of no use, increase install time, space used and being generally inelegant.</p>
 </section>
 </section>
-<section id="project-goals" class="level1 page-columns page-full">
+<section id="project-goals" class="level1">
 <h1>Project goals</h1>
 <p>There are four main goals of this project:</p>
 <ul>
@@ -439,28 +455,28 @@ Figure&nbsp;6: A broad structure of the FAOstat API package
 <li>Characterise relevant aspects of the new API to wrap</li>
 <li>Transfer maintainership</li>
 </ul>
-<section id="fix-core-functions" class="level2 page-columns page-full">
+<section id="fix-core-functions" class="level2">
 <h2 class="anchored" data-anchor-id="fix-core-functions">Fix core functions</h2>
-<p>The first priority to restore the <code>FAOSTAT</code> package is to repair the most basic and most used functions. These are the functions that work directly with the API and that provide data to the user.<a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a> After this point, functions should not only be repaired but also renamed to have a consistent naming system. The existing functions <em>do</em> have a naming convention (Camel case, consistent use of verbs) but it doesn’t reflect the terminology used in the API and there’s no internal hierarchy to naming.</p>
-<div class="no-row-height column-margin column-container"><p><sup>19</sup>&nbsp;This was completed in <code>FAOSTAT</code> 2.3.0</p></div></section>
-<section id="triage-existing-functions" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="triage-existing-functions">Triage existing functions</h2>
-<p>As described in the <a href="#current-state">Current state</a> section, many functions no longer work and need to be removed. This involves a thorough listing of them and their functionality and assessment of their usefulness. A full analysis was completed for the release of <code>FAOSTAT</code> 2.3.0 and is available on GitLab.<a href="#fn20" class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a></p>
-<div class="no-row-height column-margin column-container"><p><sup>20</sup>&nbsp;<a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/20">GitLab issue #20</a></p></div></section>
-<section id="characterise-aspects-of-the-new-api-to-wrap" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="characterise-aspects-of-the-new-api-to-wrap">Characterise aspects of the new API to wrap</h2>
-<p>Inspecting the API to find all relevant endpoints was completed with <code>FAOSTAT</code> version 2.3.0 released in March 2023.<a href="#fn21" class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a> This requires the additional step of inspecting the API manually as it does not have complete documentation.</p>
-<div class="no-row-height column-margin column-container"><p><sup>21</sup>&nbsp;For a full set of changes expected for <code>FAOSTAT</code> 3.0.0, see the <a href="https://gitlab.com/paulrougieux/faostatpackage/-/milestones/2">GitLab milestone page</a></p></div></section>
-<section id="transfer-maintainership" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="transfer-maintainership">Transfer maintainership</h2>
-<p>Uploading a package on CRAN<a href="#fn22" class="footnote-ref" id="fnref22" role="doc-noteref"><sup>22</sup></a> requires the permission of the maintainer. At the upload step, an email is sent to the maintainer of the last recorded package version to confirm that the upload was authorised. Only then can the new version proceed to the registration step. <code>FAOSTAT</code> 2.3.0 was released via this process, but maintainership needs to be transferred to do it with full autonomy.</p>
-<div class="no-row-height column-margin column-container"><p><sup>22</sup>&nbsp;Comprehensive R Archive Network, the centralised repository where the majority of R users download R packages</p></div></section>
+<p>The first priority to restore the <code>FAOSTAT</code> package is to repair the most basic and most used functions. These are the functions that work directly with the API and that provide data to the user.<a href="#fn25" class="footnote-ref" id="fnref25" role="doc-noteref"><sup>25</sup></a> After this point, functions should not only be repaired but also renamed to have a consistent naming system. The existing functions <em>do</em> have a naming convention (Camel case, consistent use of verbs) but it doesn’t reflect the terminology used in the API and there’s no internal hierarchy to naming.</p>
 </section>
-<section id="methods-discussion" class="level1 page-columns page-full">
+<section id="triage-existing-functions" class="level2">
+<h2 class="anchored" data-anchor-id="triage-existing-functions">Triage existing functions</h2>
+<p>As described in the <a href="#current-state">Current state</a> section, many functions no longer work and need to be removed. This involves a thorough listing of them and their functionality and assessment of their usefulness. A full analysis was completed for the release of <code>FAOSTAT</code> 2.3.0 and is available on GitLab.<a href="#fn26" class="footnote-ref" id="fnref26" role="doc-noteref"><sup>26</sup></a></p>
+</section>
+<section id="characterise-aspects-of-the-new-api-to-wrap" class="level2">
+<h2 class="anchored" data-anchor-id="characterise-aspects-of-the-new-api-to-wrap">Characterise aspects of the new API to wrap</h2>
+<p>Inspecting the API to find all relevant endpoints was completed with <code>FAOSTAT</code> version 2.3.0 released in March 2023.<a href="#fn27" class="footnote-ref" id="fnref27" role="doc-noteref"><sup>27</sup></a> This requires the additional step of inspecting the API manually as it does not have complete documentation.</p>
+</section>
+<section id="transfer-maintainership" class="level2">
+<h2 class="anchored" data-anchor-id="transfer-maintainership">Transfer maintainership</h2>
+<p>Uploading a package on CRAN<a href="#fn28" class="footnote-ref" id="fnref28" role="doc-noteref"><sup>28</sup></a> requires the permission of the maintainer. At the upload step, an email is sent to the maintainer of the last recorded package version to confirm that the upload was authorised. Only then can the new version proceed to the registration step. <code>FAOSTAT</code> 2.3.0 was released via this process, but maintainership needs to be transferred to do it with full autonomy.</p>
+</section>
+</section>
+<section id="methods-discussion" class="level1">
 <h1>Methods &amp; Discussion</h1>
-<p>On 2023-03-30, the <code>FAOSTAT</code> package version 2.3.0 was published to CRAN.<a href="#fn23" class="footnote-ref" id="fnref23" role="doc-noteref"><sup>23</sup></a> The process required the resolution of the issues detailed in the <a href="#project-goals">Project Goals</a> section.<a href="#fn24" class="footnote-ref" id="fnref24" role="doc-noteref"><sup>24</sup></a></p>
-<div class="no-row-height column-margin column-container"><p><sup>23</sup>&nbsp;<a href="https://cran.r-project.org/web/packages/FAOSTAT/index.html">CRAN package page</a></p><p><sup>24</sup>&nbsp;Please see <a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/?sort=created_date&amp;state=closed&amp;milestone_title=2.3.0">GitLab Milestone 2.3.0</a> for a full list of related issues</p></div><p>In order to solve these issues, a full examination of the package context, the API and a redesign of existing functions needed to be made. These efforts permitted the eventual release of <code>FAOSTAT</code> 3.0.0.</p>
-<section id="solutions-to-identified-problems" class="level2 page-columns page-full">
+<p>On 2023-03-30, the <code>FAOSTAT</code> package version 2.3.0 was published to CRAN.<a href="#fn29" class="footnote-ref" id="fnref29" role="doc-noteref"><sup>29</sup></a> The process required the resolution of the issues detailed in the <a href="#project-goals">Project Goals</a> section.<a href="#fn30" class="footnote-ref" id="fnref30" role="doc-noteref"><sup>30</sup></a></p>
+<p>In order to solve these issues, a full examination of the package context, the API and a redesign of existing functions needed to be made. These efforts permitted the eventual release of <code>FAOSTAT</code> 3.0.0.</p>
+<section id="solutions-to-identified-problems" class="level2">
 <h2 class="anchored" data-anchor-id="solutions-to-identified-problems">Solutions to Identified problems</h2>
 <p>In the above <a href="#identified-problems">Identified Problems</a> section, we described the following issues:</p>
 <ul>
@@ -471,22 +487,22 @@ Figure&nbsp;6: A broad structure of the FAOstat API package
 <li>Stewardship</li>
 <li>Obsolete dependencies</li>
 </ul>
-<section id="functionality-locked-to-the-statistical-yearbook-1" class="level3 page-columns page-full">
+<section id="functionality-locked-to-the-statistical-yearbook-1" class="level3">
 <h3 class="anchored" data-anchor-id="functionality-locked-to-the-statistical-yearbook-1">Functionality locked to the Statistical Yearbook</h3>
-<p>Of all the functions in the <code>FAOSTAT</code> package, we identified eleven functions that we inextricably linked to the Statistical Yearbook. They were either linked to text formatting (e.g.&nbsp;<code>printLab</code>) or obtaining auxiliary data from third party sources like the World Bank (e.g.&nbsp;<code>getWDI</code>). These were all identified<a href="#fn25" class="footnote-ref" id="fnref25" role="doc-noteref"><sup>25</sup></a> and removed<a href="#fn26" class="footnote-ref" id="fnref26" role="doc-noteref"><sup>26</sup></a>.</p>
-<div class="no-row-height column-margin column-container"><p><sup>25</sup>&nbsp;<a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/20">GitLab issue #20</a></p><p><sup>26</sup>&nbsp;<a href="https://gitlab.com/paulrougieux/faostatpackage/-/commit/e1f0a910a8bf358217263ca29a89db39c1974828">Commit e1f0a910</a></p></div><p>For the most part, they could be easily identified by the use of “SYB” in the function name or reference to non-FAO sources like the World Bank. In more advanced cases, we would simply examine the functions for reference to the FAOstat API and discard all functions that did not and were not called by any functions that <em>did</em> use it.</p>
+<p>Of all the functions in the <code>FAOSTAT</code> package, we identified eleven functions that we inextricably linked to the Statistical Yearbook. They were either linked to text formatting (e.g.&nbsp;<code>printLab</code>) or obtaining auxiliary data from third party sources like the World Bank (e.g.&nbsp;<code>getWDI</code>). These were all identified<a href="#fn31" class="footnote-ref" id="fnref31" role="doc-noteref"><sup>31</sup></a> and removed<a href="#fn32" class="footnote-ref" id="fnref32" role="doc-noteref"><sup>32</sup></a>.</p>
+<p>For the most part, they could be easily identified by the use of “SYB” in the function name or reference to non-FAO sources like the World Bank. In more advanced cases, we would simply examine the functions for reference to the FAOstat API and discard all functions that did not and were not called by any functions that <em>did</em> use it.</p>
 </section>
-<section id="functionality-powered-by-local-files-1" class="level3 page-columns page-full">
+<section id="functionality-powered-by-local-files-1" class="level3">
 <h3 class="anchored" data-anchor-id="functionality-powered-by-local-files-1">Functionality powered by local files</h3>
 <p>The following data is stored in local files:</p>
 <ul>
-<li>Country code conversions. Links between country codes and their M49, ISO 2-character<a href="#fn27" class="footnote-ref" id="fnref27" role="doc-noteref"><sup>27</sup></a> and internal FAO codes (<code>FAOcountryProfile</code>)</li>
+<li>Country code conversions. Links between country codes and their M49, ISO 2-character<a href="#fn33" class="footnote-ref" id="fnref33" role="doc-noteref"><sup>33</sup></a> and internal FAO codes (<code>FAOcountryProfile</code>)</li>
 <li>Code descriptions and the domains to which those codes apply (e.g.&nbsp;<code>Q</code> is the code in the API for the Production domain) (<code>FAOmetaTable</code>)</li>
 <li>Region conversions. Similar to <em>Country code conversions</em>, but gives correspondences between regions (e.g West Asia, Developing countries) and countries (<code>FAOregionProfile</code>)</li>
 </ul>
-<div class="no-row-height column-margin column-container"><p><sup>27</sup>&nbsp;For more information, see the International Standards Organization <a href="https://www.iso.org/glossary-for-iso-3166.html">glossary on country codes</a></p></div><p>These data (with the exception of ISO 2-character codes) are all obtainable from the API itself (the various <code>/dimensions</code> endpoints), so it does not make any sense to retain these. Country code conversion beyond converting between formats used by the API is not in the scope of this package. The recommended way to convert country codes for the purpose of analysis is to use the excellent <code>countrycode</code> package (<span class="citation" data-cites="Arel-Bundock2018">Arel-Bundock, Enevoldsen, and Yetman (<a href="#ref-Arel-Bundock2018" role="doc-biblioref">2018</a>)</span>). Not only can this package convert between codes, it is also capable of using regular expressions on country names, converting full text country names into the appropriate codes.</p>
+<p>These data (with the exception of ISO 2-character codes) are all obtainable from the API itself (the various <code>/dimensions</code> endpoints), so it does not make any sense to retain these. Country code conversion beyond converting between formats used by the API is not in the scope of this package. The recommended way to convert country codes for the purpose of analysis is to use the excellent <code>countrycode</code> package (<span class="citation" data-cites="Arel-Bundock2018">Arel-Bundock, Enevoldsen, and Yetman (<a href="#ref-Arel-Bundock2018" role="doc-biblioref">2018</a>)</span>). Not only can this package convert between codes, it is also capable of using regular expressions on country names, converting full text country names into the appropriate codes.</p>
 </section>
-<section id="inactive-api-1" class="level3 page-columns page-full">
+<section id="inactive-api-1" class="level3">
 <h3 class="anchored" data-anchor-id="inactive-api-1">Inactive API</h3>
 <p>The FAOstat3 API ceased functioning in 2017 and was replaced by the API that is currently being used to feed the the FAOstat data explorer.</p>
 <p>The new API however, wasn’t designed for other applications to consume it. This manifested in two ways:</p>
@@ -494,11 +510,11 @@ Figure&nbsp;6: A broad structure of the FAOstat API package
 <li>Lack of of clear documentation</li>
 <li>Hesitancy to encourage the use of the API for broad consumption</li>
 </ol>
-<p>The API is not fully documented as the only official consumer of the API is the FAOstat web application itself. Third party development isn’t in scope for the current project cycle. The main documentation is a JSON:API specification,<a href="#fn28" class="footnote-ref" id="fnref28" role="doc-noteref"><sup>28</sup></a> which describes the structure perfectly, but gives no context or recommendations for use, nor does it describe output. This is intentional as the servers which provide the API are not equipped to handle the load that a publicly available API would inflict. In one instance, the response would be cut off half-way through with no warning or error as the server was overloaded.<a href="#fn29" class="footnote-ref" id="fnref29" role="doc-noteref"><sup>29</sup></a></p>
-<div class="no-row-height column-margin column-container"><p><sup>28</sup>&nbsp;<a href="https://jsonapi.org/format/">JSON:API</a> is a standard way to describe the structure of an API as a single json document</p><p><sup>29</sup>&nbsp;Personal communication, 2023</p><p><sup>30</sup>&nbsp;A full set of this examination is found in <a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/23">GitLab issue #23</a></p></div><p>It was thus necessary to use this document to manually examine all the endpoints and characterise all the the data output from them.<a href="#fn30" class="footnote-ref" id="fnref30" role="doc-noteref"><sup>30</sup></a></p>
+<p>The API is not fully documented as the only official consumer of the API is the FAOstat web application itself. Third party development isn’t in scope for the current project cycle. The main documentation is a JSON:API specification,<a href="#fn34" class="footnote-ref" id="fnref34" role="doc-noteref"><sup>34</sup></a> which describes the structure perfectly, but gives no context or recommendations for use, nor does it describe output. This is intentional as the servers which provide the API are not equipped to handle the load that a publicly available API would inflict. In one instance, the response would be cut off half-way through with no warning or error as the server was overloaded.<a href="#fn35" class="footnote-ref" id="fnref35" role="doc-noteref"><sup>35</sup></a></p>
+<p>It was thus necessary to use this document to manually examine all the endpoints and characterise all the the data output from them.<a href="#fn36" class="footnote-ref" id="fnref36" role="doc-noteref"><sup>36</sup></a></p>
 <p>As a result, we have created the most accessible documentation for the FAOstat API. We have also negotiated that the development of this API package continue. The main arguments are that R is mainly used for scripts by individual users rather than for automated routines in a production environment (<span class="citation" data-cites="Morandat2012">Morandat et al. (<a href="#ref-Morandat2012" role="doc-biblioref">2012</a>)</span>), so it’s unlikely that there will be any issues. Furthermore, a server upgrade occurred in February 2024, increasing their capacity to handle additional requests.</p>
 </section>
-<section id="limited-extensibility-for-queries-1" class="level3 page-columns page-full">
+<section id="limited-extensibility-for-queries-1" class="level3">
 <h3 class="anchored" data-anchor-id="limited-extensibility-for-queries-1">Limited extensibility for queries</h3>
 <p>The limited extensibility of <code>FAOSTAT</code> manifests in two ways:</p>
 <ol type="1">
@@ -506,17 +522,17 @@ Figure&nbsp;6: A broad structure of the FAOstat API package
 <li>The inflexibility of its functions</li>
 </ol>
 <p>This inflexibility causes problems for unusual data structures or changes to codes in FAOstat. Essentially, any changes that are made could cause complete breakage for certain requests, for example the update to the CPC codes in 2015 (<span class="citation" data-cites="UNSD2015">United Nations Statistical Division (<a href="#ref-UNSD2015" role="doc-biblioref">2015</a>)</span>). Fixing this issue requires us to depend more heavily on the API.</p>
-<p>We solved this issue by using the same endpoints that the API uses to convert codes when providing them to the user for data view or for downloads. The API has <code>/definitions</code> endpoints that contains all of the conversions that exist for all codes. This also means that we can be internally consistent with country codes and not have to rely on third-party packages such as <code>countrycode</code> to perform conversions for us.<a href="#fn31" class="footnote-ref" id="fnref31" role="doc-noteref"><sup>31</sup></a></p>
-<div class="no-row-height column-margin column-container"><p><sup>31</sup>&nbsp;<code>countrycode</code> would only work, as the name suggests, for country codes and wouldn’t be helpful for other kinds of codes such as Commodity codes</p></div></section>
+<p>We solved this issue by using the same endpoints that the API uses to convert codes when providing them to the user for data view or for downloads. The API has <code>/definitions</code> endpoints that contains all of the conversions that exist for all codes. This also means that we can be internally consistent with country codes and not have to rely on third-party packages such as <code>countrycode</code> to perform conversions for us.<a href="#fn37" class="footnote-ref" id="fnref37" role="doc-noteref"><sup>37</sup></a></p>
+</section>
 <section id="stewardship-1" class="level3">
 <h3 class="anchored" data-anchor-id="stewardship-1">Stewardship</h3>
 <p>The fact that the API is not managed by someone with links to FAO is not a problem in itself, but it is suboptimal for the purposes of solving technical issues that depend on edge cases or implementation details of FAOstat. It further means that if FAO were to wish to promote this package to third parties, it wouldn’t be able to decide any priorities in regards to its development in terms of bug fixes or new features.</p>
 <p>The author has worked as a consultant for FAO and is currently in contact with the previous maintainers of <code>FAOSTAT</code> as well as developers who are currently working on the FAOstat API. The transfer of maintainership is however, as of the time of writing, incomplete.</p>
 </section>
-<section id="obsolete-dependencies-1" class="level3 page-columns page-full">
+<section id="obsolete-dependencies-1" class="level3">
 <h3 class="anchored" data-anchor-id="obsolete-dependencies-1">Obsolete dependencies</h3>
-<p>Obsolete dependencies result from three major sources. The packages attached to each point are dependencies that have been removed from <code>FAOSTAT</code><a href="#fn32" class="footnote-ref" id="fnref32" role="doc-noteref"><sup>32</sup></a>:</p>
-<div class="no-row-height column-margin column-container"><p><sup>32</sup>&nbsp;<a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/6">GitLab issue #6</a>, <a href="https://gitlab.com/paulrougieux/faostatpackage/-/commit/9e59eac14a0f23c8a904dedda57a9999959d54b8">Commit a1c15150</a></p></div><ol type="1">
+<p>Obsolete dependencies result from three major sources. The packages attached to each point are dependencies that have been removed from <code>FAOSTAT</code><a href="#fn38" class="footnote-ref" id="fnref38" role="doc-noteref"><sup>38</sup></a>:</p>
+<ol type="1">
 <li>Packages which were once used and are no longer used even before the author commenced work on the package</li>
 </ol>
 <ul>
@@ -528,10 +544,10 @@ Figure&nbsp;6: A broad structure of the FAOstat API package
 <ul>
 <li><code>plyr (&gt;= 1.7.1)</code>
 <ul>
-<li>Not only have its capabilities been surpassed by <code>dplyr</code>, <code>FAOSTAT</code> also depends on <code>data.table</code> which covers many of the same data manipulations tasks.<a href="#fn33" class="footnote-ref" id="fnref33" role="doc-noteref"><sup>33</sup></a></li>
+<li>Not only have its capabilities been surpassed by <code>dplyr</code>, <code>FAOSTAT</code> also depends on <code>data.table</code> which covers many of the same data manipulations tasks.<a href="#fn39" class="footnote-ref" id="fnref39" role="doc-noteref"><sup>39</sup></a></li>
 </ul></li>
 </ul>
-<div class="no-row-height column-margin column-container"><p><sup>33</sup>&nbsp;And is, in the opinion of the author, a generally superior package</p></div><ol start="3" type="1">
+<ol start="3" type="1">
 <li>Packages which are now obsolete because the functions that relied on them were removed as part of the deletion of functionality locked to the Statistical Yearbook</li>
 </ol>
 <ul>
@@ -542,27 +558,27 @@ Figure&nbsp;6: A broad structure of the FAOstat API package
 <li><code>classInt (&gt;= 0.1-19)</code></li>
 <li><code>labeling (&gt;= 0.1)</code></li>
 </ul>
-<p>The use of unit tests ensured there was no regression after removing these dependencies. The origin of these dependencies was difficult to track down as they were not added over time. Rather, they were all added in the first commit of the project.<a href="#fn34" class="footnote-ref" id="fnref34" role="doc-noteref"><sup>34</sup></a> The conventional wisdom is to “Commit early, commit often.” This makes these changes granular, so it is easier to tease apart the individual changes in any commit (<span class="citation" data-cites="Eloe2021">Eloe (<a href="#ref-Eloe2021" role="doc-biblioref">2021</a>)</span>).</p>
-<div class="no-row-height column-margin column-container"></div></section>
+<p>The use of unit tests ensured there was no regression after removing these dependencies. The origin of these dependencies was difficult to track down as they were not added over time. Rather, they were all added in the first commit of the project.<a href="#fn40" class="footnote-ref" id="fnref40" role="doc-noteref"><sup>40</sup></a> The conventional wisdom is to “Commit early, commit often.” This makes these changes granular, so it is easier to tease apart the individual changes in any commit (<span class="citation" data-cites="Eloe2021">Eloe (<a href="#ref-Eloe2021" role="doc-biblioref">2021</a>)</span>).</p>
 </section>
-<section id="solutions-to-other-problems" class="level2 page-columns page-full">
+</section>
+<section id="solutions-to-other-problems" class="level2">
 <h2 class="anchored" data-anchor-id="solutions-to-other-problems">Solutions to other problems</h2>
-<section id="learning-package-context" class="level3 page-columns page-full">
+<section id="learning-package-context" class="level3">
 <h3 class="anchored" data-anchor-id="learning-package-context">Learning package context</h3>
 <p>The two most important developers of the <code>FAOSTAT</code> package are the package author, Michael Kao and the current maintainer, Paul Rougieux.</p>
 <p>Paul Rougieux has been very helpful in guiding the author’s proposed changes to the package - making excellent suggestions in regards to code style and formatting as well as documentation and general usability.</p>
-<p>An interview with the Michael Kao<a href="#fn35" class="footnote-ref" id="fnref35" role="doc-noteref"><sup>35</sup></a> confirmed that a number of of unusual functions were due to its previous linkage with the Statistical Yearbook and that the paper attached to the package had never been published and suggested that it should be tidied up and published in future.</p>
-<div class="no-row-height column-margin column-container"><p><sup>35</sup>&nbsp;Personal Communication, 2023</p></div></section>
-<section id="redesigning-functions" class="level3 page-columns page-full">
+<p>An interview with the Michael Kao<a href="#fn41" class="footnote-ref" id="fnref41" role="doc-noteref"><sup>41</sup></a> confirmed that a number of of unusual functions were due to its previous linkage with the Statistical Yearbook and that the paper attached to the package had never been published and suggested that it should be tidied up and published in future.</p>
+</section>
+<section id="redesigning-functions" class="level3">
 <h3 class="anchored" data-anchor-id="redesigning-functions">Redesigning functions</h3>
-<p>The existing functions to be refactored to read data from the new API. <code>FAOSTAT</code> 2.3.0 only had these core functions in scope.<a href="#fn36" class="footnote-ref" id="fnref36" role="doc-noteref"><sup>36</sup></a> The most core functions include:</p>
-<div class="no-row-height column-margin column-container"><p><sup>36</sup>&nbsp;A full list of functions to be refactored or discarded is in <a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/20">GitLab issue #20</a></p></div><ul>
-<li><code>getFAO</code><a href="#fn37" class="footnote-ref" id="fnref37" role="doc-noteref"><sup>37</sup></a> - The heart of the package, pulls a custom slice of data from FAOstat. Renamed to <code>read_fao</code></li>
-<li><code>FAOsearch</code><a href="#fn38" class="footnote-ref" id="fnref38" role="doc-noteref"><sup>38</sup></a> - Allows a user to find the dataset they’re looking for using the directory in FAOstat. Renamed to <code>search_fao</code></li>
-<li><code>translateCountryCode</code><a href="#fn39" class="footnote-ref" id="fnref39" role="doc-noteref"><sup>39</sup></a> - Translates country codes between formats. Renamed to <code>translate_countrycodes</code></li>
+<p>The existing functions to be refactored to read data from the new API. <code>FAOSTAT</code> 2.3.0 only had these core functions in scope.<a href="#fn42" class="footnote-ref" id="fnref42" role="doc-noteref"><sup>42</sup></a> The most core functions include:</p>
+<ul>
+<li><code>getFAO</code><a href="#fn43" class="footnote-ref" id="fnref43" role="doc-noteref"><sup>43</sup></a> - The heart of the package, pulls a custom slice of data from FAOstat. Renamed to <code>read_fao</code></li>
+<li><code>FAOsearch</code><a href="#fn44" class="footnote-ref" id="fnref44" role="doc-noteref"><sup>44</sup></a> - Allows a user to find the dataset they’re looking for using the directory in FAOstat. Renamed to <code>search_fao</code></li>
+<li><code>translateCountryCode</code><a href="#fn45" class="footnote-ref" id="fnref45" role="doc-noteref"><sup>45</sup></a> - Translates country codes between formats. Renamed to <code>translate_countrycodes</code></li>
 <li><code>download_faostat_bulk</code> - Downloads bulk zip files - We opted not to change the API of this function as it has been a backbone of the package since the shutdown of the FAOstat API.</li>
 </ul>
-<div class="no-row-height column-margin column-container"><p><sup>37</sup>&nbsp;<a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/16">GitLab issue #16</a></p><p><sup>38</sup>&nbsp;<a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/22">GitLab issue #22</a></p><p><sup>39</sup>&nbsp;<a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/28">GitLab issue #28</a></p></div><p>The functions were all modified for <code>FAOSTAT</code> 2.3.0, but it remained to modify all of the remaining functions so they had a consistent naming. The functions were mapped to more closely match the API. Each API object has a subset of functions which are similar between different objects. They have the following pattern:</p>
+<p>The functions were all modified for <code>FAOSTAT</code> 2.3.0, but it remained to modify all of the remaining functions so they had a consistent naming. The functions were mapped to more closely match the API. Each API object has a subset of functions which are similar between different objects. They have the following pattern:</p>
 <ul>
 <li>Groups
 <ul>
@@ -602,19 +618,19 @@ Figure&nbsp;6: A broad structure of the FAOstat API package
 See help("Defunct")</code></pre>
 <p>Their help page is still intact which greatly assists in recovering from such an error and also allows advanced users to examine the defunct code and modify it to suit their needs as required.</p>
 </section>
-<section id="caching" class="level3 page-columns page-full">
+<section id="caching" class="level3">
 <h3 class="anchored" data-anchor-id="caching">Caching</h3>
-<p>One of the drawbacks of moving from internal data to pulling from the API is the need to read in data every time a lookup table or other piece of reference data is required. This slows down scripts as it is forced to wait for a reply from the FAOstat server. To mitigate that, caching was implemented. <a href="#fn40" class="footnote-ref" id="fnref40" role="doc-noteref"><sup>40</sup></a> Now instead of pulling every time, the server is polled only once and the response is kept and referred to for subsequent queries.</p>
-<div class="no-row-height column-margin column-container"><p><sup>40</sup>&nbsp;<a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/27">GitLab issue #27</a></p></div></section>
-<section id="metadata-functions" class="level3 page-columns page-full">
+<p>One of the drawbacks of moving from internal data to pulling from the API is the need to read in data every time a lookup table or other piece of reference data is required. This slows down scripts as it is forced to wait for a reply from the FAOstat server. To mitigate that, caching was implemented. <a href="#fn46" class="footnote-ref" id="fnref46" role="doc-noteref"><sup>46</sup></a> Now instead of pulling every time, the server is polled only once and the response is kept and referred to for subsequent queries.</p>
+</section>
+<section id="metadata-functions" class="level3">
 <h3 class="anchored" data-anchor-id="metadata-functions">Metadata functions</h3>
-<p>When using the package, it was found that certain functionalities were immediately necessary. It was nigh-impossible to practically make a request for data without knowing what datasets were available and what their column names were. As a last minute addition, functions to perform these tasks were slipped into the 2.3.0 release.<a href="#fn41" class="footnote-ref" id="fnref41" role="doc-noteref"><sup>41</sup></a></p>
-<div class="no-row-height column-margin column-container"><p><sup>41</sup>&nbsp;<a href="https://gitlab.com/paulrougieux/faostatpackage/-/commit/06548dd0a74e1075469aece12f0bf2f8df4a3f11">Commit 06548dd0</a></p></div></section>
-<section id="testing" class="level3 page-columns page-full">
+<p>When using the package, it was found that certain functionalities were immediately necessary. It was nigh-impossible to practically make a request for data without knowing what datasets were available and what their column names were. As a last minute addition, functions to perform these tasks were slipped into the 2.3.0 release.<a href="#fn47" class="footnote-ref" id="fnref47" role="doc-noteref"><sup>47</sup></a></p>
+</section>
+<section id="testing" class="level3">
 <h3 class="anchored" data-anchor-id="testing">Testing</h3>
 <p>When making changes to a codebase it is important to make tests to assure that the function works as intended but also to report when the function breaks as a result of changes to it or its dependencies. This package uses <code>testthat</code> for its tests <span class="citation" data-cites="Wickham2011">(<a href="#ref-Wickham2011" role="doc-biblioref">Wickham 2011</a>)</span>.</p>
-<p>Making tests is repetitive work however and many tests are structured the same way. This sort of repetitive intellectual work is perfect for an AI. The author used ChatGPT to help generate tests.<a href="#fn42" class="footnote-ref" id="fnref42" role="doc-noteref"><sup>42</sup></a> It was supplied with the function code and responded with valid tests from which relevant ones were selected.</p>
-<div class="no-row-height column-margin column-container"><p><sup>42</sup>&nbsp;<a href="https://sharegpt.com/c/REwBzY6">ChatGPTv3 conversation</a> dated 2023-03-28</p></div></section>
+<p>Making tests is repetitive work however and many tests are structured the same way. This sort of repetitive intellectual work is perfect for an AI. The author used ChatGPT to help generate tests.<a href="#fn48" class="footnote-ref" id="fnref48" role="doc-noteref"><sup>48</sup></a> It was supplied with the function code and responded with valid tests from which relevant ones were selected.</p>
+</section>
 <section id="documentation" class="level3">
 <h3 class="anchored" data-anchor-id="documentation">Documentation</h3>
 <p>The package is documented using <code>roxygen2</code> <span class="citation" data-cites="Wickham2022">(<a href="#ref-Wickham2022" role="doc-biblioref">Wickham et al. 2022</a>)</span> which allows documentation and code to be kept in the same file. Documentation has been particularly important for this project, specifically examples. As a lot of information has to be supplied to a function to get data in terms of codes, it is important that users have a clear idea of what is required as incorrect codes can result in cryptic empty responses from the server.</p>
@@ -629,7 +645,7 @@ See help("Defunct")</code></pre>
 </section>
 <section id="publication" class="level2">
 <h2 class="anchored" data-anchor-id="publication">Publication</h2>
-<p>The <code>FAOSTAT</code> package has never been officially published and it is important to widely publicise it to encourage use. The following avenues are available:</p>
+<p>The <code>FAOSTAT</code> package has never been officially published in a way that has been fully sponsored by FAO. However, it is important to widely publicise it to encourage use. The following avenues are available:</p>
 <ul>
 <li>Publishing a paper in <a href="https://joss.theoj.org/papers/published">JOSS</a> - JOSS is an online journal with peer review entirely managed by github issues</li>
 <li>Publish news in <a href="https://rweekly.org/">rweekly</a> - Rweekly is a weekly newsletter that publishes news about R in the last week</li>
@@ -644,27 +660,37 @@ See help("Defunct")</code></pre>
 <section id="funding-declaration" class="level1">
 <h1>Funding declaration</h1>
 <p>This project has been funded by the Food and Agriculture Organization of the United Nations and the author is grateful for their help in reviving it.</p>
+<div style="page-break-after: always;"></div>
 </section>
 <section id="bibliography" class="level1">
-<h1>Bibliography</h1>
-<div class="refs">
 
-</div>
 
 
 
 </section>
 
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Bibliography</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-Arel-Bundock2018" class="csl-entry" role="listitem">
 Arel-Bundock, Vincent, Nils Enevoldsen, and C J Yetman. 2018. <span>“<span class="nocase">countrycode: An R package to convert country names and country codes</span>.”</span> <em>Journal of Open Source Software</em> 3 (28): 848. <a href="https://doi.org/10.21105/joss.00848">https://doi.org/10.21105/joss.00848</a>.
 </div>
 <div id="ref-Eloe2021" class="csl-entry" role="listitem">
 Eloe, Nathan W. 2021. <span>“<span class="nocase">Teach like a git: streamlining assignment administration and enforcing good habits with professional tools and software development practices</span>.”</span> <em>Journal of Computing Sciences in Colleges</em> 36 (6): 27–36.
 </div>
+<div id="ref-FAO1946" class="csl-entry" role="listitem">
+FAO. 1946. <em><span class="nocase">World food survey.</span></em> FAO. <a href="https://fao.idm.oclc.org/login?url=https://search.ebscohost.com/login.aspx?direct=true&amp;db=cat02127a&amp;AN=fao.672698&amp;site=eds-live">https://fao.idm.oclc.org/login?url=https://search.ebscohost.com/login.aspx?direct=true&amp;db=cat02127a&amp;AN=fao.672698&amp;site=eds-live</a>.
+</div>
 <div id="ref-FAO2019" class="csl-entry" role="listitem">
-Food and Agriculture Organization of the United Nations. 2019. <span>“<span class="nocase">Data collection</span>.”</span> <a href="https://www.fao.org/statistics/data-collection/en/#jfmulticontent_c728270-2">https://www.fao.org/statistics/data-collection/en/#jfmulticontent_c728270-2</a>.
+———. 2019. <span>“<span class="nocase">Data collection</span>.”</span> <a href="https://www.fao.org/statistics/data-collection/en/#jfmulticontent_c728270-2">https://www.fao.org/statistics/data-collection/en/#jfmulticontent_c728270-2</a>.
+</div>
+<div id="ref-FAO2023" class="csl-entry" role="listitem">
+———. 2023. <span>“<span class="nocase">FAOSTAT: Statistical database.</span>”</span> Food; Agriculture Organization of the United Nations. <a href="https://www.fao.org/faostat/">https://www.fao.org/faostat/</a>.
+</div>
+<div id="ref-FAO2024" class="csl-entry" role="listitem">
+———. 2024a. <span>“<span class="nocase">About FAO | FAO | Food and Agriculture Organization of the United Nations</span>.”</span> <a href="https://www.fao.org/about/about-fao/en/">https://www.fao.org/about/about-fao/en/</a>.
+</div>
+<div id="ref-FAO2024ESS" class="csl-entry" role="listitem">
+———. 2024b. <span>“<span>Statistics Division (ESS)</span>.”</span> <a href="https://www.fao.org/about/who-we-are/departments/statistics-division/en/">https://www.fao.org/about/who-we-are/departments/statistics-division/en/</a>.
 </div>
 <div id="ref-Halili2018" class="csl-entry" role="listitem">
 Halili, Festim, and Erenis Ramadani. 2018. <span>“<span class="nocase">Web services: a comparison of soap and rest services</span>.”</span> <em>Modern Applied Science</em> 12 (3): 175.
@@ -681,8 +707,11 @@ Morandat, Floréal, Brandon Hill, Leo Osvald, and Jan Vitek. 2012. <span>“<spa
 <div id="ref-Strobel2018" class="csl-entry" role="listitem">
 Strobel, Volker. 2018. <span>“<span class="nocase">Pold87/academic-keyword-occurrence: First release</span>,”</span> April. <a href="https://doi.org/10.5281/zenodo.1218409">https://doi.org/10.5281/zenodo.1218409</a>.
 </div>
+<div id="ref-UN2005" class="csl-entry" role="listitem">
+United Nations. 2005. <span>“<span class="nocase">FAOSTAT 2005 FAO STATISTICAL DATA | Shop.un.org</span>.”</span> <a href="https://shop.un.org/lefsacr/books/faostat-2005-fao-statistical-data-4180">https://shop.un.org/lefsacr/books/faostat-2005-fao-statistical-data-4180</a>.
+</div>
 <div id="ref-UN2018" class="csl-entry" role="listitem">
-United Nations. 2018. <span>“<span>Eswatini</span>.”</span> United Nations. <a href="https://www.un.org/en/about-us/member-states/eswatini">https://www.un.org/en/about-us/member-states/eswatini</a>.
+———. 2018. <span>“<span>Eswatini</span>.”</span> United Nations. <a href="https://www.un.org/en/about-us/member-states/eswatini">https://www.un.org/en/about-us/member-states/eswatini</a>.
 </div>
 <div id="ref-UNSD2015" class="csl-entry" role="listitem">
 United Nations Statistical Division. 2015. <span>“<span>Central Product Classification (CPC): Version 2.1</span>.”</span> United Nations Publications. <a href="https://unstats.un.org/unsd/classifications/Econ/Download/In Text/CPCv2.1_complete(PDF)_English.pdf">https://unstats.un.org/unsd/classifications/Econ/Download/In Text/CPCv2.1_complete(PDF)_English.pdf</a>.
@@ -696,22 +725,66 @@ Wickham, Hadley, Peter Danenberg, Gábor Csárdi, and Manuel Eugster. 2022. <em>
 <div id="ref-Wu2023" class="csl-entry" role="listitem">
 Wu, Weiyuan, Pei Wang, Yi Xie, Yejia Liu, George Chow, and Jiannan Wang. 2023. <span>“<span class="nocase">Web Connector: A Unified API Wrapper to Simplify Web Data Collection</span>.”</span> <em>Proc. VLDB Endow.</em> 16 (12): 4042–45. <a href="https://doi.org/10.14778/3611540.3611616">https://doi.org/10.14778/3611540.3611616</a>.
 </div>
-</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{campbell2024,
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Food and Agriculture Organization of the United Nations<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Food and Agriculture Organization Corporate Statistical Database<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>For the purposes of clarity, this document will use the style <code>FAOSTAT</code> in monospace for the R package<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> and “FAOstat” for the statistical platform<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Application Programming Interface<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>This discrepancy has been fixed as of 2023-03-10<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Application Programming Interface<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>REpresentative State Transfer<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>HyperText Transfer Protocol<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>There are other verbs (HEAD, CONNECT, OPTIONS, TRACE and PATCH), but they are of much lower importance<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>Simple Object Access Protocol<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>Food and Agriculture Organization of the United Nations<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>United Nations<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>For more details, the UN website has an <a href="https://www.un.org/sites/un2.un.org/files/un_system_chart.pdf">excellent organigram</a><a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><p>Food and Agriculture Organization Corporate Statistical Database<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15"><p><a href="https://leafletjs.com/">Leaflet</a> is an interactive map library<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16"><p><a href="https://www.highcharts.com/">Highchart</a> is a charting library allowing the construction of interactive graphs of multiple different kinds<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn17"><p>For example, China may be just the mainland or may include Taiwan (Chinese Taipei), Hong Kong and Macao<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn18"><p>Statistical Year Book<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn19"><p>The author has no insight into the current production of the SYB, but they are still being produced and can be found on the <a href="https://www.fao.org/documents/card/en/c/cc2211en">FAO website</a><a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn20"><p>Personal communication, 2024<a href="#fnref20" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn21"><p>For a full description of the status of individual issues, please see the GitLab issue <a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/20">#20 Remove functions linked to defunct uses of FAOSTAT</a><a href="#fnref21" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn22"><p>For further details about FAO and how it handles country identification, see <a href="https://www.fao.org/nocs/en">FAO’s NOCS database</a><a href="#fnref22" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn23"><p>Originally hosted at faostat3.fao.org<a href="#fnref23" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn24"><p><a href="https://www.fao.org/faostat/en/#data/GFDI">Value shares by industry and primary factors</a><a href="#fnref24" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn25"><p>This was completed in <code>FAOSTAT</code> 2.3.0<a href="#fnref25" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn26"><p><a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/20">GitLab issue #20</a><a href="#fnref26" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn27"><p>For a full set of changes expected for <code>FAOSTAT</code> 3.0.0, see the <a href="https://gitlab.com/paulrougieux/faostatpackage/-/milestones/2">GitLab milestone page</a><a href="#fnref27" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn28"><p>Comprehensive R Archive Network, the centralised repository where the majority of R users download R packages<a href="#fnref28" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn29"><p><a href="https://cran.r-project.org/web/packages/FAOSTAT/index.html">CRAN package page</a><a href="#fnref29" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn30"><p>Please see <a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/?sort=created_date&amp;state=closed&amp;milestone_title=2.3.0">GitLab Milestone 2.3.0</a> for a full list of related issues<a href="#fnref30" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn31"><p><a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/20">GitLab issue #20</a><a href="#fnref31" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn32"><p><a href="https://gitlab.com/paulrougieux/faostatpackage/-/commit/e1f0a910a8bf358217263ca29a89db39c1974828">Commit e1f0a910</a><a href="#fnref32" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn33"><p>For more information, see the International Standards Organization <a href="https://www.iso.org/glossary-for-iso-3166.html">glossary on country codes</a><a href="#fnref33" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn34"><p><a href="https://jsonapi.org/format/">JSON:API</a> is a standard way to describe the structure of an API as a single json document<a href="#fnref34" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn35"><p>Personal communication, 2023<a href="#fnref35" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn36"><p>A full set of this examination is found in <a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/23">GitLab issue #23</a><a href="#fnref36" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn37"><p><code>countrycode</code> would only work, as the name suggests, for country codes and wouldn’t be helpful for other kinds of codes such as Commodity codes<a href="#fnref37" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn38"><p><a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/6">GitLab issue #6</a>, <a href="https://gitlab.com/paulrougieux/faostatpackage/-/commit/9e59eac14a0f23c8a904dedda57a9999959d54b8">Commit a1c15150</a><a href="#fnref38" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn39"><p>And is, in the opinion of the author, a generally superior package<a href="#fnref39" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn40"><p><a href="https://gitlab.com/paulrougieux/faostatpackage/-/commit/62a217e33b96134d1c2dfc180388d13d330938b9">Commit 62a217e3</a><a href="#fnref40" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn41"><p>Personal Communication, 2023<a href="#fnref41" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn42"><p>A full list of functions to be refactored or discarded is in <a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/20">GitLab issue #20</a><a href="#fnref42" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn43"><p><a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/16">GitLab issue #16</a><a href="#fnref43" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn44"><p><a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/22">GitLab issue #22</a><a href="#fnref44" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn45"><p><a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/28">GitLab issue #28</a><a href="#fnref45" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn46"><p><a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/27">GitLab issue #27</a><a href="#fnref46" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn47"><p><a href="https://gitlab.com/paulrougieux/faostatpackage/-/commit/06548dd0a74e1075469aece12f0bf2f8df4a3f11">Commit 06548dd0</a><a href="#fnref47" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn48"><p><a href="https://sharegpt.com/c/REwBzY6">ChatGPTv3 conversation</a> dated 2023-03-28<a href="#fnref48" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{campbell2024,
   author = {Campbell, Sebastian},
   title = {`FAOSTAT` 3.0},
-  date = {2024-03-01},
-  langid = {en},
-  abstract = {The `FAOSTAT` package is an important part of the Food and
-    Agriculture Organization (FAO)’s image that is being maintained, but
-    requires a makeover. Here an updated version, 3.0.0, of the package
-    is presented with repaired access to FAO’s API, new functions
-    modernisation according to new coding conventions with improved
-    dependencies, documentation and tests. Outdated functions have been
-    pruned and the package is now firmly focused on providing an
-    interface to FAO data to users of R.}
+  date = {2024-03-08},
+  langid = {en}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-campbell2024" class="csl-entry quarto-appendix-citeas" role="listitem">
-Campbell, Sebastian. 2024. <span>“`FAOSTAT` 3.0.”</span> March 1, 2024.
+Campbell, Sebastian. 2024. <span>“`FAOSTAT` 3.0.”</span> March 8, 2024.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -792,6 +865,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -826,7 +917,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
