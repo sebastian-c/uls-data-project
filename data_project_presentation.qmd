@@ -1,8 +1,8 @@
 ---
-title: "FAOSTAT-package 2.3"
-subtitle: "A revitalisation of the API wrapper of the FAOSTAT API"
+title: "FAOSTAT-package 3.0"
+subtitle: "An overhaul of the API wrapper of the FAOSTAT API"
 author: "Sebastian Campbell"
-date: "2023-04-05"
+date: "2024-03-18"
 date-format: long
 search: false
 format: 
@@ -18,6 +18,50 @@ editor: source
 library(FAOSTAT)
 ```
 
+# The core mission
+
+To update the `FAOSTAT` package to allow R users to consume FAO's API data easily
+
+#
+
+To update the `FAOSTAT` package to allow **R** users to consume FAO's API data easily
+
+:::{.notes}
+We have a bit to unpack here
+:::
+
+# 
+
+To update the `FAOSTAT` package to allow R users to consume **FAO**'s API data easily
+
+#
+
+To update the `FAOSTAT` package to allow R users to consume FAO's **API** data easily
+
+# What _is_ FAO?
+
+Food and Agriculture Organization
+
+![](img/fao_hq.jpg){width=60%}![](img/fao_small_logo.png){width=40%}
+
+# FAO
+
+Goal is to:
+
+> ...achieve food security for all and make sure that people have regular access to enough high-quality food to lead active, healthy lives.
+
+## ESS in FAO
+
+> Produce up-to-date statistics
+
+> Develop and promote international food and agricultural statistical standards, method and tools
+
+> Work directly with countries to develop national statistical capacity
+
+:::{.notes}
+These have been paraphrased. So how can ESS disseminate statistics to the world of stakeholders?
+:::
+
 # What _is_ FAOSTAT?
 
 - [FAOSTAT](https://www.fao.org/faostat) is the Food and Agriculture Organization's (FAO) tool for disseminating statistical data they produce
@@ -25,11 +69,7 @@ library(FAOSTAT)
 - Not all data
   - Fisheries and Forestry are separate
 
-::: {.notes}
-Consider using the server thing so that I can control the presentation from my phone
-:::
-
-# How do we get data from FAOSTAT?
+## How do we get data from FAOSTAT?
 
 - Web interface
   - Data explorer
@@ -38,7 +78,11 @@ Consider using the server thing so that I can control the presentation from my p
   - Web interface API
 - FAOSTAT3 API
 
-# How do we get data from FAOSTAT?
+:::{.notes}
+Bulk downloads were all that worked before we started
+:::
+
+## How do we get data from FAOSTAT?
 
 - Web interface
   - Data explorer
@@ -47,75 +91,164 @@ Consider using the server thing so that I can control the presentation from my p
   - Web interface API
 - ~~FAOSTAT3 API~~
 
+:::{.notes}
+This API doesn't work anymore
+:::
+
+# [The core problem](https://gitlab.com/paulrougieux/faostatpackage/-/issues/12)
+
+{{< video vid/faostat_ping.mp4 >}}
+
+# What _is_ an API?
+
+- Application Programming Interface
+- Allows different bit of software to communicate with each other
+- Similar to how a steering wheel lets you drive anything
+
+:::{.notes}
+Slow down and explain this properly. When you drive, you don't need to think about injecting fuel or know anything about the differential. With an automatic, you don't even need to know about gears. And you can get in any vehicle, diesel, electric, hovercraft and the same ideas apply. This is the magic of abstraction and presenting an interface divorced from the actual functionality.
+:::
+
+# REST APIs
+
+- HTTP-based
+- Use mainly GET and POST
+
+# REST example
+
+**GET** - Request data from the server
+
+:::{.incremental}
+
+  * Request: `GET https://example.com/johnsmith/info` 
+  * Payload: None
+  * Response: `{username: johnsmith, full_name = "John Smith"}` 
+
+:::
+
+
 # What is the FAOSTAT package?
 
 - API wrapper that allows R users to use FAO functions
 - Allows users to pull in FAOSTAT data
 
-# Quick demo
+## Why do R users need a package?
+
+- Easily accessible documentation
+- No need to convert json to R objects (tables)
+
+## Quick demo of pre-existing functionality
 ```{r, echo = TRUE, cache = TRUE}
 landuse <- get_faostat_bulk("RL")
 head(landuse)
 ```
 
-# Custodianship
+## Custodianship
 
 - Developed by FAO employees
 - Currently maintained by Paul Rougieux at the European Commission
 
-# Existing documentation
+## Existing documentation
 
 - A single json file
 - A word document
   - Only covers a subset of functionality
 
-# Challenges
+## Challenges
 
 - Old API doesn't work
 - New API is largely undocumented
 - Outdated functions
 
-# We need to get from here
+## We need to get from here
 
 ![](img/gitlab_code.png){.r-stretch}
 
-# To here
+## To here
 
 ![](img/faostat_cran.png){.r-stretch}
 
-# Three step program
+# FAOSTAT 2.3.0
+- Completed in March 2023 with 3 goals:
+  - Fix core functions
+  - Triage existing functions
+  - Describe all API endpoints
 
-- Fix core functions
-- Triage existing functions
-- Describe all API endpoints
-
-# [Fix core functions](https://gitlab.com/paulrougieux/faostatpackage/-/issues/12)
-
-{{< video vid/faostat_ping.mp4 >}}
-
-# [Triage existing functions](https://gitlab.com/paulrougieux/faostatpackage/-/issues/20)
+## [Triage existing functions](https://gitlab.com/paulrougieux/faostatpackage/-/issues/20)
 
 ![](img/defunctions.png){.r-stretch}
 
-# Describe all API endpoints
+## Describe all API endpoints
 
-- Used json doc
+- Used json documentation
 - Manually tested all the endpoints
 - Wrote everything up on an issue page
 
-# [It was a lot of work](https://gitlab.com/paulrougieux/faostatpackage/-/issues/23)
+## [It was a lot of work](https://gitlab.com/paulrougieux/faostatpackage/-/issues/23) {.scrollable}
 
 ![](img/api_endpoints.png)
-# Application
+
+## API structure
+
+```{mermaid}
+flowchart TD
+  Group --> Domain
+  Dimension --> Codes
+  Dimension --> Subdimensions
+  Subdimensions --> Codes
+  Domain --> Dimension
+  Domain --> Data
+  Domain --> BD[Bulk downloads]
+  Domain --> Metadata
+  Metadata --> Document
+```
+
+# FAOSTAT 3.0.0
+
+Implementing all of the changes we identified in 2.3.0
+
+- Deprecating old functions
+- Creating new structures
+
+## Now it works {.scrollable}
+
+```{r, echo = TRUE}
+read_fao(domain = "RL", 
+         area_codes = "8", 
+         element_codes = "5110", 
+         item_codes = "6620",
+         year_codes = 2000:2020)
+
+```
+:::{.notes}
+Compare this to how weak it was before
+:::
+
+## Defunct functions
+
+```{r defunct, echo = TRUE, error = TRUE}
+getWDI()
+```
+
+:::{.notes}
+Backwards compatibility, you can still access the original help and code, but it's out of the way. Use help("getWDI-defunct") for other stuff
+:::
+
+#
 
 :::{.r-fit-text}
 [Shiny app!](https://pascalian.shinyapps.io/data_quality/)
 :::
 
+:::{.notes}
+This is based on the bulk data, because I want to show a lot of data, but it could easily be based on live
+:::
+
 # Future work
 
-- Release of 3.0
-- New API is designed for the interface and not for this use case
+- Does it make sense to make a package for every API? 
+  - Web-connectors are another approach
+- Collecting AQUASTAT, Fisheries and other FAO data into one place would allow a single package to work for more data
 
 # Further reading
 

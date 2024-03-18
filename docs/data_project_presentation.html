@@ -13,8 +13,8 @@
   <meta name="generator" content="quarto-1.4.551">
 
   <meta name="author" content="Sebastian Campbell">
-  <meta name="dcterms.date" content="2023-04-05">
-  <title>data_project - FAOSTAT-package 2.3</title>
+  <meta name="dcterms.date" content="2024-03-18">
+  <title>data_project - FAOSTAT-package 3.0</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -389,14 +389,17 @@
       margin-right: 0; 
     }
   </style>
+  <script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+  <script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+  <link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 </head>
 <body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">FAOSTAT-package 2.3</h1>
-  <p class="subtitle">A revitalisation of the API wrapper of the FAOSTAT API</p>
+  <h1 class="title">FAOSTAT-package 3.0</h1>
+  <p class="subtitle">An overhaul of the API wrapper of the FAOSTAT API</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -406,19 +409,18 @@ Sebastian Campbell
 </div>
 </div>
 
-  <p class="date">April 5, 2023</p>
+  <p class="date">March 18, 2024</p>
 </section>
-<section id="what-is-faostat" class="title-slide slide level1 center">
-<h1>What <em>is</em> FAOSTAT?</h1>
-<ul>
-<li><p><a href="https://www.fao.org/faostat">FAOSTAT</a> is the Food and Agriculture Organization’s (FAO) tool for disseminating statistical data they produce</p></li>
-<li><p>Not all data</p>
-<ul>
-<li>Fisheries and Forestry are separate</li>
-</ul></li>
-</ul>
+<section id="the-core-mission" class="title-slide slide level1 center">
+<h1>The core mission</h1>
+<p>To update the <code>FAOSTAT</code> package to allow R users to consume FAO’s API data easily</p>
+</section>
+
+<section id="section" class="title-slide slide level1 center">
+<h1></h1>
+<p>To update the <code>FAOSTAT</code> package to allow <strong>R</strong> users to consume FAO’s API data easily</p>
 <aside class="notes">
-<p>Consider using the server thing so that I can control the presentation from my phone</p>
+<p>We have a bit to unpack here</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -432,8 +434,68 @@ Sebastian Campbell
       }</style></aside>
 </section>
 
-<section id="how-do-we-get-data-from-faostat" class="title-slide slide level1 center">
-<h1>How do we get data from FAOSTAT?</h1>
+<section id="section-1" class="title-slide slide level1 center">
+<h1></h1>
+<p>To update the <code>FAOSTAT</code> package to allow R users to consume <strong>FAO</strong>’s API data easily</p>
+</section>
+
+<section id="section-2" class="title-slide slide level1 center">
+<h1></h1>
+<p>To update the <code>FAOSTAT</code> package to allow R users to consume FAO’s <strong>API</strong> data easily</p>
+</section>
+
+<section id="what-is-fao" class="title-slide slide level1 center">
+<h1>What <em>is</em> FAO?</h1>
+<p>Food and Agriculture Organization</p>
+<p><img data-src="img/fao_hq.jpg" style="width:60.0%"><img data-src="img/fao_small_logo.png" style="width:40.0%"></p>
+</section>
+
+<section>
+<section id="fao" class="title-slide slide level1 center">
+<h1>FAO</h1>
+<p>Goal is to:</p>
+<blockquote>
+<p>…achieve food security for all and make sure that people have regular access to enough high-quality food to lead active, healthy lives.</p>
+</blockquote>
+</section>
+<section id="ess-in-fao" class="slide level2">
+<h2>ESS in FAO</h2>
+<blockquote>
+<p>Produce up-to-date statistics</p>
+</blockquote>
+<blockquote>
+<p>Develop and promote international food and agricultural statistical standards, method and tools</p>
+</blockquote>
+<blockquote>
+<p>Work directly with countries to develop national statistical capacity</p>
+</blockquote>
+<aside class="notes">
+<p>These have been paraphrased. So how can ESS disseminate statistics to the world of stakeholders?</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="what-is-faostat" class="title-slide slide level1 center">
+<h1>What <em>is</em> FAOSTAT?</h1>
+<ul>
+<li><p><a href="https://www.fao.org/faostat">FAOSTAT</a> is the Food and Agriculture Organization’s (FAO) tool for disseminating statistical data they produce</p></li>
+<li><p>Not all data</p>
+<ul>
+<li>Fisheries and Forestry are separate</li>
+</ul></li>
+</ul>
+</section>
+<section id="how-do-we-get-data-from-faostat" class="slide level2">
+<h2>How do we get data from FAOSTAT?</h2>
 <ul>
 <li>Web interface
 <ul>
@@ -444,10 +506,22 @@ Sebastian Campbell
 </ul></li>
 <li>FAOSTAT3 API</li>
 </ul>
+<aside class="notes">
+<p>Bulk downloads were all that worked before we started</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
-
-<section id="how-do-we-get-data-from-faostat-1" class="title-slide slide level1 center">
-<h1>How do we get data from FAOSTAT?</h1>
+<section id="how-do-we-get-data-from-faostat-1" class="slide level2">
+<h2>How do we get data from FAOSTAT?</h2>
 <ul>
 <li>Web interface
 <ul>
@@ -458,8 +532,68 @@ Sebastian Campbell
 </ul></li>
 <li><del>FAOSTAT3 API</del></li>
 </ul>
+<aside class="notes">
+<p>This API doesn’t work anymore</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section id="the-core-problem" class="title-slide slide level1 center">
+<h1><a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/12">The core problem</a></h1>
+<video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="vid/faostat_ping.mp4"></video>
 </section>
 
+<section id="what-is-an-api" class="title-slide slide level1 center">
+<h1>What <em>is</em> an API?</h1>
+<ul>
+<li>Application Programming Interface</li>
+<li>Allows different bit of software to communicate with each other</li>
+<li>Similar to how a steering wheel lets you drive anything</li>
+</ul>
+<aside class="notes">
+<p>Slow down and explain this properly. When you drive, you don’t need to think about injecting fuel or know anything about the differential. With an automatic, you don’t even need to know about gears. And you can get in any vehicle, diesel, electric, hovercraft and the same ideas apply. This is the magic of abstraction and presenting an interface divorced from the actual functionality.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="rest-apis" class="title-slide slide level1 center">
+<h1>REST APIs</h1>
+<ul>
+<li>HTTP-based</li>
+<li>Use mainly GET and POST</li>
+</ul>
+</section>
+
+<section id="rest-example" class="title-slide slide level1 center">
+<h1>REST example</h1>
+<p><strong>GET</strong> - Request data from the server</p>
+<div>
+<ul>
+<li class="fragment">Request: <code>GET https://example.com/johnsmith/info</code></li>
+<li class="fragment">Payload: None</li>
+<li class="fragment">Response: <code>{username: johnsmith, full_name = "John Smith"}</code></li>
+</ul>
+</div>
+</section>
+
+<section>
 <section id="what-is-the-faostat-package" class="title-slide slide level1 center">
 <h1>What is the FAOSTAT package?</h1>
 <ul>
@@ -467,9 +601,15 @@ Sebastian Campbell
 <li>Allows users to pull in FAOSTAT data</li>
 </ul>
 </section>
-
-<section id="quick-demo" class="title-slide slide level1 center">
-<h1>Quick demo</h1>
+<section id="why-do-r-users-need-a-package" class="slide level2">
+<h2>Why do R users need a package?</h2>
+<ul>
+<li>Easily accessible documentation</li>
+<li>No need to convert json to R objects (tables)</li>
+</ul>
+</section>
+<section id="quick-demo-of-pre-existing-functionality" class="slide level2">
+<h2>Quick demo of pre-existing functionality</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>landuse <span class="ot">&lt;-</span> <span class="fu">get_faostat_bulk</span>(<span class="st">"RL"</span>)</span>
 <span id="cb1-2"><a></a><span class="fu">head</span>(landuse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -491,17 +631,15 @@ Sebastian Campbell
 </div>
 </div>
 </section>
-
-<section id="custodianship" class="title-slide slide level1 center">
-<h1>Custodianship</h1>
+<section id="custodianship" class="slide level2">
+<h2>Custodianship</h2>
 <ul>
 <li>Developed by FAO employees</li>
 <li>Currently maintained by Paul Rougieux at the European Commission</li>
 </ul>
 </section>
-
-<section id="existing-documentation" class="title-slide slide level1 center">
-<h1>Existing documentation</h1>
+<section id="existing-documentation" class="slide level2">
+<h2>Existing documentation</h2>
 <ul>
 <li>A single json file</li>
 <li>A word document
@@ -510,67 +648,225 @@ Sebastian Campbell
 </ul></li>
 </ul>
 </section>
-
-<section id="challenges" class="title-slide slide level1 center">
-<h1>Challenges</h1>
+<section id="challenges" class="slide level2">
+<h2>Challenges</h2>
 <ul>
 <li>Old API doesn’t work</li>
 <li>New API is largely undocumented</li>
 <li>Outdated functions</li>
 </ul>
 </section>
-
-<section id="we-need-to-get-from-here" class="title-slide slide level1 center">
-<h1>We need to get from here</h1>
+<section id="we-need-to-get-from-here" class="slide level2">
+<h2>We need to get from here</h2>
 <img data-src="img/gitlab_code.png" class="r-stretch">
 </section>
-
-<section id="to-here" class="title-slide slide level1 center">
-<h1>To here</h1>
+<section id="to-here" class="slide level2">
+<h2>To here</h2>
 <img data-src="img/faostat_cran.png" class="r-stretch">
-</section>
-
-<section id="three-step-program" class="title-slide slide level1 center">
-<h1>Three step program</h1>
+</section></section>
+<section>
+<section id="faostat-2.3.0" class="title-slide slide level1 center">
+<h1>FAOSTAT 2.3.0</h1>
+<ul>
+<li>Completed in March 2023 with 3 goals:
 <ul>
 <li>Fix core functions</li>
 <li>Triage existing functions</li>
 <li>Describe all API endpoints</li>
+</ul></li>
 </ul>
 </section>
-
-<section id="fix-core-functions" class="title-slide slide level1 center">
-<h1><a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/12">Fix core functions</a></h1>
-<video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="vid/faostat_ping.mp4"></video>
-</section>
-
-<section id="triage-existing-functions" class="title-slide slide level1 center">
-<h1><a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/20">Triage existing functions</a></h1>
+<section id="triage-existing-functions" class="slide level2">
+<h2><a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/20">Triage existing functions</a></h2>
 <img data-src="img/defunctions.png" class="r-stretch">
 </section>
-
-<section id="describe-all-api-endpoints" class="title-slide slide level1 center">
-<h1>Describe all API endpoints</h1>
+<section id="describe-all-api-endpoints" class="slide level2">
+<h2>Describe all API endpoints</h2>
 <ul>
-<li>Used json doc</li>
+<li>Used json documentation</li>
 <li>Manually tested all the endpoints</li>
 <li>Wrote everything up on an issue page</li>
 </ul>
 </section>
+<section id="it-was-a-lot-of-work" class="slide level2 scrollable">
+<h2><a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/23">It was a lot of work</a></h2>
 
-<section id="it-was-a-lot-of-work" class="title-slide slide level1 center">
-<h1><a href="https://gitlab.com/paulrougieux/faostatpackage/-/issues/23">It was a lot of work</a></h1>
-<p><img data-src="img/api_endpoints.png"> # Application</p>
+<img data-src="img/api_endpoints.png" class="r-stretch"></section>
+<section id="api-structure" class="slide level2">
+<h2>API structure</h2>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+  Group --&gt; Domain
+  Dimension --&gt; Codes
+  Dimension --&gt; Subdimensions
+  Subdimensions --&gt; Codes
+  Domain --&gt; Dimension
+  Domain --&gt; Data
+  Domain --&gt; BD[Bulk downloads]
+  Domain --&gt; Metadata
+  Metadata --&gt; Document
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="faostat-3.0.0" class="title-slide slide level1 center">
+<h1>FAOSTAT 3.0.0</h1>
+<p>Implementing all of the changes we identified in 2.3.0</p>
+<ul>
+<li>Deprecating old functions</li>
+<li>Creating new structures</li>
+</ul>
+</section>
+<section id="now-it-works" class="slide level2 scrollable">
+<h2>Now it works</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">read_fao</span>(<span class="at">domain =</span> <span class="st">"RL"</span>, </span>
+<span id="cb3-2"><a></a>         <span class="at">area_codes =</span> <span class="st">"8"</span>, </span>
+<span id="cb3-3"><a></a>         <span class="at">element_codes =</span> <span class="st">"5110"</span>, </span>
+<span id="cb3-4"><a></a>         <span class="at">item_codes =</span> <span class="st">"6620"</span>,</span>
+<span id="cb3-5"><a></a>         <span class="at">year_codes =</span> <span class="dv">2000</span><span class="sc">:</span><span class="dv">2020</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Domain.Code   Domain Area.Code..M49.                Area Element.Code
+1           RL Land Use              28 Antigua and Barbuda         5110
+2           RL Land Use              28 Antigua and Barbuda         5110
+3           RL Land Use              28 Antigua and Barbuda         5110
+4           RL Land Use              28 Antigua and Barbuda         5110
+5           RL Land Use              28 Antigua and Barbuda         5110
+6           RL Land Use              28 Antigua and Barbuda         5110
+7           RL Land Use              28 Antigua and Barbuda         5110
+8           RL Land Use              28 Antigua and Barbuda         5110
+9           RL Land Use              28 Antigua and Barbuda         5110
+10          RL Land Use              28 Antigua and Barbuda         5110
+11          RL Land Use              28 Antigua and Barbuda         5110
+12          RL Land Use              28 Antigua and Barbuda         5110
+13          RL Land Use              28 Antigua and Barbuda         5110
+14          RL Land Use              28 Antigua and Barbuda         5110
+15          RL Land Use              28 Antigua and Barbuda         5110
+16          RL Land Use              28 Antigua and Barbuda         5110
+17          RL Land Use              28 Antigua and Barbuda         5110
+18          RL Land Use              28 Antigua and Barbuda         5110
+19          RL Land Use              28 Antigua and Barbuda         5110
+20          RL Land Use              28 Antigua and Barbuda         5110
+21          RL Land Use              28 Antigua and Barbuda         5110
+   Element Item.Code..CPC.     Item Year.Code Year    Unit Value Flag
+1     Area           F6620 Cropland      2000 2000 1000 ha     5    I
+2     Area           F6620 Cropland      2001 2001 1000 ha     5    I
+3     Area           F6620 Cropland      2002 2002 1000 ha     5    I
+4     Area           F6620 Cropland      2003 2003 1000 ha     5    I
+5     Area           F6620 Cropland      2004 2004 1000 ha     5    I
+6     Area           F6620 Cropland      2005 2005 1000 ha     5    I
+7     Area           F6620 Cropland      2006 2006 1000 ha     5    I
+8     Area           F6620 Cropland      2007 2007 1000 ha     5    I
+9     Area           F6620 Cropland      2008 2008 1000 ha     5    I
+10    Area           F6620 Cropland      2009 2009 1000 ha     5    I
+11    Area           F6620 Cropland      2010 2010 1000 ha     5    I
+12    Area           F6620 Cropland      2011 2011 1000 ha     5    I
+13    Area           F6620 Cropland      2012 2012 1000 ha     5    I
+14    Area           F6620 Cropland      2013 2013 1000 ha     5    I
+15    Area           F6620 Cropland      2014 2014 1000 ha     5    I
+16    Area           F6620 Cropland      2015 2015 1000 ha     5    I
+17    Area           F6620 Cropland      2016 2016 1000 ha     5    I
+18    Area           F6620 Cropland      2017 2017 1000 ha     5    I
+19    Area           F6620 Cropland      2018 2018 1000 ha     5    I
+20    Area           F6620 Cropland      2019 2019 1000 ha     5    I
+21    Area           F6620 Cropland      2020 2020 1000 ha     5    I
+   Flag.Description Note
+1     Imputed value   NA
+2     Imputed value   NA
+3     Imputed value   NA
+4     Imputed value   NA
+5     Imputed value   NA
+6     Imputed value   NA
+7     Imputed value   NA
+8     Imputed value   NA
+9     Imputed value   NA
+10    Imputed value   NA
+11    Imputed value   NA
+12    Imputed value   NA
+13    Imputed value   NA
+14    Imputed value   NA
+15    Imputed value   NA
+16    Imputed value   NA
+17    Imputed value   NA
+18    Imputed value   NA
+19    Imputed value   NA
+20    Imputed value   NA
+21    Imputed value   NA</code></pre>
+</div>
+</div>
+<aside class="notes">
+<p>Compare this to how weak it was before</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="defunct-functions" class="slide level2">
+<h2>Defunct functions</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">getWDI</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error: 'getWDI' is defunct.
+See help("Defunct")</code></pre>
+</div>
+</div>
+<aside class="notes">
+<p>Backwards compatibility, you can still access the original help and code, but it’s out of the way help(“getWDI-defunct”)</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section id="section-3" class="title-slide slide level1 center">
+<h1></h1>
 <div class="r-fit-text">
 <p><a href="https://pascalian.shinyapps.io/data_quality/">Shiny app!</a></p>
 </div>
+<aside class="notes">
+<p>This is based on the bulk data, because I want to show a lot of data, but it could easily be based on live</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 
 <section id="future-work" class="title-slide slide level1 center">
 <h1>Future work</h1>
 <ul>
-<li>Release of 3.0</li>
-<li>New API is designed for the interface and not for this use case</li>
+<li>Does it make sense to make a package for every API?
+<ul>
+<li>Web-connectors are another approach</li>
+</ul></li>
+<li>Collecting AQUASTAT, Fisheries and other FAO data into one place would allow a single package to work for more data</li>
 </ul>
 </section>
 
